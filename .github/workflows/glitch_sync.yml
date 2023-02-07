@@ -13,5 +13,5 @@ jobs:
       - name: Sync to Glitch Project
         uses: kanadgupta/glitch-sync@main
         with:
-          auth-token: '${{ secrets.authToken }}'
-          project-id: '${{ secrets.projectId }}'
+          auth-token: '${{ secrets.GLITCH_AUTH_TOKEN }}'
+          project-id: '${{ secrets.GLITCH_PROJECT_ID }}'
