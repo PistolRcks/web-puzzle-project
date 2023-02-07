@@ -1,13 +1,15 @@
-# shamelessly stolen from `kanadgupta/glitch-sync`
-name: Glitch Sync
+name: Glitch Sync on PR Merge
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - master
 
 jobs:
-  sync:
+  sync_on_merge:
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     steps:
       - name: Sync to Glitch Project
