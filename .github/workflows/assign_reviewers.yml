@@ -13,5 +13,4 @@ jobs:
           assignees: ${{ github.actor }} # assign pull request author
           reviewers: Blackkirby72, connormckellips, kantab, kreklb, lmschaff, Maxwell1455, prewe5294, PistolRcks
           max-num-of-reviewers: 2
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           ready-comment: "Ready for review by <reviewers>"
