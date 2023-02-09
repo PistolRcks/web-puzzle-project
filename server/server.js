@@ -3,4 +3,4 @@ dotenv.config()
 
 const app = require('./index.js')
 const PORT = process.env.PORT
-app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
+app.listen(PORT, () => console.log(`http://localhost:${PORT}\nListening on port: ${PORT}`))

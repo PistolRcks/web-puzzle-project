@@ -10,6 +10,7 @@
 
 # production
 /build
+bundle.js
 
 # secrets
 .env
