@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
+import AccountCreation from './components/AccountCreation/AccountCreation';
 
 export default function PageRoutes() {
   /**
@@ -15,7 +16,7 @@ export default function PageRoutes() {
    */
   return (
     <Routes>
-      <Route path="/" element={<div> temporary div </div>} />
+      <Route path="/" element={<AccountCreation />} />
     </Routes>
   );
 }
