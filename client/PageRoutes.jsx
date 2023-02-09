@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
+import LandingPage from './pages/LandingPage/LandingPage.jsx'
 
 export default function PageRoutes() {
   /**
@@ -15,7 +16,9 @@ export default function PageRoutes() {
    */
   return (
     <Routes>
-      <Route path="/" element={<div> temporary div </div>} />
+      <Route path="/" element={<LandingPage />}>
+
+      </Route>
     </Routes>
   );
 }
