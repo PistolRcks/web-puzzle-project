@@ -16,9 +16,10 @@ export default function PageRoutes() {
    */
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />}>
+        <Route index element={<LandingPage />} />
+        <Route path="/" element={<div>temp</div>}>
 
-      </Route>
+        </Route>
     </Routes>
   );
 }
