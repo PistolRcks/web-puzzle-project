@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
 import LandingPage from './pages/LandingPage/LandingPage.jsx'
+import PuzzleSelectionPage from './pages/PuzzleSelectionPage/PuzzleSelectionPage.jsx';
 
 export default function PageRoutes() {
   /**
@@ -16,10 +17,9 @@ export default function PageRoutes() {
    */
   return (
     <Routes>
+        {/* <Route index element={<div>temp</div>} /> */}
         <Route index element={<LandingPage />} />
-        <Route path="/" element={<div>temp</div>}>
-
-        </Route>
+        <Route path="/PuzzleSelection" element={<PuzzleSelectionPage />} />
     </Routes>
   );
 }

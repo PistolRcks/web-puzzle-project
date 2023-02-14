@@ -1,0 +1,17 @@
+body {
+    background-color: #2E1C2B;
+}
+
+.buttons {
+    background-color: #893168;
+    border-color: #893168;
+}
+
+.back-button {
+    padding: 25px;
+}
+
+h1 {
+    color: #EAEAEA;
+    padding: 55px;
+}
