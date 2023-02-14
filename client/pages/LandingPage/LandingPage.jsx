@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container, Form, Modal, Row } from 'react-bootstrap';
+// import puzzlePiece from "../../assets/puzzle-piece.png";
 import "./LandingPage.css";
 
 export default function LandingPage() {
@@ -14,24 +15,25 @@ export default function LandingPage() {
     };
 
     return (
-        <div className="App">
-            <h1>Welcome to our Web Puzzle</h1>
-            <Container className="container">
-
-            <h3>This website is made to challenge the user to solve multiple 
-                different puzzles that will require them to learn about the tricks of 
-                websites and the hidden information they carry. Each puzzle will get you 
-                closer to solving the hidden message.
-            </h3>
-            <br />
+        <div className="App min-vh-100 min-vw-100">
+            <Container className="min-vw-100 header-container">
+                <div>{/*<img src={puzzlePiece} alt="puzzle piece" width="50" height="70" />*/}  Welcome to our Web Puzzle</div>
             </Container>
-            <Container className="container">
-            <h6>All features of this website are intended; it's not a bug, it's a feature. 
-                Make sure to explore the site in its entirety in order to solve the puzzles.
-            </h6>
-            <br />
+            <Container className="text-container">
+                <h3>This website is made to challenge the user to solve multiple 
+                    different puzzles that will require them to learn about the tricks of 
+                    websites and the hidden information they carry. Each puzzle will get you 
+                    closer to solving the hidden message.
+                </h3>
+                <br />
             </Container>
-            <Button className="buttons" onClick={handleShow}>Log In</Button>
+            <Container className="text-container">
+                <h6>All features of this website are intended; it's not a bug, it's a feature. 
+                    Make sure to explore the site in its entirety in order to solve the puzzles.
+                </h6>
+                <br />
+            </Container>
+            <Button className="button" onClick={handleShow}>Log In</Button>
             <Modal
                 show={show}
                 onHide={handleClose}
