@@ -3,8 +3,6 @@ const Crypto = require('crypto');
 
 var db = require('../db');
 
-var router = new Express.Router();
-
 /* POST /signup
  *
  * This route creates a new user account.
