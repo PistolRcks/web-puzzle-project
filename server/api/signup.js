@@ -1,9 +1,7 @@
 const Express = require('express');
 const Crypto = require('crypto');
 
-// TODO (integration): change the link to where the database module will actually 
-// live!
-// var db = require('../db');
+var db = require('../db');
 
 var router = new Express.Router();
 
@@ -30,8 +28,6 @@ function signup(req, res, next) {
       if (err) { return next(err); }
       res.send([req.body.username, hashedPassword.toString('utf-8'), salt]);
       // insert new user into database
-      // FIXME: Will remain stubbed until we get the database setup
-      /*
       db.run('INSERT INTO users (username, hashed_pass, salt) VALUES (?, ?, ?)', [
         req.body.username,
         hashedPassword,
@@ -49,7 +45,6 @@ function signup(req, res, next) {
           res.redirect('/');    // TODO: eventually this should lead to the puzzle select page
         });
       });
-      */
     });
   };
   

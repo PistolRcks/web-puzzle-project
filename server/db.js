@@ -1,6 +1,7 @@
-var sqlite3 = require('sqlite3');
+const sqlite3 = require('sqlite3');
+const Crypto = require('crypto');
 
-var db = new sqlite3.Database('puzzle.db');
+var db = new sqlite3.Database('./puzzle.db');
 
 db.serialize(function() {
   // create the database schema for the todos app
