@@ -11,6 +11,7 @@
 # production
 /build
 bundle.js
+bundle.css
 
 # secrets
 .env
