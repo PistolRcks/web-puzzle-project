@@ -8,11 +8,28 @@
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+a {
+    color:#52796f;
+}
+
+a:hover {
+    color:#2f3e46;
+}
+
 .button {
     background-color:#52796f;
     border-style: none;
     box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
+.close-button {
+    background-color: #2f3e46;
+    border-style: none;
+    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.custom-control-input {
+    margin-right: 8px;
 }
 
 .header-container {
