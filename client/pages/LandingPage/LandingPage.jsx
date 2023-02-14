@@ -26,7 +26,7 @@ export default function LandingPage() {
             <br />
             </Container>
             <Container className="container">
-            <h6>All features of this website are intended, it's not a bug, it's a feature. 
+            <h6>All features of this website are intended; it's not a bug, it's a feature. 
                 Make sure to explore the site in its entirety in order to solve the puzzles.
             </h6>
             <br />
