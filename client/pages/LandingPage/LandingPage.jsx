@@ -49,27 +49,42 @@ export default function LandingPage() {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form onSubmit={handleSubmit}>
-                            <Row className="mb-3">
-                                <Form.Text>Enter Username:</Form.Text>
-                                <Form.Control
-                                    type="text"
-                                    id="username"
-                                    placeholder="Username"
-                                    name="username"
-                                    />
-                            </Row>
-                            <Row className="mb-3">
-                                <Form.Text>Enter Password:</Form.Text>
-                                <Form.Control
-                                    type="text"
-                                    id="password"
-                                    placeholder="Password"
-                                    name="password"
-                                    />
-                            </Row>
+                       <Form onSubmit={handleSubmit}>
+                       
+        <div className="mb-3">
+          <label>User Name</label>
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Enter User Name"
+          />
+        </div>
+        <div className="mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter password"
+          />
+        </div>
+        <div className="mb-3">
+          <div className="custom-control custom-checkbox">
+            <input
+              type="checkbox"
+              className="custom-control-input"
+              id="customCheck1"
+            />
+            <label className="custom-control-label" htmlFor="customCheck1">
+              Remember me
+            </label>
+          </div>
+        </div>
+        
+        <p className="create account">
+          Need to <a href="#">Create Account?</a>
+        </p>
 
-                        </Form>
+                        </Form> 
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Close</Button>
