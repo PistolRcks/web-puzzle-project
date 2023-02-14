@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
-import AccountCreation from './components/AccountCreation/AccountCreation';
+import {AccountCreation} from './components/AccountCreation/AccountCreation';
 
 export default function PageRoutes() {
   /**
