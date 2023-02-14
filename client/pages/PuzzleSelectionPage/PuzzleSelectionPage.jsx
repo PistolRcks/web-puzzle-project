@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 // import back from '../../assets/back-arrow.png';
 import "./PuzzleSelectionPage.css";
 
@@ -8,7 +8,7 @@ export default function PuzzleSelection() {
 
 
     return (
-        <div className="App min-vh-100 min-vw-100">
+        <div className="app min-vh-100 min-vw-100">
             <div className="back-button">
                 <Link to="/">
                     <Button className="button">
@@ -17,8 +17,10 @@ export default function PuzzleSelection() {
                           Back</Button>
                 </Link> 
             </div>
+            <Container className="selection-header min-vw-100">
+                <p className="selection-title">Puzzle Selection</p>
+            </Container>
             <div>
-                <h1>Puzzle Selection</h1>
                 <Form>
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="puzzle1">

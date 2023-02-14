@@ -1,23 +1,25 @@
-.App {
+.app {
     text-align: center;
     overflow: auto;
     background-color: #2f3e46;
     /* background-image: url("../../assets/puzzle.jpg"); */
+    background-size: cover;
     background-attachment: fixed;
     color: #cad2c5;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 a {
-    color:#52796f;
+    color: #52796f;
 }
 
 a:hover {
-    color:#2f3e46;
+    color: #2f3e46;
 }
 
 .button {
-    background-color:#52796f;
+    background-color: #52796f;
+    color: #cad2c5;
     border-style: none;
     box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -34,13 +36,13 @@ a:hover {
 
 .header-container {
     height: 120px;
-    margin:0px;
+    margin: 0px;
     padding: 20px;
     margin-bottom: 50px;
     background-color: #84a98c;
+    color: #dee7d9;
     font-size: 30px;
     box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 }
 
 .text-container { 

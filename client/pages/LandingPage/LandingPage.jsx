@@ -15,7 +15,7 @@ export default function LandingPage() {
     };
 
     return (
-        <div className="App min-vh-100 min-vw-100">
+        <div className="app min-vh-100 min-vw-100">
             <Container className="min-vw-100 header-container">
                 <div>{/*<img src={puzzlePiece} alt="puzzle piece" width="50" height="70" />*/}  Welcome to our Web Puzzle</div>
             </Container>
