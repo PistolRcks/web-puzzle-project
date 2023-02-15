@@ -19,7 +19,8 @@ export default function PageRoutes() {
     <Routes>
         {/* <Route index element={<div>temp</div>} /> */}
         <Route index element={<LandingPage />} />
-        <Route path="/PuzzleSelection" element={<PuzzleSelectionPage />} />
+        <Route path="/Puzzle/Selection" element={<PuzzleSelectionPage />} />
+        <Route path='/Puzzle/Details/:puzzleID' element={<div style={{color: 'white'}}>temp div</div>} />
     </Routes>
   );
 }
