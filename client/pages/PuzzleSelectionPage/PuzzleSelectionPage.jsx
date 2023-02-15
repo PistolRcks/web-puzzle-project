@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-// import back from '../../assets/back-arrow.png';
+import back from '../../assets/back-arrow.png';
 import "./PuzzleSelectionPage.css";
 
 export default function PuzzleSelection() {
@@ -12,7 +12,7 @@ export default function PuzzleSelection() {
             <div className="back-button">
                 <Link to="/">
                     <Button className="button">
-                        {/*<img src={back} alt="back" width="22" height="22"/>*/}
+                        <img src={back} alt="back" width="22" height="22"/>
                         {/* Error: No loader is configured for ".png" files: client/assets/back-arrow.png*/}
                           Back</Button>
                 </Link> 

@@ -2,7 +2,7 @@
     text-align: center;
     overflow: auto;
     background-color: #2f3e46;
-    /* background-image: url("../../assets/puzzle.jpg"); */
+    background-image: url("../../assets/puzzle.jpg");
     background-size: cover;
     background-attachment: fixed;
     color: #cad2c5;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container, Form, Modal, Row } from 'react-bootstrap';
-// import puzzlePiece from "../../assets/puzzle-piece.png";
+import puzzlePiece from "../../assets/puzzle-piece.png";
 import "./LandingPage.css";
 
 export default function LandingPage() {
@@ -17,7 +17,7 @@ export default function LandingPage() {
     return (
         <div className="app min-vh-100 min-vw-100">
             <Container className="min-vw-100 header-container">
-                <div>{/*<img src={puzzlePiece} alt="puzzle piece" width="50" height="70" />*/}  Welcome to our Web Puzzle</div>
+                <div><img src={puzzlePiece} alt="puzzle piece" width="50" height="70" />  Welcome to our Web Puzzle</div>
             </Container>
             <Container className="text-container">
                 <h3>This website is made to challenge the user to solve multiple 
