@@ -59,8 +59,8 @@ function insertUser(db, username, hashedPassword, salt) {
 
     // return the new user from the callback
     user = {
-      id: this.lastID,
-      username: username
+      "id": this.lastID,
+      "username": username
     };
   });
   return user;
