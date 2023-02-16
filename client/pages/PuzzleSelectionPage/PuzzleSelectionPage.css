@@ -38,3 +38,11 @@ h1 {
     font-size: 40px;
     color: #cad2c5;
 }
+
+.puzzle_selection_page__profile-link {
+  float: right;
+  padding: 4px;
+  background-color: #893168;
+  border-color: #893168;
+  border-radius: 15%;
+}

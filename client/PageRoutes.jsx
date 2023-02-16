@@ -3,7 +3,6 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import LandingPage from './pages/LandingPage/LandingPage.jsx'
 import PuzzleSelectionPage from './pages/PuzzleSelectionPage/PuzzleSelectionPage.jsx';
-import PuzzleDetails from './pages/PuzzleDetails/PuzzleDetails.jsx'
 
 export default function PageRoutes() {
   /**
@@ -21,7 +20,6 @@ export default function PageRoutes() {
         {/* <Route index element={<div>temp</div>} /> */}
         <Route index element={<LandingPage />} />
         <Route path="/Puzzle/Selection" element={<PuzzleSelectionPage />} />
-        <Route path='/Puzzle/Details/:puzzleID' element={<PuzzleDetails />} />
     </Routes>
   );
 }

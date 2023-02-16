@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Container } from 'react-bootstrap'
 
 import back from '../../assets/back-arrow.png';
 
@@ -23,7 +23,7 @@ export default function PuzzleSelection() {
                 // TODO: user authentication and managing the userID after logging in
               }
               <Link to={`/UserProfile/${userID}`} className='puzzle_selection_page__profile-link'>
-                <img src={userIcon} alt='User profile picture' height='75'/>
+                <img className='user_profile_picture' src={userIcon} alt='User profile' height='75'/>
               </Link>
           </div>
           <Container className="selection-header min-vw-100">
@@ -41,6 +41,7 @@ export default function PuzzleSelection() {
 }
 
 // TODO: Update this function to call the API once it's ready
+// TODO: userID will likely be passed around on the front end to reduce database queries
 const RetrievePuzzleData = () => {
   return {
     userID: 1,

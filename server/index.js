@@ -16,7 +16,7 @@ app.use(Express.static('public'))
 
 app.use('/api', dataRouter)
 
-app.get(['/login', '/Puzzle/Selection', 'Puzzle/Details/:id' ], (req, res) => {
+app.get(['/login', '/Puzzle/Selection' ], (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'index.html'))
 })
 
