@@ -52,7 +52,8 @@ describe("Tests for Account Creation", () => {
     });
     test("check to make sure typing in the form and submission works", () => {
         const consoleSpy = jest.spyOn(global.console, "log");
-        const wrapper = render(<AccountCreation />)
+        const close = jest.fn();
+        const wrapper = render(<AccountCreation close={close}/>)
 
         const inputUsername = screen.getByTestId("username");
         userEvent.type(inputUsername, "validUsername");

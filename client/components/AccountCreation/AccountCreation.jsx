@@ -28,6 +28,7 @@ function AccountCreation(props) {
         else if(checkPasswordRequirements(formData.password) && checkUsernameRequirements(formData.username)) {
             //TODO send the formData to the backend
             console.log("Hey this code works");
+            props.close();
         }
     }
 
