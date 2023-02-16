@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Button, Container, Form, Modal, Row } from 'react-bootstrap';
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -31,29 +32,38 @@ function AccountCreation(props) {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username:
-                    <br/>
-                    <input onChange={handleChange} data-testid="username" name="username"/>
-                </label>
-                <label>
-                    <br/>
-                    Password:
-                    <br/>
-                    <input onChange={handleChange} data-testid="password" type="password" name="password"/>
-                </label>
-                <label>
-                    <br/>
-                    Confirm Password:
-                    <br/>
-                    <input onChange={handleChange} data-testid="confirmPassword" type="password" name="confirmPassword"/>
-                </label>
-                <br/>
-            </form>
-            <button onClick={handleSubmit} data-testid="submitButton">Submit</button>
-        </div>
+        <Form onSubmit={handleSubmit}>
+            <Row className="mb-3">
+                <Form.Text>Enter Username:</Form.Text>
+                <Form.Control
+                    type="text"
+                    data-testid="username"
+                    name="username"
+                    onChange={handleChange}
+                    />
+            </Row>
+            <Row className="mb-3">
+                <Form.Text>Enter Password:</Form.Text>
+                <Form.Control
+                    type="password"
+                    data-testid="password"
+                    name="password"
+                    onChange={handleChange}
+                    />
+            </Row>
+            <Row className="mb-3">
+                <Form.Text>Confirm Password:</Form.Text>
+                <Form.Control
+                    type="password"
+                    data-testid="confirmPassword"
+                    name="confirmPassword"
+                    onChange={handleChange}
+                    />
+            </Row>
+            <Row>
+            <Button variant="primary" type="submit" onClick={handleSubmit} data-testid="submitButton">Create Account</Button>
+            </Row>
+        </Form>
     );
 }
 /*  Checks to make sure the password:

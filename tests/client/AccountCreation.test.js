@@ -9,7 +9,7 @@ describe("Tests for Account Creation", () => {
     }) 
     test("Checks for button", () => {
         const wrapper = render(<AccountCreation />)
-        expect(wrapper.baseElement.outerHTML).toContain("Submit");
+        expect(wrapper.baseElement.outerHTML).toContain("Create Account");
     });
     test("Checks for username label", () => {
         const wrapper = render(<AccountCreation />)
