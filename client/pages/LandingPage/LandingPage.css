@@ -1,19 +1,56 @@
-.App {
+.app {
     text-align: center;
-    background-color: #2E1C2B;
-    color: #EAEAEA;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
+    overflow: auto;
+    background-color: #2f3e46;
+    background-image: url("../../assets/puzzle.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    color: #cad2c5;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.buttons {
-    background-color: #893168;
+a {
+    color: #52796f;
 }
 
-.container { 
-    border-color: #893168;
+a:hover {
+    color: #2f3e46;
+}
+
+.button {
+    background-color: #52796f;
+    color: #cad2c5;
+    border-style: none;
+    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.close-button {
+    background-color: #2f3e46;
+    border-style: none;
+    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.custom-control-input {
+    margin-right: 8px;
+}
+
+.header-container {
+    height: 120px;
+    margin: 0px;
+    padding: 20px;
+    margin-bottom: 50px;
+    background-color: #84a98c;
+    color: #dee7d9;
+    font-size: 30px;
+    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.text-container { 
+    width: 60vw;
+    border-color: #52796f;
     border-radius: 15px;
-    background-color: #893168;
+    background-color: #52796f;
     padding: 25px;
     margin-bottom: 15px;
+    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
