@@ -1,6 +1,5 @@
 const Express = require('express')
 const signup = require(`./signup`)
-//const getPuzzles = require('./listpuzzles')
 const puzzles = require('./listpuzzles')
 
 const router = new Express.Router()

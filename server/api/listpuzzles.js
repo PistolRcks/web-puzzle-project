@@ -1,5 +1,3 @@
-const Express = require('express');
-const sqlite = require('sqlite3');
 const db = require('../db');
 
 function getPuzzles(page = 1) {
