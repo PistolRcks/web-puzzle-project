@@ -8,10 +8,49 @@ export default function LandingPage() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const initialFormData = Object.freeze({
+        username: "",
+        password: "",
+        confirmPassword: ""
+    }); 
+
+    const [formData, updateFormData] = React.useState(initialFormData);
+    const validateUserAndPass = (user) => {
+        let userStr = String(user);
+        if(userStr.length < 5) {
+            alert("Your username you created should be at least 5 characters")
+            return false;
+        }
+        if(/^\w+$/.test(userStr)) {
+            return true;
+        }
+        else {
+            alert("The username or password you entered contains illegal characters, please make sure it contains letters, numbers, and underscores only")
+            return false;
+        }
+    }
     const handleSubmit = event => {
-        event.preventDefault();
+        
         console.log('Form submitted')
+        if(!validateUserAndPass(formData.password)||!validateUserAndPass(formData.username)){
+            event.preventDefault();
+        }
+        else if(validateUserAndPass(formData.password)&&validateUserAndPass(formData.username)){
+            setShow(false);
+            console.log("This is correct");
+        }
+        
+
     };
+    
+    const handleChange = (e) => {
+        updateFormData({
+            ...formData,
+            [e.target.name]: e.target.value.trim()
+        });
+    }
+    
+
 
     return (
         <div className="App">
@@ -49,49 +88,58 @@ export default function LandingPage() {
                     <Modal.Body>
                        <Form onSubmit={handleSubmit}>
                        
-        <div className="mb-3">
-          <label>User Name</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter User Name"
-          />
-        </div>
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-          />
-        </div>
-        <div className="mb-3">
-          <div className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
-            />
-            <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
-            </label>
-          </div>
-        </div>
+               <div className="mb-3">
+                <label>User Name</label>
+               <input 
+               data-testid="username" 
+               name="username"
+               onChange={handleChange} 
+               class="form-control" 
+               type="text" 
+               placeholder="Enter User Name"></input>
+         
+              </div>
+              <div className="mb-3">
+                <label>Password</label>
+               <input 
+                 data-testid="password" 
+                 type="password" 
+                 name="password"                
+                 className="form-control"
+                 placeholder="Enter password"
+                 onChange={handleChange}
+               />
+             </div>
+                <div className="mb-3">
+                  <div className="custom-control custom-checkbox">
+                    <input
+                     type="checkbox"
+                    className="custom-control-input"
+                    id="customCheck1"
+                 />
+                 <label className="custom-control-label" htmlFor="customCheck1">
+                   Remember me
+                 </label>
+                </div>
+                </div>
         
-        <p className="create account">
-          Need to <a href="#">Create Account?</a>
-        </p>
+                <p className="create account">
+               Need to <a href="#">Create Account?</a>
+                 </p>
 
                         </Form> 
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Close</Button>
                         <Link to="/PuzzleSelection">
-                        <Button variant="primary" type="submit" onClick={handleClose}>Log In</Button>   
-                         {/* ^ should verify log in information*/}
+                        <Button variant="primary" type="submit" onClick={handleSubmit} >Log In</Button>   
+                                             {/*connect to backend*/}
+                         
                          </Link>
                     </Modal.Footer>
             </Modal>
+           
         </div>
+      
     );
 }
