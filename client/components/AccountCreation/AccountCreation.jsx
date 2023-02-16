@@ -17,7 +17,6 @@ function AccountCreation(props) {
             ...formData,
             [e.target.name]: e.target.value.trim()
         });
-        console.log(formData.username);
     }
     //Whenever the submit button is clicked, this checks to make sure the passwords match and calls another func
     const handleSubmit = (e) => {
@@ -108,7 +107,6 @@ function AccountCreation(props) {
 
 const checkUsernameRequirements = (user) => {
     let userStr = String(user);
-    console.log(userStr);
     if(userStr.length < 5) {
         alert("Your username needs to be at least 5 characters")
         return false;
