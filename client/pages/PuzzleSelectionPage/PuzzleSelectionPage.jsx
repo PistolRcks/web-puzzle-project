@@ -11,12 +11,12 @@ export default function PuzzleSelection() {
   const { userID, userIcon, puzzles } = RetrievePuzzleData()
 
   return (
-      <div>
-          <div className='back-button'>
-              <Link to='/'>
-                  <Button className='buttons'>
-                      <img src={back} alt='back' width='22' height='22'/>
-                        Back</Button>
+      <div className="app min-vh-100 min-vw-100">
+          <div className="back-button">
+              <Link to="/">
+                <Button className="button">
+                  <img src={back} alt="back" width="22" height="22"/> Back
+                </Button>
               </Link> 
               {
                 // TODO: This link will likely not work until we know how we are handling 
@@ -26,13 +26,15 @@ export default function PuzzleSelection() {
                 <img src={userIcon} alt='User profile picture' height='75'/>
               </Link>
           </div>
-          <div className='App'>
-              <h1>Puzzle Selection</h1>
-              <Form>
-                  {puzzles.map(puzzle => {
-                    return (<PuzzleItem puzzle={puzzle} />)
-                  })}
-              </Form>
+          <Container className="selection-header min-vw-100">
+            <p className="selection-title">Puzzle Selection</p>
+          </Container>
+          <div>
+            <Form>
+              {puzzles.map(puzzle => {
+                return (<PuzzleItem puzzle={puzzle} />)
+              })}
+            </Form>
           </div>
       </div>
   );
