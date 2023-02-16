@@ -40,6 +40,6 @@ jobs:
       - name: Check code prettiness
         uses: creyD/prettier_action@v4.2
         with:
-          prettier_options: --check **.{js,jsx}
+          prettier_options: --check **/*.{js,jsx}
           dry: True
           only_changed: True
