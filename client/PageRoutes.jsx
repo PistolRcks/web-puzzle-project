@@ -2,6 +2,8 @@ import React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
 import {AccountCreation} from './components/AccountCreation/AccountCreation';
+import LandingPage from './pages/LandingPage/LandingPage.jsx'
+import PuzzleSelectionPage from './pages/PuzzleSelectionPage/PuzzleSelectionPage.jsx';
 
 export default function PageRoutes() {
   /**
@@ -16,7 +18,9 @@ export default function PageRoutes() {
    */
   return (
     <Routes>
-      <Route path="/" element={<AccountCreation />} />
+        {/* <Route index element={<div>temp</div>} /> */}
+        <Route index element={<LandingPage />} />
+        <Route path="/PuzzleSelection" element={<PuzzleSelectionPage />} />
     </Routes>
   );
 }

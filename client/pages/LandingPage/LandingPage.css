@@ -1,0 +1,19 @@
+.App {
+    text-align: center;
+    background-color: #2E1C2B;
+    color: #EAEAEA;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+.buttons {
+    background-color: #893168;
+}
+
+.container { 
+    border-color: #893168;
+    border-radius: 15px;
+    background-color: #893168;
+    padding: 25px;
+    margin-bottom: 15px;
+}
