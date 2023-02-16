@@ -17,6 +17,7 @@ function AccountCreation(props) {
             ...formData,
             [e.target.name]: e.target.value.trim()
         });
+        console.log(formData.username);
     }
     //Whenever the submit button is clicked, this checks to make sure the passwords match and calls another func
     const handleSubmit = (e) => {
@@ -36,19 +37,19 @@ function AccountCreation(props) {
                 <label>
                     Username:
                     <br/>
-                    <input onChange={handleChange} data-testid="username" />
+                    <input onChange={handleChange} data-testid="username" name="username"/>
                 </label>
                 <label>
                     <br/>
                     Password:
                     <br/>
-                    <input onChange={handleChange} data-testid="password" type="password"/>
+                    <input onChange={handleChange} data-testid="password" type="password" name="password"/>
                 </label>
                 <label>
                     <br/>
                     Confirm Password:
                     <br/>
-                    <input onChange={handleChange} data-testid="confirmPassword" type="password"/>
+                    <input onChange={handleChange} data-testid="confirmPassword" type="password" name="confirmPassword"/>
                 </label>
                 <br/>
             </form>

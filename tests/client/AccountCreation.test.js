@@ -1,8 +1,12 @@
 import {AccountCreation, checkPasswordRequirements, checkUsernameRequirements} from '../../client/components/AccountCreation/AccountCreation';
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { beforeEach } from 'node:test';
 
 describe("Tests for Account Creation", () => {
+    beforeAll(() => {
+        jest.spyOn(console, 'error').mockImplementation(() => {});
+    }) 
     test("Checks for button", () => {
         const wrapper = render(<AccountCreation />)
         expect(wrapper.baseElement.outerHTML).toContain("Submit");
@@ -47,7 +51,8 @@ describe("Tests for Account Creation", () => {
         expect(!checkPasswordRequirements('PASSWORD7')).toBeTruthy();
     });
     test("check to make sure typing in the form and submission works", () => {
-        const consoleSpy = jest.spyOn(console, "log");
+        const consoleSpy = jest.spyOn(global.console, "log");
+        const wrapper = render(<AccountCreation />)
 
         const inputUsername = screen.getByTestId("username");
         userEvent.type(inputUsername, "validUsername");
@@ -61,6 +66,6 @@ describe("Tests for Account Creation", () => {
         const submitButton = screen.getByTestId("submitButton");
         userEvent.click(submitButton);
 
-        expect(consoleSpy).toHaveBeenCalledWith("Hey this code works");
+        expect(consoleSpy).toBeCalledWith("Hey this code works");
     });
 });
