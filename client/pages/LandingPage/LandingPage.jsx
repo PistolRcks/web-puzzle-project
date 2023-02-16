@@ -90,34 +90,40 @@ export default function LandingPage() {
                     <Modal.Body>
                        <Form onSubmit={handleSubmit}>
                        
-        <div className="mb-3">
-          <label>User Name</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter User Name"
-          />
-        </div>
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-          />
-        </div>
-        <div className="mb-3">
-          <div className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
-            />
-            <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
-            </label>
-          </div>
-        </div>
+                       <div className="mb-3">
+                <label>User Name</label>
+               <input 
+               data-testid="username" 
+               name="username"
+               onChange={handleChange} 
+               class="form-control" 
+               type="text" 
+               placeholder="Enter User Name"></input>
+         
+              </div>
+              <div className="mb-3">
+                <label>Password</label>
+               <input 
+                 data-testid="password" 
+                 type="password" 
+                 name="password"                
+                 className="form-control"
+                 placeholder="Enter password"
+                 onChange={handleChange}
+               />
+             </div>
+                <div className="mb-3">
+                  <div className="custom-control custom-checkbox">
+                    <input
+                     type="checkbox"
+                    className="custom-control-input"
+                    id="customCheck1"
+                 />
+                 <label className="custom-control-label" htmlFor="customCheck1">
+                   Remember me
+                 </label>
+                </div>
+                </div>
         
         <p className="create account">
           Need to <a href="#">Create Account?</a>
@@ -128,8 +134,8 @@ export default function LandingPage() {
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Close</Button>
                         <Link to="/PuzzleSelection">
-                        <Button variant="primary" type="submit" onClick={handleClose}>Log In</Button>   
-                         {/* ^ should verify log in information*/}
+                        <Button variant="primary" type="submit" onClick={handleSubmit} >Log In</Button>   
+                                             {/*connect to backend*/}
                          </Link>
                     </Modal.Footer>
             </Modal>
