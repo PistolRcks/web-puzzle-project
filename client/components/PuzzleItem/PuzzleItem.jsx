@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
 import x from '../../assets/x.png'
 import check from '../../assets/check.png'
+import './PuzzleItem.css'
 
 export function PuzzleItem({ puzzle }) {
   const [show, setShow] = useState(false)
@@ -17,7 +18,7 @@ export function PuzzleItem({ puzzle }) {
     <>
       <Row className="mb-3">
           <Form.Group as={Col} controlId={puzzleID}>
-              <Button className="buttons" onClick={handleShow} size="lg" style={{minWidth: '100'}}>
+              <Button className="puzzleSelectionPage__button puzzleItem__button" onClick={handleShow} size="lg" style={{minWidth: '100'}}>
                 {puzzleText}
               </Button>
               <Modal 

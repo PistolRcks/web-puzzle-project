@@ -1,48 +1,71 @@
-.app {
-    background-color: #2f3e46;
-    text-align: center;
-    color: #cad2c5;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+.puzzleSelectionPage {
+  background-color: #2f3e46;
+  text-align: center;
+  color: #cad2c5;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.back-button {
-    float: left;
-    padding: 15px;
-    position: fixed;
-    z-index: 2;
+.puzzleSelectionPage__backButton {
+  float: left;
+  padding: 15px;
+  position: fixed;
+  z-index: 2;
 }
 
-.buttons {
-    background-color: #52796f;
-    border-color: #52796f;
-    color: #cad2c5;
-    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.puzzleSelectionPage__button {
+  background-color: #52796f;
+  border-color: #52796f;
+  color: #cad2c5;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 h1 {
-    color: #2f3e46;
-    padding: 35px;
+  color: #2f3e46;
+  padding: 35px;
 }
 
-.selection-header {
-    background-color: #354f52;
-    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    height: 120px;
-    margin-bottom: 45px;
-    position: relative;
-    z-index: 0;
+.puzzleSelectionPage__selection-header {
+  background-color: #354f52;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 120px;
+  margin-bottom: 45px;
+  position: sticky;
+  top: 0;
+  z-index: 0;
 }
 
-.selection-title {
-    padding-top: 25px;
-    font-size: 40px;
-    color: #cad2c5;
+.puzzleSelectionPage__selection-title {
+  padding-top: 25px;
+  font-size: 40px;
+  color: #cad2c5;
 }
 
-.puzzle_selection_page__profile-link {
-  float: right;
+.puzzle_selection_page__profile-link  {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 8px;
   padding: 4px;
-  background-color: #893168;
-  border-color: #893168;
+  background-color: #52796f;
   border-radius: 15%;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media screen and (max-width: 750px) {
+  .puzzle_selection_page__profile-link img {
+    height: 50px;
+  }
+
+  .puzzleSelectionPage__selection-header {
+    height: 80px;
+  }
+
+  .puzzleSelectionPage__selection-title {
+    padding-top: 15px;
+    font-size: 35px;
+  }
+
+  .puzzleSelectionPage__backButton {
+    padding: 15px 10px;
+  }
 }
