@@ -3,11 +3,16 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Form, Modal, Row } from 'react-bootstrap';
 import puzzlePiece from "../../assets/puzzle-piece.png";
 import "./LandingPage.css";
+import { AccountCreation } from '../../components/AccountCreation/AccountCreation';
 
 export default function LandingPage() {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [showLogin, setShowLogin] = useState(false);
+    const handleCloseLogin = () => setShowLogin(false);
+    const handleShowLogin = () => setShowLogin(true);
+
+    const [showCreate, setShowCreate] = useState(false);
+    const handleCloseCreate = () => setShowCreate(false);
+    const handleShowCreate = () => setShowCreate(true);
 
     const initialFormData = Object.freeze({
         username: "",
@@ -72,10 +77,10 @@ export default function LandingPage() {
                 </h6>
                 <br />
             </Container>
-            <Button className="button" onClick={handleShow}>Log In</Button>
+            <Button className="button" onClick={handleShowLogin}>Log In</Button>
             <Modal
-                show={show}
-                onHide={handleClose}
+                show={showLogin}
+                onHide={handleCloseLogin}
                 backdrop="static"
                 keyboard={false}
                 size="lg"
@@ -89,57 +94,98 @@ export default function LandingPage() {
                     </Modal.Header>
                     <Modal.Body>
                        <Form onSubmit={handleSubmit}>
-                       
-                       <div className="mb-3">
-                <label>User Name</label>
-               <input 
-               data-testid="username" 
-               name="username"
-               onChange={handleChange} 
-               class="form-control" 
-               type="text" 
-               placeholder="Enter User Name"></input>
-         
-              </div>
-              <div className="mb-3">
-                <label>Password</label>
-               <input 
-                 data-testid="password" 
-                 type="password" 
-                 name="password"                
-                 className="form-control"
-                 placeholder="Enter password"
-                 onChange={handleChange}
-               />
-             </div>
-                <div className="mb-3">
-                  <div className="custom-control custom-checkbox">
-                    <input
-                     type="checkbox"
-                    className="custom-control-input"
-                    id="customCheck1"
-                 />
-                 <label className="custom-control-label" htmlFor="customCheck1">
-                   Remember me
-                 </label>
-                </div>
-                </div>
-        
-        <p className="create account">
-          Need to <a href="#">Create Account?</a>
-        </p>
-
-                        </Form> 
+                            <div className="mb-3">
+                                <label>User Name</label>
+                                <input 
+                                data-testid="username" 
+                                name="username"
+                                onChange={handleChange} 
+                                class="form-control" 
+                                type="text" 
+                                placeholder="Enter User Name"></input>
+                        
+                            </div>
+                            <div className="mb-3">
+                                <label>Password</label>
+                                <input 
+                                    data-testid="password" 
+                                    type="password" 
+                                    name="password"                
+                                    className="form-control"
+                                    placeholder="Enter password"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                                <div className="mb-3">
+                                <div className="custom-control custom-checkbox">
+                                    <input
+                                    type="checkbox"
+                                    className="custom-control-input"
+                                    id="customCheck1"
+                                    />
+                                    <label className="custom-control-label" htmlFor="customCheck1">
+                                        Remember me
+                                    </label>
+                                </div>
+                                </div>
+                        
+                                <p className="create account">
+                                Need to <a href="#">Create Account?</a>
+                                </p>
+                        </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>Close</Button>
+                        <Button variant="secondary" onClick={handleCloseLogin}>Close</Button>
                         <Link to="/PuzzleSelection">
-                        <Button variant="primary" type="submit" onClick={handleSubmit} >Log In</Button>   
-                                             {/*connect to backend*/}
+                        <Button variant="primary" type="submit" onClick={handleCloseLogin}>Log In</Button>   
+                         {/* ^ should verify log in information*/}
                          </Link>
                     </Modal.Footer>
             </Modal>
-           
+            <Button className="button" onClick={handleShowCreate}>Create Account</Button>
+            <Modal
+                show={showCreate}
+                onHide={handleCloseCreate}
+                backdrop="static"
+                keyboard={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Create Account
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <AccountCreation close={handleCloseCreate}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseCreate}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+            <Button className="button" onClick={handleShowCreate}>Create Account</Button>
+            <Modal
+                show={showCreate}
+                onHide={handleCloseCreate}
+                backdrop="static"
+                keyboard={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Create Account
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <AccountCreation close={handleCloseCreate}/>
+                    </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseCreate}>Close</Button>
+                </Modal.Footer>
+        </Modal>
         </div>
       
     );
