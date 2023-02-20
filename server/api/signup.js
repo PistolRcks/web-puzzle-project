@@ -1,6 +1,6 @@
 const Crypto = require('crypto');
 
-var db = require('../db');
+var db = require('../db').db;
 
 /**
  * The callback function for the /api/signup POST route. Signs up a user into the database.

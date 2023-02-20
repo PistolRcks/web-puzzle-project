@@ -39,4 +39,4 @@ function initDatabase(fp) {
 
 var db = initDatabase('./server/puzzle.db');
 
-module.exports = db;
+module.exports = {db, initDatabase};

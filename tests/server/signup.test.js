@@ -3,6 +3,8 @@ import {insertUser} from '../../server/api/signup';
 import {initDatabase} from '../../server/db';
 import {unlink} from 'node:fs';
 
+const Crypto = require('crypto');
+
 describe("Test insertUser", () => {
     var db;
     var lastID;
