@@ -22,13 +22,17 @@ function AccountCreation(props) {
     //Whenever the submit button is clicked, this checks to make sure the passwords match and calls another func
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(formData.password !== formData.confirmPassword) {
-            alert("YOUR PASSWORDS DO NOT MATCH");
-        }
-        else if(checkPasswordRequirements(formData.password) && checkUsernameRequirements(formData.username)) {
-            //TODO send the formData to the backend
-            console.log("Hey this code works");
-            props.close();
+        try {
+            if(formData.password !== formData.confirmPassword) {
+                alert("YOUR PASSWORDS DO NOT MATCH");
+            }
+            else if(checkPasswordRequirements(formData.password) && checkUsernameRequirements(formData.username)) {
+                //TODO send the formData to the backend
+                console.log("Hey this code works");
+                props.close();
+            }
+        } catch (error) {
+           alert(error.message); 
         }
     }
 
@@ -73,7 +77,7 @@ function AccountCreation(props) {
     has a lowercase letter
     has a digit
 
-    If these requirments are not met, an alert displays what is missing
+    If these requirements are not met, throws an error displaying what is missing
     Returns true if these conditions are met
 */
     const checkPasswordRequirements = (pass) => {
@@ -101,33 +105,29 @@ function AccountCreation(props) {
         count++;
     }
     if(count < 4) {
-        alert("Your password does not meet requirements: \nLength: "
+        throw Error("Your password does not meet requirements: \nLength: "
         + length + "\nUppercase: " + uppercase + "\nLowercase: "
         + lowercase + "\nDigit: " + number);
-        return false;
     }
     //If the password contains anything else other than letters, numbers, and underscores, this evaluates false
     if(/^\w+$/.test(passStr)) {
         return true;
     }
     else {
-        alert("Your password contains illegal characters, please make sure it contains letters, numbers, and underscores only")
-        return false;
+        throw Error("Your password contains illegal characters, please make sure it contains letters, numbers, and underscores only")
     }
 }
 
 const checkUsernameRequirements = (user) => {
     let userStr = String(user);
     if(userStr.length < 5) {
-        alert("Your username needs to be at least 5 characters")
-        return false;
+        throw Error("Your username needs to be at least 5 characters")
     }
     if(/^\w+$/.test(userStr)) {
         return true;
     }
     else {
-        alert("Your username contains illegal characters, please make sure it contains letters, numbers, and underscores only")
-        return false;
+        throw Error("Your username contains illegal characters, please make sure it contains letters, numbers, and underscores only")
     }
 }
 

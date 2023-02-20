@@ -27,28 +27,28 @@ describe("Tests for Account Creation", () => {
         expect(checkUsernameRequirements('myUsername')).toBeTruthy();
     });
     test("checkUsernameRequirements with username with special characters", () => {
-        expect(!checkUsernameRequirements('myUsername$')).toBeTruthy();
+        expect(() => {checkUsernameRequirements('myUsername$')}).toThrow();
     });
     test("checkUsernameRequirements with username that is too short", () => {
-        expect(!checkUsernameRequirements('user')).toBeTruthy();
+        expect(() => {checkUsernameRequirements('user')}).toThrow();
     });
     test("checkPasswordRequirements with accepted password", () => {
         expect(checkPasswordRequirements('Password7')).toBeTruthy();
     });
     test("checkPasswordRequirements with password with special characters", () => {
-        expect(!checkPasswordRequirements('Password7$')).toBeTruthy();
+        expect(() => {checkPasswordRequirements('Password7$')}).toThrow();
     });
     test("checkPasswordRequirements with password that is too short", () => {
-        expect(!checkPasswordRequirements('Paord7')).toBeTruthy();
+        expect(() => {checkPasswordRequirements('Paord7')}).toThrow();
     });
     test("checkPasswordRequirements with password with not digits", () => {
-        expect(!checkPasswordRequirements('Password')).toBeTruthy();
+        expect(() => {checkPasswordRequirements('Password')}).toThrow();
     });
     test("checkPasswordRequirements with password with no uppercase", () => {
-        expect(!checkPasswordRequirements('password7')).toBeTruthy();
+        expect(() => {checkPasswordRequirements('password7')}).toThrow();
     });
     test("checkPasswordRequirements with password with no lowercase", () => {
-        expect(!checkPasswordRequirements('PASSWORD7')).toBeTruthy();
+        expect(() => {checkPasswordRequirements('PASSWORD7')}).toThrow();
     });
     test("check to make sure typing in the form and submission works", () => {
         const consoleSpy = jest.spyOn(global.console, "log");
