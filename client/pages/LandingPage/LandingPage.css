@@ -22,6 +22,7 @@ a:hover {
     color: #cad2c5;
     border-style: none;
     box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 5px;
 }
 
 .close-button {
