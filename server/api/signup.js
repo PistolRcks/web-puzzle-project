@@ -53,9 +53,7 @@ function insertUser(db, username, hashedPassword, salt) {
     salt
   ], function(err) {
     // throw an error if there's an issue
-    if (err) {
-      throw err; 
-    }
+    if (err) throw err; 
 
     // return the new user from the callback
     user = {
