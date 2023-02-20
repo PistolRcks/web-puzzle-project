@@ -1,17 +1,40 @@
-body {
-    background-color: #2E1C2B;
-}
-
-.buttons {
-    background-color: #893168;
-    border-color: #893168;
+.app {
+    background-color: #2f3e46;
+    text-align: center;
+    color: #cad2c5;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .back-button {
-    padding: 25px;
+    float: left;
+    padding: 15px;
+    position: fixed;
+    z-index: 2;
+}
+
+.buttons {
+    background-color: #52796f;
+    border-color: #52796f;
+    color: #cad2c5;
+    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 h1 {
-    color: #EAEAEA;
-    padding: 55px;
+    color: #2f3e46;
+    padding: 35px;
+}
+
+.selection-header {
+    background-color: #354f52;
+    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 120px;
+    margin-bottom: 45px;
+    position: relative;
+    z-index: 0;
+}
+
+.selection-title {
+    padding-top: 25px;
+    font-size: 40px;
+    color: #cad2c5;
 }
