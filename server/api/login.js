@@ -36,7 +36,7 @@ function login(req, res, next) {
                 res.status(200).send(`Successfully logged ${req.body.username} in!`);
             }
             else {
-                res.status(500).send(err);
+                res.status(401).send(err);
             }
         });
       });
