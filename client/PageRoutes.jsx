@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
+import {AccountCreation} from './components/AccountCreation/AccountCreation';
 import LandingPage from './pages/LandingPage/LandingPage.jsx'
 import PuzzleSelectionPage from './pages/PuzzleSelectionPage/PuzzleSelectionPage.jsx';
 
