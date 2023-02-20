@@ -1,6 +1,7 @@
 import {checkUsernameRequirements, checkPasswordRequirements} from "../../client/components/AccountCreation/AccountCreation.jsx";
 
 const Crypto = require('crypto');
+const Sqlite3 = require('sqlite3');
 var db = require('../db').db;
 
 /**
@@ -13,9 +14,14 @@ var db = require('../db').db;
  * @returns Nothing.
  */
 function signup(req, res, next) {
+  // use test database if test flag is set
+  if (req.body.test) {
+    db = new Sqlite3.Database("./signup_test_db2.db")
+  }
+
   // check that signup data is real
   if (!req.body.username || !req.body.password) {
-    res.status(401).send("Error: Username or password not set!");
+    res.status(400).send("Error: Username or password not set!");
     return next("Error: Username or password not set!");
   }
 
@@ -31,7 +37,7 @@ function signup(req, res, next) {
 
   var salt = Crypto.randomBytes(16);      // salt is required for hashing; it makes 
                                           // otherwise identical hashes different
-  Crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function(err, hashedPassword) {
+  Crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', async function(err, hashedPassword) {
     if (err) {
       res.status(500).send(err); 
       return next(err); 
@@ -39,7 +45,7 @@ function signup(req, res, next) {
 
     // insert new user into database
     try {
-      var newUser = insertUser(db, req.body.username, hashedPassword, salt);
+      var newUser = await insertUser(db, req.body.username, hashedPassword, salt);
       res.status(200).send(`Successfully signed user ${req.body.username} up!`)
       // TODO (integration): After correctly signing up, log the user in
     } catch (err) {
@@ -56,9 +62,9 @@ function signup(req, res, next) {
  * @param {String} salt - The salt used in hashing the password. 
  * @returns {Array} An array with the new `id` and `username` of the new User.
  */
-function insertUser(db, username, hashedPassword, salt) {
+async function insertUser(db, username, hashedPassword, salt) {
   var user;
-  db.run('INSERT INTO User (username, hashed_password, salt) VALUES (?, ?, ?)', [
+  await db.run('INSERT INTO User (username, hashed_password, salt) VALUES (?, ?, ?)', [
     username,
     hashedPassword,
     salt
@@ -75,4 +81,4 @@ function insertUser(db, username, hashedPassword, salt) {
   return user;
 }
 
-module.exports = signup;
+module.exports = {signup, insertUser};
