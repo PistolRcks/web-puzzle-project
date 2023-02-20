@@ -1,5 +1,6 @@
-const Crypto = require('crypto');
+import {checkUsernameRequirements, checkPasswordRequirements} from "../../client/components/AccountCreation/AccountCreation.jsx";
 
+const Crypto = require('crypto');
 var db = require('../db').db;
 
 /**
@@ -17,6 +18,16 @@ function signup(req, res, next) {
     res.status(400).send("Error: Username or password not set!");
     return next("Error: Username or password not set!");
   }
+
+  // test username and password; should throw an error if there's an issue
+  try {
+    checkUsernameRequirements(req.body.username);
+    checkPasswordRequirements(req.body.password);
+  } catch (error) {
+    res.status(401).send(error.message);
+    return next(error.message);
+  }
+
 
   var salt = Crypto.randomBytes(16);      // salt is required for hashing; it makes 
                                           // otherwise identical hashes different
