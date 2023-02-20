@@ -1,5 +1,6 @@
 const Express = require('express')
 const signup = require(`./signup`)
+const login = require(`./login`)
 
 const router = new Express.Router()
 router.use(Express.urlencoded({ extended: true }))
@@ -10,5 +11,6 @@ router.get('/testRoute', (req, res) => {
 })
 
 router.post('/signup', signup)
+router.post('/login', login)
 
 module.exports = router
