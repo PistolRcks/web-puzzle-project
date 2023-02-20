@@ -15,7 +15,7 @@ var db = require('../db').db;
 function signup(req, res, next) {
   // check that signup data is real
   if (!req.body.username || !req.body.password) {
-    res.status(400).send("Error: Username or password not set!");
+    res.status(401).send("Error: Username or password not set!");
     return next("Error: Username or password not set!");
   }
 
