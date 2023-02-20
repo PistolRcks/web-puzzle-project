@@ -3,11 +3,16 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Form, Modal, Row } from 'react-bootstrap';
 import puzzlePiece from "../../assets/puzzle-piece.png";
 import "./LandingPage.css";
+import { AccountCreation } from '../../components/AccountCreation/AccountCreation';
 
 export default function LandingPage() {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [showLogin, setShowLogin] = useState(false);
+    const handleCloseLogin = () => setShowLogin(false);
+    const handleShowLogin = () => setShowLogin(true);
+
+    const [showCreate, setShowCreate] = useState(false);
+    const handleCloseCreate = () => setShowCreate(false);
+    const handleShowCreate = () => setShowCreate(true);
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -33,10 +38,10 @@ export default function LandingPage() {
                 </h6>
                 <br />
             </Container>
-            <Button className="button" onClick={handleShow}>Log In</Button>
+            <Button className="button" onClick={handleShowLogin}>Log In</Button>
             <Modal
-                show={show}
-                onHide={handleClose}
+                show={showLogin}
+                onHide={handleCloseLogin}
                 backdrop="static"
                 keyboard={false}
                 size="lg"
@@ -82,16 +87,38 @@ export default function LandingPage() {
                         Need to <a href="#">Create Account?</a>
                         </p>
 
-                        </Form> 
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button className="close-button" variant="secondary" onClick={handleClose}>Close</Button>
-                    <Link to="/Puzzle/Selection">
-                        <Button className="button" variant="primary" type="submit" onClick={handleClose}>Log In</Button>   
-                        {/* ^ should verify log in information*/}
-                        </Link>
-                </Modal.Footer>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseLogin}>Close</Button>
+                        <Link to="/Puzzle/Selection">
+                        <Button variant="primary" type="submit" onClick={handleCloseLogin}>Log In</Button>   
+                         {/* ^ should verify log in information*/}
+                         </Link>
+                    </Modal.Footer>
             </Modal>
+            <Button className="button" onClick={handleShowCreate}>Create Account</Button>
+            <Modal
+                show={showCreate}
+                onHide={handleCloseCreate}
+                backdrop="static"
+                keyboard={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Create Account
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <AccountCreation close={handleCloseCreate}/>
+                    </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseCreate}>Close</Button>
+                </Modal.Footer>
+        </Modal>
         </div>
     );
 }

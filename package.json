@@ -21,8 +21,8 @@
   },
   "scripts": {
     "start": "npm run build && node ./server/server.js",
+    "test": "jest --coverage",
     "build": "esbuild --bundle --minify --target=ES6 --loader:.png=dataurl --loader:.jpg=dataurl --outfile=public/bundle.js client/app.jsx",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -45,6 +45,18 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
-    "jest": "^27.5.1"
+    "jest": "^29.4.2",
+    "jest-environment-jsdom": "^29.4.2"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)"
+    ],
+    "collectCoverageFrom": [
+      "{client,server}/**/*.{js,jsx}",
+      "!**/app.jsx",
+      "!**/server.js"
+    ]
   }
 }
