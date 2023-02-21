@@ -56,6 +56,7 @@ describe("Tests for Account Creation", () => {
         const close = jest.fn();
         const wrapper = render(<AccountCreation close={close}/>)
 
+
         const inputUsername = screen.getByTestId("username");
         userEvent.type(inputUsername, "validUsername");
 
@@ -69,5 +70,5 @@ describe("Tests for Account Creation", () => {
         userEvent.click(submitButton);
 
         expect(consoleSpy).toBeCalledWith("Hey this code works");
-    });
+  });
 });

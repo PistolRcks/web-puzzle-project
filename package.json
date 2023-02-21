@@ -21,7 +21,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node ./server/server.js",
+    "start": "npm run build && node ./server/server.js",
     "test": "jest --coverage",
     "build": "esbuild --bundle --minify --target=ES6 --loader:.png=dataurl --loader:.jpg=dataurl --outfile=public/bundle.js client/app.jsx",
     "eject": "react-scripts eject"
@@ -58,6 +58,9 @@
       "{client,server}/**/*.{js,jsx}",
       "!**/app.jsx",
       "!**/server.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|css)$": "<rootDir>/tests/fileMock.js"
+    }
   }
 }
