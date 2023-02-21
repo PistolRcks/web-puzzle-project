@@ -7,7 +7,6 @@ function getPuzzles(req, res, next) {
             res.status(500).send(err);
             return next(err);
         } else if (res.headersSent !== true) {
-            //console.log(`Title: ${row.title}, Desc: ${row.description}`);
             res.status(200).send(`Title: ${row.title}, Description ${row.description}`);
         }
     });
