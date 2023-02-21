@@ -12,9 +12,7 @@ export default function PuzzleSelection() {
             <div className="back-button">
                 <Link to="/">
                     <Button className="button">
-                        <img src={back} alt="back" width="22" height="22"/>
-                        {/* Error: No loader is configured for ".png" files: client/assets/back-arrow.png*/}
-                          Back</Button>
+                        <img src={back} alt="back" width="22" height="22"/>Back</Button>
                 </Link> 
             </div>
             <Container className="selection-header min-vw-100">

@@ -59,7 +59,7 @@ export default function LandingPage() {
 
 
     return (
-        <div className="app min-vh-100 min-vw-100">
+        <div className="app min-vh-100 min-vw-100" data-testid="landing-1">
             <Container className="min-vw-100 header-container">
                 <div><img src={puzzlePiece} alt="puzzle piece" width="50" height="50" />  Welcome to our Web Puzzle</div>
             </Container>
