@@ -1,4 +1,5 @@
-import {AccountCreation, checkPasswordRequirements, checkUsernameRequirements} from '../../client/components/AccountCreation/AccountCreation';
+import {AccountCreation} from '../../client/components/AccountCreation/AccountCreation';
+import {checkPasswordRequirements, checkUsernameRequirements} from '../../utilities/AccountValidators'
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach } from 'node:test';

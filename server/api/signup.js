@@ -1,4 +1,4 @@
-import {checkUsernameRequirements, checkPasswordRequirements} from "../../client/components/AccountCreation/AccountCreation.jsx";
+const {checkUsernameRequirements, checkPasswordRequirements} = require("../../utilities/AccountValidators");
 
 const Crypto = require('crypto');
 const Sqlite3 = require('sqlite3');
@@ -33,7 +33,6 @@ function signup(req, res, next) {
     res.status(401).send(error.message);
     return next(error.message);
   }
-
 
   var salt = Crypto.randomBytes(16);      // salt is required for hashing; it makes 
                                           // otherwise identical hashes different
