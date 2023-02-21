@@ -1,6 +1,6 @@
 const Express = require('express')
 const signup = require(`./signup`)
-const puzzles = require('./listpuzzles')
+const listPuzzles = require(`./listpuzzles`)
 
 const router = new Express.Router()
 router.use(Express.urlencoded({ extended: true }))
@@ -12,14 +12,6 @@ router.get('/testRoute', (req, res) => {
 
 router.post('/signup', signup)
 
-router.get('/PuzzleSelection', (req, res, next) => {
-  try {
-    res.json(puzzles.getPuzzles(req.query.page));
-  }
-  catch (err) {
-    console.error(`Error while getting puzzles`, err.message);
-    next(err);
-  }
-})
+router.get('/PuzzleSelection', listPuzzles)
 
 module.exports = router

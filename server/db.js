@@ -37,11 +37,4 @@ db.serialize(function () {
   ]);
 });
 
-function query(sql, params) {
-  return db.prepare(sql, params);
-}
-
-module.exports = {
-  db,
-  query
-};
+module.exports = db

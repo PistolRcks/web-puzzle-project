@@ -1,16 +1,16 @@
+const Express = require('express')
 const db = require('../db');
 
-function getPuzzles(page = 1) {
-    const offset = (page - 1) * 10;
-    const data = db.query(`SELECT * FROM Puzzle LIMIT ?,?`, [offset, 10]);
-    const meta = { page };
-
-    return {
-        data,
-        meta
-    }
+function getPuzzles(req, res, next) {
+    db.each(`SELECT title, description FROM Puzzle`, [], (err, row) => {
+        if (err) {
+            res.status(500).send(err);
+            return next(err);
+        } else if (res.headersSent !== true) {
+            //console.log(`Title: ${row.title}, Desc: ${row.description}`);
+            res.status(200).send(`Title: ${row.title}, Description ${row.description}`);
+        }
+    });
 }
 
-module.exports = {
-    getPuzzles
-}
+module.exports = getPuzzles
