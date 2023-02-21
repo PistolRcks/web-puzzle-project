@@ -1,18 +1,19 @@
 import {describe, expect, test, beforeAll, afterAll} from '@jest/globals';
 import {initDatabase} from '../../server/db';
-import {unlinkSync} from 'node:fs';
 
+const withLocalTmpDir = require('with-local-tmp-dir');
 const App = require('../../server/index');
 const Supertest = require('supertest');
 const request = Supertest(App);
 
-describe("Test signup route", () => {
-    var db;
-    const noUNOrPass = "Error: Username or password not set!";
+const noUNOrPass = "Error: Username or password not set!";
 
-    beforeAll(() => {
-        // initialize database
-        db = initDatabase('./signup_test_db2.db');
+describe("Test signup route", () => {
+    beforeAll(async () => {
+        // init temp dir
+        this.resetTempDir = await withLocalTmpDir();
+        // initialize database within temp dir
+        this.db = initDatabase('signup_test_db2.db');
     });
 
     test('Error 400 - no username or password', async () => {
@@ -67,16 +68,15 @@ describe("Test signup route", () => {
         });
         expect(res.statusCode).toEqual(200);
         
-        db.get(`select id from Users where username="usernameVeryCool"`, function(err, row) {
+        this.db.get(`select id from Users where username="usernameVeryCool"`, function(err, row) {
             if (err) throw err;
             expect(row["id"]).toBeDefined(); // we don't know the id; however, it should be something
         });
     })
 
-    afterAll(() => {
-        // delete database file, throw error if there's an issue
-        db.close();
-        // TODO (fixme): Eventually, this should delete artifacts... eventually
-        // unlinkSync('./signup_test_db2.db');
+    afterAll(async () => {
+        // close database and remove temp dir
+        this.db.close();
+        await this.resetTempDir();
     })
 });

@@ -16,7 +16,7 @@ var db = require('../db').db;
 function signup(req, res, next) {
   // use test database if test flag is set
   if (req.body.test) {
-    db = new Sqlite3.Database("./signup_test_db2.db")
+    db = new Sqlite3.Database("signup_test_db2.db")
   }
 
   // check that signup data is real
