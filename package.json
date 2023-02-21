@@ -57,6 +57,9 @@
       "{client,server}/**/*.{js,jsx}",
       "!**/app.jsx",
       "!**/server.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|css)$": "<rootDir>/tests/fileMock.js"
+    }
   }
 }
