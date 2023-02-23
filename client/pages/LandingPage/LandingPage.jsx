@@ -164,28 +164,6 @@ export default function LandingPage() {
                     <Button variant="secondary" onClick={handleCloseCreate}>Close</Button>
                 </Modal.Footer>
             </Modal>
-            <Button className="button" onClick={handleShowCreate}>Create Account</Button>
-            <Modal
-                show={showCreate}
-                onHide={handleCloseCreate}
-                backdrop="static"
-                keyboard={false}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Create Account
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <AccountCreation close={handleCloseCreate}/>
-                    </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseCreate}>Close</Button>
-                </Modal.Footer>
-        </Modal>
         </div>
       
     );
