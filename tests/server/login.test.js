@@ -1,11 +1,10 @@
-const login = require("./login");
-import supertest from "supertest";
-const request = supertest(login);
+const login = require('./login');
+const supertest = require('supertest');
 
-describe("Tests for login.js", async () => {
-  it("login - Missing Data 400", async () => {
-    const response = await request.post("/api/login").send({
-      username: "missingPassword",
+describe('Tests for login.js', async () => {
+  it('login - Missing Data 400', async () => {
+    const response = await request.post('/api/login').send({
+      username: 'missingPassword',
     });
 
     expect(response.statusCode).toEqual(400);
