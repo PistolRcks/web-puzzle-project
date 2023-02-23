@@ -1,4 +1,4 @@
-const login = require('./login');
+const login = require('./login.js');
 const supertest = require('supertest');
 
 describe('Tests for login.js', async () => {
