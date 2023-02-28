@@ -1,4 +1,4 @@
-cconst Crypto = require("crypto");
+const Crypto = require("crypto");
 
 var db = require("../db");
 
