@@ -42,7 +42,7 @@ export default function LandingPage() {
             event.preventDefault();
         }
         else if(validateUserAndPass(formData.password)&&validateUserAndPass(formData.username)){
-            setShow(false);
+            setShowLogin(false);
             console.log("This is correct");
         }
         
@@ -137,7 +137,7 @@ export default function LandingPage() {
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleCloseLogin}>Close</Button>
                         <Link to="/Puzzle/Selection">
-                        <Button variant="primary" type="submit" onClick={handleCloseLogin}>Log In</Button>   
+                        <Button variant="primary" type="submit" onClick={handleSubmit}>Log In</Button>   
                          {/* ^ should verify log in information*/}
                          </Link>
                     </Modal.Footer>
