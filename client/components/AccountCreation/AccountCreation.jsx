@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Container, Form, Modal, Row } from 'react-bootstrap';
+import './AccountCreation.css';
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -62,7 +63,7 @@ function AccountCreation(props) {
                     />
             </Row>
             <Row>
-            <Button variant="primary" type="submit" onClick={handleSubmit} data-testid="submitButton">Create Account</Button>
+                <Button className="button create-account-button" variant="primary" type="submit" onClick={handleSubmit} data-testid="submitButton">Create Account</Button>
             </Row>
         </Form>
     );

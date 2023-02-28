@@ -5,7 +5,7 @@
     background-image: url("../../assets/puzzle.jpg");
     background-size: cover;
     background-attachment: fixed;
-    color: #cad2c5;
+    color: #e8f1e8;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -13,16 +13,20 @@ a {
     color: #52796f;
 }
 
-a:hover {
-    color: #2f3e46;
-}
-
 .button {
     background-color: #52796f;
-    color: #cad2c5;
+    color: #e8f1e8;
     border-style: none;
     box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin: 5px;
+}
+
+.button:hover {
+    background-color: #2f3e46;
+}
+
+.button:active {
+    background-color: #2f3e46;
 }
 
 .close-button {
@@ -36,12 +40,12 @@ a:hover {
 }
 
 .header-container {
-    height: 120px;
+    height: 85px;
     margin: 0px;
-    padding: 20px;
-    margin-bottom: 50px;
+    padding-top: 20px;
+    margin-bottom: 30px;
     background-color: #84a98c;
-    color: #dee7d9;
+    color: #e8f1e8;
     font-size: 30px;
     box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -51,7 +55,7 @@ a:hover {
     border-color: #52796f;
     border-radius: 15px;
     background-color: #52796f;
-    padding: 25px;
+    padding: 15px;
     margin-bottom: 15px;
     box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
