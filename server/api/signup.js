@@ -14,11 +14,6 @@ var db = require('../db').db;
  * @returns Nothing.
  */
 function signup(req, res, next) {
-  // use test database if test flag is set
-  if (req.body.test) {
-    db = new Sqlite3.Database("signup_test_db2.db")
-  }
-
   // check that signup data is real
   if (!req.body.username || !req.body.password) {
     res.status(400).send("Error: Username or password not set!");
