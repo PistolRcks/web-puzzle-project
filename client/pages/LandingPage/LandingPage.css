@@ -46,7 +46,7 @@ a:hover {
     box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.text-container {
+.text-container { 
     width: 60vw;
     border-color: #52796f;
     border-radius: 15px;

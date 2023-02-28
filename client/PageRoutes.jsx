@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
-import {AccountCreation} from './components/AccountCreation/AccountCreation';
+import { AccountCreation } from './components/AccountCreation/AccountCreation';
 import LandingPage from './pages/LandingPage/LandingPage.jsx'
 import PuzzleSelectionPage from './pages/PuzzleSelectionPage/PuzzleSelectionPage.jsx';
 
@@ -20,7 +20,7 @@ export default function PageRoutes() {
     <Routes>
         {/* <Route index element={<div>temp</div>} /> */}
         <Route index element={<LandingPage />} />
-        <Route path="/PuzzleSelection" element={<PuzzleSelectionPage />} />
+        <Route path="/Puzzle/Selection" element={<PuzzleSelectionPage />} />
     </Routes>
   );
 }
