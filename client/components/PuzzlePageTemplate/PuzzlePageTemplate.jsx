@@ -35,23 +35,16 @@ export function PuzzlePageTemplate(){
                         <Modal.Title>Hints</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="hint-modal">
-                        <Container>
-                            <Row>
-                                <h5>Opening the Console</h5>
-                            </Row>
-                            <Row>
-                                <ol>
-                                    <li>
-                                        Right click on the screen and select Inspect
-                                    </li>
-                                    <li>
-                                        Once the side bar is open on the right, select Console
-                                        from the top tabs in the side bar. 
-                                    </li>
-                                </ol>
-                            </Row>
-
-                        </Container>
+                        <h5>Opening the Console</h5>
+                        <ol>
+                            <li>
+                                Right click on the screen and select Inspect
+                            </li>
+                            <li>
+                                Once the side bar is open on the right, select Console
+                                from the top tabs in the side bar. 
+                            </li>
+                        </ol>
                     </Modal.Body>
                     <Modal.Footer className="hint-modal">
                         <Button className="close-button" variant="secondary" onClick={handleCloseHint}>Close</Button>
