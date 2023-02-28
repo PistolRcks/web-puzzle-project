@@ -1,8 +1,6 @@
 const {checkUsernameRequirements, checkPasswordRequirements} = require("../../utilities/AccountValidators");
-
+const {db} = require('../db');
 const Crypto = require('crypto');
-const Sqlite3 = require('sqlite3');
-var db = require('../db').db;
 
 /**
  * The callback function for the /api/signup POST route. Signs up a user into the database.
@@ -17,7 +15,7 @@ function signup(req, res, next) {
   // check that signup data is real
   if (!req.body.username || !req.body.password) {
     res.status(400).send("Error: Username or password not set!");
-    return next("Error: Username or password not set!");
+    return;
   }
 
   // test username and password; should throw an error if there's an issue
@@ -26,24 +24,25 @@ function signup(req, res, next) {
     checkPasswordRequirements(req.body.password);
   } catch (error) {
     res.status(401).send(error.message);
-    return next(error.message);
+    return;
   }
 
-  var salt = Crypto.randomBytes(16);      // salt is required for hashing; it makes 
-                                          // otherwise identical hashes different
+  const salt = Crypto.randomBytes(16);        // salt is required for hashing; it makes 
+                                              // otherwise identical hashes different
   Crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', async function(err, hashedPassword) {
     if (err) {
       res.status(500).send(err); 
-      return next(err); 
+      return; 
     }
 
     // insert new user into database
     try {
-      var newUser = await insertUser(db, req.body.username, hashedPassword, salt);
+      const newUser = await insertUser(db, req.body.username, hashedPassword, salt);
       res.status(200).send(`Successfully signed user ${req.body.username} up!`)
       // TODO (integration): After correctly signing up, log the user in
     } catch (err) {
       res.status(500).send(`Error: Failed to insert new user!\nSpecific error: ${err}`);
+      return;
     }
   });
 };

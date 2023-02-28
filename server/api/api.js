@@ -1,5 +1,5 @@
 const Express = require('express')
-const signup = require(`./signup`).signup
+const {signup} = require('./signup')
 
 const router = new Express.Router()
 router.use(Express.urlencoded({ extended: true }))

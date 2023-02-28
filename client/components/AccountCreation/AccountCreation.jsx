@@ -29,7 +29,7 @@ function AccountCreation(props) {
             }
             else if(checkPasswordRequirements(formData.password) && checkUsernameRequirements(formData.username)) {
                 //TODO send the formData to the backend
-                console.log("Hey this code works");
+                console.log("Hey this code works");     // TODO: Required for flaky test. Should be removed in the future
                 props.close();
             }
         } catch (error) {

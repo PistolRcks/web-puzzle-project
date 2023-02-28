@@ -38,6 +38,6 @@ function initDatabase(fp) {
   return db;
 };
 
-var db = initDatabase('./server/puzzle.db');
+const db = initDatabase('./server/puzzle.db');
 
 module.exports = {db, initDatabase};
