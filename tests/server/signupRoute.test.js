@@ -47,16 +47,19 @@ describe("Test signup route", () => {
         expect(res.statusCode).toEqual(401);
     })
 
-    test('Response 200 - happy insertion', async () => {
-        const res = await request.post('/api/signup').send({
+    test('Response 200 - happy insertion', (done) => {
+        // this test *may* look a little gross, but this makes sure it hits all the lines of the test 
+        request.post('/api/signup').send({
             username: "usernameVeryCool",
             password: "Very1Epic"
-        });
-        expect(res.statusCode).toEqual(200);
-        
-        db.get(`select id from Users where username="usernameVeryCool"`, function(err, row) {
-            if (err) throw err;
-            expect(row["id"]).toBeDefined(); // we don't know the id; however, it should be something
+        }).then((res) => {
+            expect(res.statusCode).toEqual(200);
+            
+            db.get(`select user_id from User where username="usernameVeryCool"`, function(err, row) {
+                if (err) throw err;
+                expect(row["user_id"]).toBeDefined(); // we don't know the user_id; however, it should be something
+                done();
+            });
         });
     })
 });
