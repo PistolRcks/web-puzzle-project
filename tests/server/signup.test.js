@@ -28,7 +28,7 @@ describe("Test insertUser", () => {
       32,
       "sha256",
       function (err, hashedPassword) {
-        insertUser(db, "username", hashedPassword, salt, (user) => {
+        insertUser(db, "username", hashedPassword, salt, (err, user) => {
           expect(user).toEqual({ user_id: lastID + 1, username: "username" });
           done();
         });
@@ -96,7 +96,7 @@ describe("Test signup route", () => {
   beforeAll(() => {
     jest.spyOn(console, "log").mockImplementation(() => {});
     jest.spyOn(console, "error").mockImplementation(() => {});
-  });
+  }); 
   
   test("Error 400 - no username or password", async () => {
     const res = await request.post("/api/signup").send({});
@@ -120,20 +120,35 @@ describe("Test signup route", () => {
     expect(res.text).toEqual(noUNOrPass);
   });
 
-  test("Error 401 - bad username", async () => {
+  test("Error 400 - bad username", async () => {
     const res = await request.post("/api/signup").send({
       username: "un$",
       password: "Very1Epic!",
     });
-    expect(res.statusCode).toEqual(401);
+    expect(res.statusCode).toEqual(400);
   });
 
-  test("Error 401 - bad password", async () => {
+  test("Error 400 - bad password", async () => {
     const res = await request.post("/api/signup").send({
       username: "usernameVeryEpic",
       password: "password",
     });
-    expect(res.statusCode).toEqual(401);
+    expect(res.statusCode).toEqual(400);
+  });
+  
+  test("Error 400 - username already exists", async () => {
+    await request.post("/api/signup").send({
+        username: "usernameVeryCool1",
+        password: "Very1Epic",
+    });
+
+    const res = await request.post("/api/signup").send({
+        username: "usernameVeryCool1",
+        password: "Very1Epic",
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.text).toEqual("Error: Username already exists!");
   });
 
   test("Response 200 - happy insertion", (done) => {
@@ -141,14 +156,14 @@ describe("Test signup route", () => {
     request
       .post("/api/signup")
       .send({
-        username: "usernameVeryCool",
+        username: "usernameVeryEpic",
         password: "Very1Epic",
       })
       .then((res) => {
         expect(res.statusCode).toEqual(200);
 
         db.get(
-          `select user_id from User where username="usernameVeryCool"`,
+          `select user_id from User where username="usernameVeryEpic"`,
           function (err, row) {
             if (err) throw err;
             expect(row["user_id"]).toBeDefined(); // we don't know the user_id; however, it should be something
@@ -157,4 +172,9 @@ describe("Test signup route", () => {
         );
       });
   });
+
+  // nuke the table afterwards
+  afterEach(async () => {
+    await db.run("DELETE FROM User");
+  })
 });
