@@ -1,6 +1,6 @@
 const Express = require('express')
 const signup = require(`./signup`)
-const listPuzzles = require(`./listpuzzles`)
+const listPuzzles = require(`./listpuzzles`);
 
 const router = new Express.Router()
 router.use(Express.urlencoded({ extended: true }))

@@ -1,46 +1,20 @@
-const myApp = require('../../server/index')
-const supertest = require('supertest')
-const request = supertest(myApp)
+import { db } from "../../server/db";
 
-jest.mock('jsdom', () => {
-    return {
-        getPuzzles: jest.fn(),
-    };
-});
+const app = require('../../server/index')
+const request = require('supertest')
 
-function dataForListPuzzles(rows, offset = 0) {
-    const data = [];
-    for (let i = 1; i <= rows; i++) {
-        const value = i + offset;
-        data.push({
-            puzzle_id: `${value}`,
-            title: `Test Puzzle ${value}`,
-            description: `Test description ${value}`,
-        })
-    }
-    return data;
-}
+jest.mock("../../server/db");
 
-describe('GET /ListPuzzles', () => {
-    beforeEach(() => {
-        puzzles.getPuzzles.mockReset();
-        puzzles.getPuzzles.mockResolvedValue(null);
-    })
-});
-
-async function callGetOnListPuzRoute(row, key = 'id') {
-    const id = row[key];
-    puzzles.getPuzzles.mockResolvedValueOnce(row);
-    const response = await request(app).get(`/PuzzleSelection/${id}`);
-    return response;
-}
-
-it('should respond with json containing puzzle data', async () => {
-    const data = dataForListPuzzles(10);
-    for (const row of data) {
-        const { body: puzzle } = await callGetOnListPuzRoute(row);
-        expect(puzzle.puzzle_id).toBe(row.puzzle_id);
-        expect(puzzle.title).toBe(row.title);
-        expect(puzzle.description).toBe(row.description);
-    }
+describe('Puzzles endpoint', () => {
+    test("Response 200 - successful query", async () => {
+        // insert dummy puzzle into mock db
+        db.run(`INSERT INTO Puzzle VALUES (1, "test puzzle", "test description")`);
+        const res = await request(app).get("/api/PuzzleSelection");
+        expect(res.statusCode).toEqual(200); // statues code should be 200
+        expect(res.body).toEqual([{ // res should be the same as dummy puzzle
+            puzzle_id: 1,
+            title: "test puzzle",
+            description: "test description"
+        }]);
+    });
 });
