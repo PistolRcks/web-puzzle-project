@@ -12,9 +12,9 @@ export default function PuzzleSelectionPage() {
 
   return (
     <div className="puzzleSelectionPage min-vh-100 min-vw-100">
-      <div className="puzzleSelectionPage__backButton">
+      <div className="puzzleSelectionPage__backButtonDiv">
         <Link to="/">
-          <Button className="puzzleSelectionPage__button" width="150">
+          <Button className="puzzleSelectionPage__backButton" width="150">
             <img src={back} alt="back" width="22" height="22" /> Back
           </Button>
         </Link>
@@ -53,18 +53,26 @@ export const RetrievePuzzleData = () => {
       {
         puzzleID: 1,
         isCompleted: true,
+        puzzleTitle: "REALLY COOL PUZZLE WOW",
+        puzzleDescription: "Wow this is a cool puzzle"
       },
       {
         puzzleID: 2,
         isCompleted: false,
+        puzzleTitle: "Cool Puzzle 2",
+        puzzleDescription: "Wow this is a cool puzzle"
       },
       {
         puzzleID: 3,
         isCompleted: false,
+        puzzleTitle: "Cool Puzzle 3",
+        puzzleDescription: "Wow this is a cool puzzle"
       },
       {
         puzzleID: 4,
         isCompleted: true,
+        puzzleTitle: "Cool Puzzle 4",
+        puzzleDescription: "Wow this is a cool puzzle"
       },
     ],
   };

@@ -5,6 +5,7 @@ import {
 } from "../../client/components/AccountCreation/AccountCreation";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { accountCreation } from "../../client/api/DataHelper";
 
 describe("Tests for Account Creation", () => {
   beforeAll(() => {

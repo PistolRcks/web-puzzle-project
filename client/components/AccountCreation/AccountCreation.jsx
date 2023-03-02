@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Container, Form, Modal, Row } from 'react-bootstrap';
+import { accountCreation } from '../../api/DataHelper';
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -27,6 +28,7 @@ function AccountCreation(props) {
         }
         else if(checkPasswordRequirements(formData.password) && checkUsernameRequirements(formData.username)) {
             //TODO send the formData to the backend
+            accountCreation(formData);
             console.log("Hey this code works");
             props.close();
         }
