@@ -1,4 +1,5 @@
 const Crypto = require("crypto");
+import axios from "axios";
 
 var db = require("../db");
 
@@ -9,15 +10,15 @@ function login(req, res, next) {
   }
 
   // select existing user in database
-  db.each(
-    `SELECT hashed_password, salt FROM User WHERE username = ?`,
-    [`${req.body.username}`],
+  db.get(
+    "SELECT hashed_password, salt FROM User WHERE username = ?",
+    req.body.username,
     function(err, row) {
       // if entered username isn't found, send error
       if (err) {
         // TODO: Eventually place more speciic errors in here
         res.status(500).send(err);
-        //return next(err);
+        return next(err);
       }
 
       hashedPassword = `${row.hashed_password}`;
