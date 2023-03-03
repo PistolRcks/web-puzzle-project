@@ -8,6 +8,7 @@ jest.mock("../../server/db");
 /**
  * Helper function to insert test puzzles into db
  * @param {int} k - Number of test puzzles to insert
+ * @returns nothing
  */
 function dataHelper(k) {
     for (let i = 1; i <= k; i++) {
