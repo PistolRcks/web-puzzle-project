@@ -1,24 +1,18 @@
 const myApp = require("../../server/index");
 const supertest = require("supertest");
 const request = supertest(myApp);
-const sqlite3 = require("sqlite3");
-const Crypto = require("crypto");
 
 // mock the database module
 jest.mock("../../server/db", () => {
   const original = jest.requireActual("../../server/db");
   return {
-    ...original,
-    get: jest.fn()
+    ...original
   }
 })
 
 const db = require("../../server/db");
 
 describe("Tests for user login", () => {
-  beforeEach(() => {
-  });
-
   it("login - Missing Password 400", async () => {
     const response = await request.post("/api/login").send({
       username: "missingPassword",
