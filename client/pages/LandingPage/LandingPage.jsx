@@ -59,7 +59,12 @@ export default function LandingPage() {
                 </h6>
                 <br />
             </Container>
-            <Button className="button" variant="secondary" onClick={handleShowLogin}>Log In</Button>
+            <Button 
+                className="button" 
+                variant="secondary" 
+                onClick={handleShowLogin}>
+                Log In
+            </Button>
             <Modal
                 show={showLogin}
                 onHide={handleCloseLogin}
@@ -78,10 +83,20 @@ export default function LandingPage() {
                     <LogIn close={handleCloseLogin}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseLogin}>Close</Button>
+                    <Button 
+                        className="close-button"
+                        variant="secondary" 
+                        onClick={handleCloseLogin}>
+                            Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
-            <Button className="button" variant="secondary" onClick={handleShowCreate}>Create Account</Button>
+            <Button 
+                className="button" 
+                variant="secondary" 
+                onClick={handleShowCreate}>
+                Create Account
+            </Button>
             <Modal
                 show={showCreate}
                 onHide={handleCloseCreate}
