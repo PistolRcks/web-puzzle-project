@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { Button, Container, Form, Modal } from 'react-bootstrap';
 import puzzlePiece from "../../assets/puzzle-piece.png";
 import "./LandingPage.css";
 import { AccountCreation } from '../../components/AccountCreation/AccountCreation';
+import {LogIn} from '../../components/LogIn/LogIn';
 
 export default function LandingPage() {
     const [showLogin, setShowLogin] = useState(false);
@@ -21,33 +22,7 @@ export default function LandingPage() {
     }); 
 
     const [formData, updateFormData] = React.useState(initialFormData);
-    const validateUserAndPass = (user) => {
-        let userStr = String(user);
-        if(userStr.length < 5) {
-            alert("Your username you created should be at least 5 characters")
-            return false;
-        }
-        if(/^\w+$/.test(userStr)) {
-            return true;
-        }
-        else {
-            alert("The username or password you entered contains illegal characters, please make sure it contains letters, numbers, and underscores only")
-            return false;
-        }
-    }
-    const handleSubmit = event => {
-        
-        console.log('Form submitted')
-        if(!validateUserAndPass(formData.password)||!validateUserAndPass(formData.username)){
-            event.preventDefault();
-        }
-        else if(validateUserAndPass(formData.password)&&validateUserAndPass(formData.username)){
-            setShow(false);
-            console.log("This is correct");
-        }
-        
-
-    };
+  
     
     const handleChange = (e) => {
         updateFormData({
@@ -94,70 +69,17 @@ export default function LandingPage() {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Log In
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                       <Form onSubmit={handleSubmit}>
-                            <div className="mb-3">
-                                <label>User Name</label>
-                                <input 
-                                data-testid="username" 
-                                name="username"
-                                onChange={handleChange} 
-                                class="form-control" 
-                                type="text" 
-                                placeholder="Enter User Name"></input>
-                        
-                            </div>
-                            <div className="mb-3">
-                                <label>Password</label>
-                                <input 
-                                    data-testid="password" 
-                                    type="password" 
-                                    name="password"                
-                                    className="form-control"
-                                    placeholder="Enter password"
-                                    onChange={handleChange}
-                                />
-                            </div>
-                                <div className="mb-3">
-                                <div className="custom-control custom-checkbox">
-                                    <input
-                                    type="checkbox"
-                                    className="custom-control-input"
-                                    id="customCheck1"
-                                    />
-                                    <label className="custom-control-label" htmlFor="customCheck1">
-                                        Remember me
-                                    </label>
-                                </div>
-                                </div>
-                        
-                                <p className="create account">
-                                Need to <a href="#">Create Account?</a>
-                                </p>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button 
-                            className="close-button" 
-                            variant="secondary" 
-                            onClick={handleCloseLogin}>
-                            Close
-                        </Button>
-                        <Link to="/Puzzle/Selection">
-                            <Button 
-                                className="button" 
-                                variant="secondary" 
-                                type="submit" 
-                                onClick={handleCloseLogin}>
-                                Log In
-                            </Button>   
-                        </Link>
-                    </Modal.Footer>
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Log In
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <LogIn close={handleCloseLogin}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseLogin}>Close</Button>
+                </Modal.Footer>
             </Modal>
             <Button className="button" variant="secondary" onClick={handleShowCreate}>Create Account</Button>
             <Modal
