@@ -35,7 +35,7 @@ function LogIn(props) {
                  <Form.Text>Enter Username:</Form.Text>
                  <Form.Control
                      type="text"
-                     data-testid="username"
+                     data-testid="usernameLogin"
                      name="username"
                      onChange={handleChange}
                      />
@@ -44,7 +44,7 @@ function LogIn(props) {
                  <Form.Text>Enter Password:</Form.Text>
                  <Form.Control
                      type="password"
-                     data-testid="password"
+                     data-testid="passwordLogin"
                      name="password"
                      onChange={handleChange}
                      />
@@ -52,7 +52,7 @@ function LogIn(props) {
             
              <Row>
              <Link to="/Puzzle/Selection">
-             <Button variant="primary" type="submit" onClick={handleSubmit} data-testid="submitButton">Log In</Button>
+             <Button variant="primary" type="submit" onClick={handleSubmit} data-testid="submitButtonLogin">Log In</Button>
              </Link>
              </Row>
          </Form>
