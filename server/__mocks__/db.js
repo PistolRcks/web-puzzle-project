@@ -1,6 +1,8 @@
 /* eslint-disable no-multi-str */
 const Sqlite3 = require("sqlite3");
 
+// TODO: I'd like to import this function from the original db.js, but it'll break with a stack overflow
+// TODO: This will have to be copied over when the schema would be adjusted
 /**
  * Creates or initializes the database, if it is not already done.
  * @param {String} fp - The filepath location to the initialized or newly created database.
@@ -43,6 +45,6 @@ function initDatabase(fp) {
   return db;
 }
 
-const db = initDatabase("./server/puzzle.db");
+var db = initDatabase(":memory:");
 
-module.exports = { db, initDatabase };
+module.exports = { db };
