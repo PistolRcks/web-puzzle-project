@@ -1,6 +1,6 @@
 const Express = require("express");
-const signup = require(`./signup`);
-const login = require(`./login`);
+const { signup } = require("./signup");
+const login = require("./login")
 
 const router = new Express.Router();
 router.use(Express.urlencoded({ extended: true }));

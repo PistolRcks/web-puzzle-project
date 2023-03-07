@@ -91,7 +91,7 @@ export default function LandingPage() {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleCloseLogin}>Close</Button>
-                        <Link to="/PuzzleSelection">
+                        <Link to="/Puzzle/Selection">
                         <Button variant="primary" type="submit" onClick={handleCloseLogin}>Log In</Button>   
                          {/* ^ should verify log in information*/}
                          </Link>
