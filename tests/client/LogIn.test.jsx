@@ -1,8 +1,4 @@
-import {
-  LogIn,
-  checkPass,
-  checkUsername,
-} from "../../client/components/LogIn/LogIn";
+import { LogIn } from "../../client/components/LogIn/LogIn";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
@@ -35,21 +31,6 @@ describe("Tests for Log In", () => {
       </BrowserRouter>
     );
     expect(wrapper.baseElement.outerHTML).toContain("Password:");
-  });
-  test("checkUsername with accepted username", () => {
-    expect(checkUsername("myUsername")).toBeTruthy();
-  });
-  test("checkUsername with username with special characters", () => {
-    expect(!checkUsername("myUsername$")).toBeTruthy();
-  });
-  test("checkUsername with username that is too short", () => {
-    expect(!checkUsername("user")).toBeTruthy();
-  });
-  test("checkPasswordRequirements with accepted password", () => {
-    expect(checkPass("Password7")).toBeTruthy();
-  });
-  test("checkPasswordRequirements with password with special characters", () => {
-    expect(!checkPass("Password7$")).toBeTruthy();
   });
 
   test("check to make sure typing in the form and submission works", () => {

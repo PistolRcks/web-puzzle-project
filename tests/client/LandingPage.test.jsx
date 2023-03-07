@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import LandingPage from "../../client/pages/LandingPage/LandingPage";
-import { validateUserAndPass } from "../../client/pages/LandingPage/LandingPage";
 
 describe("Tests for Landing Page", () => {
   beforeAll(() => {

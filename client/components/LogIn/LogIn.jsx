@@ -3,6 +3,10 @@ import React, { Component } from "react";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import { Button, Container, Form, Modal, Row } from "react-bootstrap";
 import PuzzleSelectionPage from "../../pages/PuzzleSelectionPage/PuzzleSelectionPage";
+import {
+  checkUsernameRequirements,
+  checkPasswordRequirements,
+} from "../../../utilities/AccountValidators";
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -23,11 +27,15 @@ function LogIn(props) {
   //Whenever the submit button is clicked, this checks to make sure the passwords match and calls another func
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (checkPass(formData.password) && checkUsername(formData.username)) {
-      //TODO send the formData to the backend
+    try {
+      // check username and password here
+      checkUsernameRequirements(formData.username);
+      checkPasswordRequirements(formData.password);
       navigate("/Puzzle/Selection");
       console.log("Hey this code works");
       props.close();
+    } catch (error) {
+      alert(error.message);
     }
   };
 
@@ -67,39 +75,5 @@ function LogIn(props) {
     </Form>
   );
 }
-/*  Checks to make sure the password:
-     has at least 8 characters
-     has an uppercase letter
-     has a lowercase letter
-     has a digit
- 
-     If these requirments are not met, an alert displays what is missing
-     Returns true if these conditions are met
- */
-const checkPass = (pass) => {
-  let passStr = String(pass);
 
-  //If the password contains anything else other than letters, numbers, and underscores, this evaluates false
-  if (/^\w+$/.test(passStr)) {
-    return true;
-  } else {
-    alert("The password you entered contains illegal characters");
-    return false;
-  }
-};
-
-const checkUsername = (user) => {
-  let userStr = String(user);
-  if (userStr.length < 5) {
-    alert("Wrong  Username, Your Username should be atleast 5 characters long");
-    return false;
-  }
-  if (/^\w+$/.test(userStr)) {
-    return true;
-  } else {
-    alert("The username you entered contains illegal characters");
-    return false;
-  }
-};
-
-export { LogIn, checkPass, checkUsername };
+export { LogIn };
