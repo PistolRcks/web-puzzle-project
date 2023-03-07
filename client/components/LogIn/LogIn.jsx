@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+import {Link, Routes, Route, useNavigate} from 'react-router-dom';
 import { Button, Container, Form, Modal, Row } from 'react-bootstrap';
+import PuzzleSelectionPage from '../../pages/PuzzleSelectionPage/PuzzleSelectionPage';
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -11,7 +13,7 @@ const initialFormData = Object.freeze({
 function LogIn(props) {
      //formData is an object that holds username, password, confirmPassword
      const [formData, updateFormData] = React.useState(initialFormData);
-
+     const navigate = useNavigate();
      //Whenever username or confirmPassword input boxes change, this saves the new data to formData
      const handleChange = (e) => {
          updateFormData({
@@ -24,6 +26,7 @@ function LogIn(props) {
          e.preventDefault();
          if(checkPass(formData.password) && checkUsername(formData.username)) {
              //TODO send the formData to the backend
+             navigate('/Puzzle/Selection');
              console.log("Hey this code works");
              props.close();
          }
