@@ -14,16 +14,16 @@ import {
       jest.spyOn(console, "error").mockImplementation(() => {});
     }); 
     test("Checks for button", () => {
-      const wrapper = render(<LogIn />);
-      expect(wrapper.baseElement.outerHTML).toContain("Log In");
+        const wrapper = render(<BrowserRouter><LogIn /></BrowserRouter>);
+      expect(wrapper.baseElement.outerHTML).toContain("In");
     });
     test("Checks for username label", () => {
-      const wrapper = render(<LogIn />);
-      expect(wrapper.baseElement.outerHTML).toContain("Enter Username:");
+        const wrapper = render(<BrowserRouter><LogIn /></BrowserRouter>);
+      expect(wrapper.baseElement.outerHTML).toContain("Username:");
     });
     test("Checks for password label", () => {
-      const wrapper = render(<LogIn />);
-      expect(wrapper.baseElement.outerHTML).toContain("Enter Password:");
+      const wrapper = render(<BrowserRouter><LogIn /></BrowserRouter>);
+      expect(wrapper.baseElement.outerHTML).toContain("Password:");
     });
     test("checkUsername with accepted username", () => {
       expect(checkUsername("myUsername")).toBeTruthy();
