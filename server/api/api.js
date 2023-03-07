@@ -1,6 +1,6 @@
 const Express = require("express");
 const { signup } = require("./signup");
-const { listPuzzles } = require("./listPuzzles")
+const { listPuzzles } = require("./listPuzzles");
 
 const router = new Express.Router();
 router.use(Express.urlencoded({ extended: true }));
@@ -12,6 +12,6 @@ router.get("/testRoute", (req, res) => {
 
 router.post("/signup", signup);
 
-router.get('/listPuzzles', listPuzzles)
+router.get("/listPuzzles", listPuzzles);
 
 module.exports = router;
