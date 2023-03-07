@@ -13,10 +13,11 @@ jest.mock("../../server/db", () => {
   }
 })
 
-const db = require("../../server/db");
+const { db } = require("../../server/db");
 
 describe("Tests for user login", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   it("login - Missing Password 400", async () => {

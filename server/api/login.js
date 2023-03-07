@@ -20,8 +20,7 @@ function login(req, res, next) {
         return next(err);
       }
 
-
-      { hashed_password: hashedPassword, salt: salt } = row;
+      const { hashed_password: hashedPassword, salt: salt } = row;
 
       // if entered username is found, encrypt entered password with existing salt
       Crypto.pbkdf2(req.body.password, salt, 310000, 32, "sha256", function(
