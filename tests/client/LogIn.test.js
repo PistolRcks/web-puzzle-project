@@ -5,6 +5,7 @@ import {
   } from "../../client/components/LogIn/LogIn";
   import { render, screen } from "@testing-library/react";
   import userEvent from "@testing-library/user-event";
+  import { BrowserRouter } from "react-router-dom";
   
   
   describe("Tests for Log In", () => {
@@ -43,7 +44,7 @@ import {
    test("check to make sure typing in the form and submission works", () => {
       const consoleSpy = jest.spyOn(global.console, "log");
       const close = jest.fn();
-      const wrapper = render(<LogIn close={close} />);
+      const wrapper = render(<BrowserRouter><LogIn close={close} /></BrowserRouter>);
   
       const inputUsername = screen.getByTestId("usernameLogin");
       userEvent.type(inputUsername, "validUsername");
