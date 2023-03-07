@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Container, Row, Col } from "react-bootstrap";
+import { Button, Form, Container } from "react-bootstrap";
 
 import back from "../../assets/back-arrow.png";
 

@@ -1,16 +1,31 @@
 const Express = require('express')
 const path = require('path')
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+
 const dataRouter = require('./api/api.js')
+const { redirectBundleManifest, logRouteAndCheckAuthorization } = require("./middleware");
 
 const app = new Express()
+const oneHour = 1000 * 60 * 60;
 
 // Parse JSON boides into JavaScript objects
 app.use(Express.json())
 
-app.use((req, res, next) => {
-  console.log(`${req.method} at ${req.path}`)
-  next()
-})
+// Cookie parser middleware
+app.use(cookieParser())
+
+// Session will automatically terminate after the `maxAge` specified in the cookie.
+app.use(session({
+  secret: "supersecrettoken",
+  saveUninitialized: true,
+  cookie: { maxAge: 4 * oneHour },
+  resave: false
+}))
+
+app.use(redirectBundleManifest)
+
+app.use(logRouteAndCheckAuthorization)
 
 app.use(Express.static('public'))
 
