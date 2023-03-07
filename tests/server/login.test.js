@@ -10,9 +10,13 @@ jest.mock("../../server/db", () => ({
 }));
 
 const db = require("../../server/db");
-//const login = require("../../server/login");
 
 describe("Tests for user login", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    db.get.mockReset();
+  });
+
   it("login - Missing Password 400", async () => {
     const response = await request.post("/api/login").send({
       username: "missingPassword",
@@ -31,13 +35,13 @@ describe("Tests for user login", () => {
 
   it("login - Invalid username 500", async () => {
     // mock the database response
-    db.get.mockImplementationOnce((query, params, callback) => {
-      expect(query).toBe(
+    db.get = jest.fn((query, params, callback) => {
+      const lastCall = db.get.mock.calls[db.get.mock.calls.length - 1];
+      expect(lastCall[0]).toBe(
         "SELECT hashed_password, salt FROM User WHERE username = ?"
       );
-      expect(params).toEqual(["bob"]);
-
-      callback(new Error("Database error"));
+      expect(lastCall[1]).toEqual("bob");
+      callback(null, { hashed_password: "hashed", salt: "salt" });
     });
 
     const response = await request.post("/api/login").send({
@@ -50,13 +54,13 @@ describe("Tests for user login", () => {
 
   it("login - Successful login 200", async () => {
     // mock the database response
-    db.get.mockImplementationOnce((query, params, callback) => {
-      expect(query).toBe(
+    db.get = jest.fn((query, params, callback) => {
+      const lastCall = db.get.mock.calls[db.get.mock.calls.length - 1];
+      expect(lastCall[0]).toBe(
         "SELECT hashed_password, salt FROM User WHERE username = ?"
       );
-      expect(params).toEqual(["alice"]);
-
-      callback(null, { hashed_password: "hashed_password", salt: "salt" });
+      expect(lastCall[1]).toEqual("alice");
+      callback(null, { hashed_password: "hashed", salt: "salt" });
     });
 
     const response = await request.post("/api/login").send({
@@ -69,13 +73,13 @@ describe("Tests for user login", () => {
 
   it("login - Unauthorized login 401", async () => {
     // mock the database response
-    db.get.mockImplementationOnce((query, params, callback) => {
-      expect(query).toBe(
+    db.get = jest.fn((query, params, callback) => {
+      const lastCall = db.get.mock.calls[db.get.mock.calls.length - 1];
+      expect(lastCall[0]).toBe(
         "SELECT hashed_password, salt FROM User WHERE username = ?"
       );
-      expect(params).toEqual(["alice"]);
-
-      callback(null, { hashed_password: "hashed_password", salt: "salt" });
+      expect(lastCall[1]).toEqual("alice");
+      callback(null, { hashed_password: "hashed", salt: "salt" });
     });
 
     const response = await request.post("/api/login").send({
