@@ -37,6 +37,12 @@ function AccountCreation(props) {
         //TODO: Required for flaky test. Should be removed in the future
         console.log("Hey this code works");
         accountCreation(formData)
+          .then(() => {
+            console.log("done")
+          })
+          .catch((err) => {
+            alert(err)
+          })
         props.close();
       }
     } catch (error) {
