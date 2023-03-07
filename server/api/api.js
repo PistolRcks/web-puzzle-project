@@ -1,6 +1,6 @@
 const Express = require("express");
 const { signup } = require("./signup");
-const { randomWord } = require("./randomWord")
+const { randomWord } = require("./randomWord");
 
 const router = new Express.Router();
 router.use(Express.urlencoded({ extended: true }));
@@ -12,6 +12,6 @@ router.get("/testRoute", (req, res) => {
 
 router.post("/signup", signup);
 
-router.post("/word", randomWord);
+router.get("/word", randomWord);
 
 module.exports = router;
