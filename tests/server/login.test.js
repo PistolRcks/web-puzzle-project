@@ -5,16 +5,18 @@ const sqlite3 = require("sqlite3");
 const Crypto = require("crypto");
 
 // mock the database module
-jest.mock("../../server/db", () => ({
-  get: jest.fn(),
-}));
+jest.mock("../../server/db", () => {
+  const original = jest.requireActual("../../server/db");
+  return {
+    ...original,
+    get: jest.fn()
+  }
+})
 
 const db = require("../../server/db");
 
 describe("Tests for user login", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    db.get.mockReset();
   });
 
   it("login - Missing Password 400", async () => {
