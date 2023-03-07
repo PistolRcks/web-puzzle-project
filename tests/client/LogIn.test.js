@@ -6,12 +6,13 @@ import {
   import { render, screen } from "@testing-library/react";
   import userEvent from "@testing-library/user-event";
   
+  
   describe("Tests for Log In", () => {
     beforeAll(() => {
       jest.spyOn(console, "log").mockImplementation(() => {});
       jest.spyOn(console, "error").mockImplementation(() => {});
     }); 
-  /*  test("Checks for button", () => {
+    test("Checks for button", () => {
       const wrapper = render(<LogIn />);
       expect(wrapper.baseElement.outerHTML).toContain("Log In");
     });
@@ -22,7 +23,7 @@ import {
     test("Checks for password label", () => {
       const wrapper = render(<LogIn />);
       expect(wrapper.baseElement.outerHTML).toContain("Enter Password:");
-    });*/
+    });
     test("checkUsername with accepted username", () => {
       expect(checkUsername("myUsername")).toBeTruthy();
     });
