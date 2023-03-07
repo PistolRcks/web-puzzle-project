@@ -10,7 +10,7 @@ export default function Puzzle1Page() {
             <PuzzleNavBar />
             <PuzzleHint />
             <div className="puzzle1">
-                <h1> Hello </h1>
+                {/* <h1> Hello </h1> */}
             </div>
             
 

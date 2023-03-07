@@ -24,6 +24,7 @@ export function PuzzleItem({ puzzle }) {
         <Form.Group as={Col} controlId={puzzleID}>
           <Button
             className="puzzleSelectionPage__button puzzleItem__button button"
+            variant="secondary"
             onClick={handleShow}
             size="lg"
             style={{ minWidth: "100" }}
@@ -50,7 +51,7 @@ export function PuzzleItem({ puzzle }) {
                 Close
               </Button>
               <Link to={`/Puzzle/${puzzleID}`}>
-                <Button className="button" variant="primary" type="submit" onClick={handleClose}>
+                <Button className="button" variant="secondary" type="submit" onClick={handleClose}>
                   Begin
                 </Button>
               </Link>

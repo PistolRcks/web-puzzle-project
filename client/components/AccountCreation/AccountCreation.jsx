@@ -74,7 +74,8 @@ function AccountCreation(props) {
       </Row>
       <Row>
         <Button
-          variant="primary"
+          className="button create-account-button"
+          variant="secondary"
           type="submit"
           onClick={handleSubmit}
           data-testid="submitButton"

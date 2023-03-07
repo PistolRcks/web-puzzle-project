@@ -61,7 +61,14 @@ export default function LandingPage() {
     return (
         <div className="app min-vh-100 min-vw-100" data-testid="landing-1">
             <Container className="min-vw-100 header-container">
-                <div><img src={puzzlePiece} alt="puzzle piece" width="50" height="50" /> Welcome to our Web Puzzle</div>
+                <div>
+                    <img 
+                    src={puzzlePiece} 
+                    alt="puzzle piece" 
+                    width="50" 
+                    height="50" /> 
+                    Welcome to our Web Puzzle
+                </div>
             </Container>
             <Container className="text-container">
                 <h3>This website is made to challenge the user to solve multiple 
@@ -77,7 +84,7 @@ export default function LandingPage() {
                 </h6>
                 <br />
             </Container>
-            <Button className="button" onClick={handleShowLogin}>Log In</Button>
+            <Button className="button" variant="secondary" onClick={handleShowLogin}>Log In</Button>
             <Modal
                 show={showLogin}
                 onHide={handleCloseLogin}
@@ -135,14 +142,24 @@ export default function LandingPage() {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button className="close-button" variant="secondary" onClick={handleCloseLogin}>Close</Button>
+                        <Button 
+                            className="close-button" 
+                            variant="secondary" 
+                            onClick={handleCloseLogin}>
+                            Close
+                        </Button>
                         <Link to="/Puzzle/Selection">
-                        <Button className="button" variant="primary" type="submit" onClick={handleCloseLogin}>Log In</Button>   
-                         {/* ^ should verify log in information*/}
-                         </Link>
+                            <Button 
+                                className="button" 
+                                variant="secondary" 
+                                type="submit" 
+                                onClick={handleCloseLogin}>
+                                Log In
+                            </Button>   
+                        </Link>
                     </Modal.Footer>
             </Modal>
-            <Button className="button" onClick={handleShowCreate}>Create Account</Button>
+            <Button className="button" variant="secondary" onClick={handleShowCreate}>Create Account</Button>
             <Modal
                 show={showCreate}
                 onHide={handleCloseCreate}
@@ -161,7 +178,12 @@ export default function LandingPage() {
                     <AccountCreation close={handleCloseCreate}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className="close-button" variant="secondary" onClick={handleCloseCreate}>Close</Button>
+                    <Button 
+                        className="close-button" 
+                        variant="secondary" 
+                        onClick={handleCloseCreate}>
+                        Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </div>

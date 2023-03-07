@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Container, Navbar, Nav, Modal } from 'react-bootstrap';
 import './PuzzleNavBar.css';
 
@@ -16,8 +17,9 @@ export function PuzzleNavBar(){
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/Puzzle/Selection">Puzzle Selection Page</Nav.Link>
-                    {/* ^ does not work atm, idk why */}
+                    <Link to="/Puzzle/Selection">
+                        <Nav.Link href="/Puzzle/Selection">Puzzle Selection Page</Nav.Link>
+                    </Link>
                     <Nav.Link href="/UserProfile">User Profile</Nav.Link>
                     <Nav.Link onClick={handleShowDesc}>Puzzle Description</Nav.Link>
 

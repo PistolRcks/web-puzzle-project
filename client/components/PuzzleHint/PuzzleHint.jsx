@@ -9,7 +9,7 @@ export function PuzzleHint(){
 
     return(
         <>
-        <Button className="button hint rounded-circle" onClick={handleShowHint}>?</Button>
+        <Button className="button hint rounded-circle" variant="secondary" onClick={handleShowHint}>?</Button>
         <Modal
             show={showHint}
             onHide={handleCloseHint}

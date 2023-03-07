@@ -25,10 +25,6 @@ a {
     background-color: #2f3e46;
 }
 
-.button:active {
-    background-color: #2f3e46;
-}
-
 .close-button {
     background-color: #2f3e46;
     border-style: none;
@@ -44,7 +40,8 @@ a {
     margin: 0px;
     padding-top: 20px;
     margin-bottom: 30px;
-    background-color: #84a98c;
+    background-color: #354f52;
+    /* background-color: #84a98c; */
     color: #e8f1e8;
     font-size: 30px;
     box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
