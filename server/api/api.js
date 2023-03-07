@@ -11,7 +11,6 @@ router.get("/testRoute", (req, res) => {
 });
 
 router.post("/signup", signup);
-
 router.get("/listPuzzles", listPuzzles);
 
 module.exports = router;

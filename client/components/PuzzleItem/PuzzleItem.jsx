@@ -10,11 +10,12 @@ export function PuzzleItem({ puzzle }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { puzzleID, isCompleted, puzzleTitle, puzzleDescription } = puzzle;
+  const { puzzle_id: puzzleID, title: puzzleTitle, description: puzzleDescription } = puzzle;
 
   const puzzleText = (
     <>
-      <img src={isCompleted ? check : x} height="22" alt={String(isCompleted)} /> {`Puzzle ${puzzleID} - ${puzzleTitle}`}
+      {/* <img src={isCompleted ? check : x} height="22" alt={String(isCompleted)} />*/ }
+      {`Puzzle ${puzzleID} - ${puzzleTitle}`}
     </>
   );
 

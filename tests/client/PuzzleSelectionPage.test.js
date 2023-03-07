@@ -22,10 +22,12 @@ describe("Tests for the Puzzle Selection Page", () => {
     );
   });
 
-  it("Checks for Puzzle 1 button", () => {
-    const puzzleSelectionPage = render(<PuzzleSelectionPage />);
-    expect(puzzleSelectionPage.baseElement.outerHTML).toContain("Puzzle 1");
-  });
+  //TODO: Commenting out this test because the puzzle buttons are no longer hard coded
+  //TODO: and all this would test is if the API is working (we already have tests for that)
+  // it("Checks for Puzzle 1 button", () => {
+  //   const puzzleSelectionPage = render(<PuzzleSelectionPage />);
+  //   expect(puzzleSelectionPage.baseElement.outerHTML).toContain("Puzzle 1");
+  // });
 
   it("Checks for not Puzzle 2 button", () => {
     const puzzleSelectionPage = render(<PuzzleSelectionPage />);

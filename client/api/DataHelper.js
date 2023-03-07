@@ -15,3 +15,15 @@ export function accountCreation(userData) {
             })
     });
 }
+
+export function listPuzzles() {
+    return new Promise((resolve, reject) => {
+        axios.get('/api/listPuzzles')
+            .then(function(res) {
+                return resolve(res);
+            })
+            .catch(function(err) {
+                return reject(err);
+            })
+    });
+}
