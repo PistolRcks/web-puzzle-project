@@ -63,6 +63,7 @@ function LogIn(props) {
       <Row>
         <Link to="/Puzzle/Selection">
           <Button
+            className="button"
             variant="primary"
             type="submit"
             onClick={handleSubmit}
