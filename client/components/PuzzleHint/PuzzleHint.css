@@ -47,13 +47,3 @@
 .modal-left-fade-in .modal-dialog {
     left: 0;
 }
-/* ^ Makes modal pop up on the left */
-
-.puzzle-nav {
-    background-color: #52796f;
-}
-
-.puzzle-page {
-    background-color: #2f3e46;
-    color: #e8f1e8;
-}

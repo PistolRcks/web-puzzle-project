@@ -19,11 +19,6 @@
   box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-h1 {
-  color: #2f3e46;
-  padding: 35px;
-}
-
 .puzzleSelectionPage__selection-header {
   background-color: #354f52;
   box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
