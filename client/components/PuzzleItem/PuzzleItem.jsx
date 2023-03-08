@@ -10,11 +10,12 @@ export function PuzzleItem({ puzzle }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { puzzleID, isCompleted } = puzzle;
+  const { puzzle_id: puzzleID, title: puzzleTitle, description: puzzleDescription } = puzzle;
 
   const puzzleText = (
     <>
-      <img src={isCompleted ? check : x} height="22" alt={String(isCompleted)} /> {`Puzzle ${puzzleID}`}
+      {/* <img src={isCompleted ? check : x} height="22" alt={String(isCompleted)} />*/ }
+      {`Puzzle ${puzzleID} - ${puzzleTitle}`}
     </>
   );
 
@@ -45,7 +46,7 @@ export function PuzzleItem({ puzzle }) {
                 {puzzleText}
               </Modal.Title>
             </Modal.Header>
-            <Modal.Body>This is a modal body</Modal.Body>
+            <Modal.Body>{puzzleDescription}</Modal.Body>
             <Modal.Footer>
               <Button className="close-button" variant="secondary" onClick={handleClose}>
                 Close

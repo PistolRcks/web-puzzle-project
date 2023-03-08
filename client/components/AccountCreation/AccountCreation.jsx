@@ -5,6 +5,7 @@ import {
   checkPasswordRequirements,
 } from "../../../utilities/AccountValidators";
 import './AccountCreation.css';
+import { accountCreation } from "../../api/DataHelper";
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -34,8 +35,15 @@ function AccountCreation(props) {
         checkPasswordRequirements(formData.password) &&
         checkUsernameRequirements(formData.username)
       ) {
-        //TODO send the formData to the backend
-        console.log("Hey this code works"); // TODO: Required for flaky test. Should be removed in the future
+        //TODO: Required for flaky test. Should be removed in the future
+        console.log("Hey this code works");
+        accountCreation(formData)
+          .then(() => {
+            console.log("done")
+          })
+          .catch((err) => {
+            alert(err)
+          })
         props.close();
       }
     } catch (error) {

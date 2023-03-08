@@ -17,7 +17,7 @@ describe("Tests for the Puzzle Item component", () => {
 
   it("Checks for button text", () => {
     const puzzleItem = render(
-      <PuzzleItem puzzle={{ puzzleID: 17, isCompleted: false }} />
+      <PuzzleItem puzzle={{ puzzle_id: 17, title: "title", description: "description" }} />
     );
     expect(puzzleItem.baseElement.outerHTML).toContain("Puzzle 17");
   });
