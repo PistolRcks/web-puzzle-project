@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { Button, Container, Form, Modal, Row } from 'react-bootstrap';
 import puzzlePiece from "../../assets/puzzle-piece.png";
 import "./LandingPage.css";
 import { AccountCreation } from '../../components/AccountCreation/AccountCreation';
+import {LogIn} from '../../components/LogIn/LogIn';
 
 export default function LandingPage() {
     const [showLogin, setShowLogin] = useState(false);
@@ -14,15 +15,28 @@ export default function LandingPage() {
     const handleCloseCreate = () => setShowCreate(false);
     const handleShowCreate = () => setShowCreate(true);
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        console.log('Form submitted')
-    };
+    const initialFormData = Object.freeze({
+        username: "",
+        password: "",
+        confirmPassword: ""
+    }); 
+
+    const [formData, updateFormData] = React.useState(initialFormData);
+  
+    
+    const handleChange = (e) => {
+        updateFormData({
+            ...formData,
+            [e.target.name]: e.target.value.trim()
+        });
+    }
+    
+
 
     return (
-        <div className="app min-vh-100 min-vw-100">
+        <div className="app min-vh-100 min-vw-100" data-testid="landing-1">
             <Container className="min-vw-100 header-container">
-                <div><img src={puzzlePiece} alt="puzzle piece" width="50" height="70" />  Welcome to our Web Puzzle</div>
+                <div><img src={puzzlePiece} alt="puzzle piece" width="50" height="50" />  Welcome to our Web Puzzle</div>
             </Container>
             <Container className="text-container">
                 <h3>This website is made to challenge the user to solve multiple 
@@ -38,6 +52,8 @@ export default function LandingPage() {
                 </h6>
                 <br />
             </Container>
+            
+
             <Button className="button" onClick={handleShowLogin}>Log In</Button>
             <Modal
                 show={showLogin}
@@ -54,49 +70,16 @@ export default function LandingPage() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={handleSubmit}>
-                    
-                        <div className="mb-3">
-                        <label>User Name</label>
-                        <input
-                            type="email"
-                            className="form-control"
-                            placeholder="Enter User Name"
-                        />
-                        </div>
-                        <div className="mb-3">
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            placeholder="Enter password"
-                        />
-                        </div>
-                        <div className="mb-3 custom-control custom-checkbox">
-                            <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="customCheck1"
-                            />
-                            <label className="custom-control-label" htmlFor="customCheck1">
-                            Remember me
-                            </label>
-                        </div>
-                        
-                        <p className="create-account">
-                        Need to <a href="#">Create Account?</a>
-                        </p>
-
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseLogin}>Close</Button>
-                        <Link to="/Puzzle/Selection">
-                        <Button variant="primary" type="submit" onClick={handleCloseLogin}>Log In</Button>   
-                         {/* ^ should verify log in information*/}
-                         </Link>
-                    </Modal.Footer>
+                    <LogIn close={handleCloseLogin}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseLogin}>Close</Button>
+                </Modal.Footer>
             </Modal>
+
+
+
+
             <Button className="button" onClick={handleShowCreate}>Create Account</Button>
             <Modal
                 show={showCreate}
@@ -107,18 +90,19 @@ export default function LandingPage() {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Create Account
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <AccountCreation close={handleCloseCreate}/>
-                    </Modal.Body>
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Create Account
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <AccountCreation close={handleCloseCreate}/>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseCreate}>Close</Button>
                 </Modal.Footer>
-        </Modal>
+            </Modal>
         </div>
+      
     );
 }
