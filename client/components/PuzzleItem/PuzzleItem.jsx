@@ -24,7 +24,8 @@ export function PuzzleItem({ puzzle }) {
       <Row className="mb-3">
         <Form.Group as={Col} controlId={puzzleID}>
           <Button
-            className="puzzleSelectionPage__button puzzleItem__button"
+            className="puzzleSelectionPage__button puzzleItem__button button"
+            variant="secondary"
             onClick={handleShow}
             size="lg"
             style={{ minWidth: "100" }}
@@ -47,11 +48,11 @@ export function PuzzleItem({ puzzle }) {
             </Modal.Header>
             <Modal.Body>{puzzleDescription}</Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button className="close-button" variant="secondary" onClick={handleClose}>
                 Close
               </Button>
               <Link to={`/Puzzle/${puzzleID}`}>
-                <Button variant="primary" type="submit" onClick={handleClose}>
+                <Button className="button" variant="secondary" type="submit" onClick={handleClose}>
                   Begin
                 </Button>
               </Link>

@@ -34,8 +34,8 @@ export default function PuzzleSelectionPage() {
     <div className="puzzleSelectionPage min-vh-100 min-vw-100">
       <div className="puzzleSelectionPage__backButtonDiv">
         <Link to="/">
-          <Button className="puzzleSelectionPage__backButton" width="150">
-            <img src={back} alt="back" width="22" height="22" /> Back
+          <Button className="puzzleSelectionPage__button button" variant="secondary" width="150">
+            <img src={back} alt="back" width="22" height="22" /> Home
           </Button>
         </Link>
       </div>
