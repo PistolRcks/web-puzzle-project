@@ -14,16 +14,16 @@ export default function PuzzleSelectionPage() {
   const userIcon = "https://api.dicebear.com/5.x/adventurer/svg?seed=Gracie&scale=130&radius=20&backgroundType=solid,gradientLinear&randomizeIds=true&backgroundColor=c0aede,b6e3f4,d1d4f9,ffdfbf,ffd5dc";
 
   const[puzzles, setPuzzles] = useState([{puzzle_id:1, title:"title", description:"description"}]);
-  const[hasResponded, setHasResponded] = useState(true);
+  const[hasResponded, setHasResponded] = useState(false);
 
   //If puzzles is still default, this evaluates to true
   //hasResponded makes sure that if there is 1 puzzle in the DB that we don't accidentally
   //infinitely call the api for puzzles (ran into this issue during testing)
-  if(puzzles.length == 1 && hasResponded) {
+  if(puzzles.length == 1 && !hasResponded) {
     listPuzzles()
     .then((res) => {
       setPuzzles(res.data);
-      setHasResponded(false);
+      setHasResponded(true);
     })
     .catch((err) => {
       alert(err);
