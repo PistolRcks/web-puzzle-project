@@ -1,7 +1,9 @@
 import React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
+import { AccountCreation } from './components/AccountCreation/AccountCreation';
 import LandingPage from './pages/LandingPage/LandingPage.jsx'
+import Puzzle1Page from './pages/Puzzle1Page/Puzzle1Page';
 import PuzzleSelectionPage from './pages/PuzzleSelectionPage/PuzzleSelectionPage.jsx';
 import Verify from './components/Verify/Verify.jsx';
 
@@ -17,11 +19,14 @@ export default function PageRoutes() {
    * Then head over to localhost:YOUR_PORT/YOUR_ROUTE to see your changes!
    */
   return (
+    <>
     <Routes>
       <Route index element={<LandingPage />} />
       <Route element={<Verify />}>
         <Route path="/Puzzle/Selection" element={<PuzzleSelectionPage />} />
+        <Route path="/Puzzle/1" element={<Puzzle1Page />} />
       </Route>
     </Routes>
+    </>
   );
 }

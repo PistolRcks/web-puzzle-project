@@ -1,11 +1,11 @@
 .puzzleSelectionPage {
   background-color: #2f3e46;
   text-align: center;
-  color: #cad2c5;
+  color: #e8f1e8;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.puzzleSelectionPage__backButton {
+.puzzleSelectionPage__backButtonDiv {
   float: left;
   padding: 15px;
   position: fixed;
@@ -15,13 +15,17 @@
 .puzzleSelectionPage__button {
   background-color: #52796f;
   border-color: #52796f;
+  color: #e8f1e8;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  max-width: 400px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.puzzleSelectionPage__backButton {
+  background-color: #52796f;
+  border-color: #52796f;
   color: #cad2c5;
   box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-h1 {
-  color: #2f3e46;
-  padding: 35px;
 }
 
 .puzzleSelectionPage__selection-header {
@@ -37,7 +41,7 @@ h1 {
 .puzzleSelectionPage__selection-title {
   padding-top: 25px;
   font-size: 40px;
-  color: #cad2c5;
+  color: #e8f1e8;
 }
 
 .puzzle_selection_page__profile-link  {
