@@ -1,40 +1,5 @@
 const axios = require('axios');
 
-/*
-Acceptance Criteria:
-
-- This (https://random-word-api.herokuapp.com/home) API is connected
-- Server endpoint is setup to generate one or more random words at the request of the client.
-- The endpoint allows the client to specify a number of words it would like.
-- The endpoint allows the client to specify a length for the words.
-- The endpoint returns the random words as an array or an object containing an array.
-
-Notes:
-Consider allowing the front end to send something like 
-    [
-        {
-          numberOfWords: 5,
-          length: 3
-        },
-        {
-          numberOfWords: 2,
-          length: 8
-        },
-        ...
-    ]
-to allow the front end to request multiple words of different lengths in one call.
-
-The example above would return something like 2D array:
-    [ [5 three letter words], 
-      [2 eight letter words]]
-
-or an object like:
-{
-  3: [5 three letter words],
-  8: [2 eight letter words]
-}
-*/
-
 /**
  * Serves as the callback for the GET /api/word route. Gets an Array containing Arrays containing words.
  * The JSON body should have one key-value pair at the root called "words" which contains the Array of requirement Objects, e.g.:
@@ -58,13 +23,19 @@ or an object like:
  */
 async function randomWord(req, res, next) {
   let words;
+
+  // check for bad data
+  if (!("words" in req.body)) {
+    res.status(400).send("Error: Malformed JSON. Make sure that the `words` array exists in the root of the request.");
+    return;
+  }
+
   try {
     words = await fetchWordsFromAPI(req.body.words);
+    res.status(200).json(words);
   } catch (error) {
     res.status(500).send(error.message);
   }
-
-  res.status(200).json(words);
 }
 
 /**
@@ -108,4 +79,4 @@ async function fetchWordsFromAPI(requirements) {
   return out;
 }
 
-module.exports = { randomWord };
+module.exports = { randomWord, fetchWordsFromAPI };
