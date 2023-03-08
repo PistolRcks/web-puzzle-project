@@ -12,6 +12,7 @@ router.get("/testRoute", (req, res) => {
 });
 
 router.post("/signup", signup);
+
 router.post("/login", login);
 
 router.get("/listPuzzles", listPuzzles);
