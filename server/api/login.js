@@ -20,7 +20,7 @@ function login(req, res, next) {
       }
 
       if (!row) {
-        res.status(500).send("Username not found");
+        res.status(500).send("Error: Username not found!");
         return;
       }
 
