@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import { Button, Container, Form, Modal, Row } from "react-bootstrap";
 import PuzzleSelectionPage from "../../pages/PuzzleSelectionPage/PuzzleSelectionPage";
+import { logIn } from "../../api/DataHelper";
 import {
   checkUsernameRequirements,
   checkPasswordRequirements,
@@ -28,10 +29,17 @@ function LogIn(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      // check username and password here
-      checkUsernameRequirements(formData.username);
-      checkPasswordRequirements(formData.password);
-      navigate("/Puzzle/Selection");
+      if(checkUsernameRequirements(formData.username) &&
+      checkPasswordRequirements(formData.password)) {
+        logIn(formData)
+        .then((res) => {
+          //TODO: The api will have to send me back something here so I have have a userID on the front end
+          navigate("/Puzzle/Selection");
+        })
+        .catch((err) => {
+          alert(err)
+        })
+      }
       console.log("Hey this code works");
       props.close();
     } catch (error) {

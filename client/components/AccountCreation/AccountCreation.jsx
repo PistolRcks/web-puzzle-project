@@ -5,6 +5,7 @@ import {
   checkPasswordRequirements,
 } from "../../../utilities/AccountValidators";
 import { accountCreation } from "../../api/DataHelper";
+import { useNavigate } from "react-router-dom";
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -16,6 +17,7 @@ const initialFormData = Object.freeze({
 function AccountCreation(props) {
   //formData is an object that holds username, password, confirmPassword
   const [formData, updateFormData] = React.useState(initialFormData);
+  const navigate = useNavigate();
 
   //Whenever username or confirmPassword input boxes change, this saves the new data to formData
   const handleChange = (e) => {
@@ -38,7 +40,7 @@ function AccountCreation(props) {
         console.log("Hey this code works");
         accountCreation(formData)
           .then(() => {
-            console.log("done")
+            navigate("/Puzzle/Selection")
           })
           .catch((err) => {
             alert(err)
