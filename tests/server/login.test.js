@@ -13,6 +13,11 @@ jest.mock("../../server/db", () => {
 const db = require("../../server/db");
 
 describe("Tests for user login", () => {
+  beforeAll(() => {
+    jest.spyOn(console, "log").mockImplementation();
+    jest.spyOn(console, "error").mockImplementation();
+  });
+  
   it("login - Missing Password 400", async () => {
     const response = await request.post("/api/login").send({
       username: "missingPassword",
