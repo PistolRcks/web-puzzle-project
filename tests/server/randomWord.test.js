@@ -7,6 +7,12 @@ const request = Supertest(App);
 jest.mock("axios");
 
 describe("Test /api/word route", () => {
+    beforeEach(() => {
+        axios.get.mockClear();
+        jest.spyOn(console, "log").mockImplementation();
+        jest.spyOn(console, "error").mockImplementation();
+    })
+
     test("Response 400 - Malformed input", async () => {
         const res = await request.get("/api/word").send({
             blah: []
@@ -120,7 +126,7 @@ describe("Test /api/word route", () => {
         });
 
         expect(axios.get.mock.calls[0][1]).toEqual({params: {length: 5, number: 2}});
-        expect(axios.get.mock.calls[1][1]).toEqual({params: {length: 1, number: 4}});
+        expect(axios.get.mock.calls[1][1]).toEqual({params: {length: 4, number: 1}});
         expect(res.text).toEqual(JSON.stringify([data1, data2]));
     })
 })
