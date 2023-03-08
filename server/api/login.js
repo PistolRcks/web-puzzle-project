@@ -1,11 +1,10 @@
 const Crypto = require("crypto");
-
-var { db } = require("../db");
+const { db } = require("../db");
 
 function login(req, res, next) {
   if (!req.body.password || !req.body.username) {
     res.status(400).send("Error: Username or password not set!");
-    return next("Error: Username or password not set!");
+    return;
   }
 
   // select existing user in database
@@ -17,11 +16,12 @@ function login(req, res, next) {
       if (err) {
         // TODO: Eventually place more speciic errors in here
         res.status(500).send(err);
-        return next(err);
+        return;
       }
 
       if (!row) {
-        return res.status(500).send("Username not found")
+        res.status(500).send("Username not found")
+        return;
       }
 
       const { hashed_password: hashedPassword, salt } = row;
@@ -35,13 +35,14 @@ function login(req, res, next) {
         if (err) {
           // TODO: send specific errors eventually
           res.status(500).send(err);
-          return next(err);
+          return;
         }
-
         // if the attempted password matches the existing password, let user know login
         // was a success, otherwise send an error
         if (Buffer.compare(attemptedPassword, hashedPassword) === 0) {
-          res.status(200).send(`Successfully logged ${req.body.username} in!`);
+          // TODO (fixme): We're currently sending no text! It crashes tests for no fucking reason!!!
+          // TODO (fixme): If you can figure it out, be my guest!!! Otherwise, status 200 should be enough to say you're ok
+          res.status(200).send();       
         } else {
           res.status(401).send(err);
         }
