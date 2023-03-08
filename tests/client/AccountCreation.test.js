@@ -5,6 +5,7 @@ import {
 } from "../../utilities/AccountValidators";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { BrowserRouter } from "react-router-dom";
 
 
 describe("Tests for Account Creation", () => {
@@ -12,19 +13,35 @@ describe("Tests for Account Creation", () => {
     jest.spyOn(console, "error").mockImplementation(() => {});
   });
   test("Checks for button", () => {
-    const wrapper = render(<AccountCreation />);
+    const wrapper = render(
+    <BrowserRouter>
+      <AccountCreation />
+    </BrowserRouter>
+    );
     expect(wrapper.baseElement.outerHTML).toContain("Create Account");
   });
   test("Checks for username label", () => {
-    const wrapper = render(<AccountCreation />);
+    const wrapper = render(
+      <BrowserRouter>
+        <AccountCreation />
+      </BrowserRouter>
+      );
     expect(wrapper.baseElement.outerHTML).toContain("Username:");
   });
   test("Checks for password label", () => {
-    const wrapper = render(<AccountCreation />);
+    const wrapper = render(
+      <BrowserRouter>
+        <AccountCreation />
+      </BrowserRouter>
+      );
     expect(wrapper.baseElement.outerHTML).toContain("Password:");
   });
   test("Checks for confirm password label", () => {
-    const wrapper = render(<AccountCreation />);
+    const wrapper = render(
+      <BrowserRouter>
+        <AccountCreation />
+      </BrowserRouter>
+      );
     expect(wrapper.baseElement.outerHTML).toContain("Confirm Password:");
   });
   test("checkUsernameRequirements with accepted username", () => {
@@ -71,7 +88,11 @@ describe("Tests for Account Creation", () => {
   test("check to make sure typing in the form and submission works", () => {
     const consoleSpy = jest.spyOn(global.console, "log");
     const close = jest.fn();
-    const wrapper = render(<AccountCreation close={close} />);
+    const wrapper = render(
+      <BrowserRouter>
+        <AccountCreation close={close}/>
+      </BrowserRouter>
+      );
 
     const inputUsername = screen.getByTestId("username");
     userEvent.type(inputUsername, "validUsername");
