@@ -11,6 +11,7 @@ jest.mock("react-router-dom", () => ({
 
 describe("Tests for the Puzzle Selection Page", () => {
   beforeAll(() => {
+    jest.spyOn(window, "alert").mockImplementation(); // breaks tests in CI otherwise
     jest.spyOn(console, "log").mockImplementation();
     jest.spyOn(console, "error").mockImplementation();
   });
