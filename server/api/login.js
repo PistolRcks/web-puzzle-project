@@ -47,9 +47,7 @@ function login(req, res, next) {
             req.session.userID = userID;
             req.session.username = username;
 
-            // TODO (fixme): We're currently sending no text! It crashes tests for no fucking reason!!!
-            // TODO (fixme): If you can figure it out, be my guest!!! Otherwise, status 200 should be enough to say you're ok
-            res.status(200).send(';ok');
+            res.status(200).send('OK');
           } else {
             res.status(401).send(err);
           }
