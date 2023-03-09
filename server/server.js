@@ -1,11 +1,10 @@
 const dotenv = require('dotenv')
+const https = require('https');
+const fs = require('fs');
 dotenv.config()
 
 const app = require('./index.js')
 const PORT = process.env.PORT
-// app.listen(PORT, () => console.log(`http://localhost:${PORT}\nListening on port: ${PORT}`))
-//const PORT = process.env.PORT
-// app.listen(PORT, () => console.log(`http://localhost:${PORT}\nListening on port: ${PORT}`))
 
 https
   .createServer(
