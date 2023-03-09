@@ -1,4 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 /**
  * Makes an API call to '/api/verify' to authenticate the session. If the session does not exist or is invalid, an error will be thrown.
@@ -6,10 +8,14 @@ import axios from 'axios';
  */
 export function verifySession() {
   return new Promise((resolve, reject) => {
-    axios.get('/api/verify')
-      .then((response) => { 
-        return resolve(response) })
-      .catch((error) => { return reject(error) })
+    axios
+      .get("/api/verify")
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
   });
 }
 
@@ -18,47 +24,50 @@ export function verifySession() {
 
 //Function that calls the signup post
 export function accountCreation(userData) {
-    const{username, password} = userData;
-    return new Promise((resolve, reject) => {
-        axios.post('/api/signup', {
-            username,
-            password
-            })
-            .then(function(res) {
-                return resolve(res);
-            })
-            .catch(function(err) {
-                return reject(err)
-            })
-    });
+  const { username, password } = userData;
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/api/signup", {
+        username,
+        password,
+      })
+      .then(function (res) {
+        return resolve(res);
+      })
+      .catch(function (err) {
+        return reject(err);
+      });
+  });
 }
 
 //Function that calls the login post
 export function logIn(userData) {
-    const{username, password} = userData;
-    return new Promise((resolve, reject) => {
-        axios.post('/api/login', {
-            username,
-            password
-        })
-        .then(function(res) {
-            return resolve(res);
-        })
-        .catch(function(err) {
-            return reject(err);
-        })
-    });
+  const { username, password } = userData;
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/api/login", {
+        username,
+        password,
+      })
+      .then(function (res) {
+        return resolve(res);
+      })
+      .catch(function (err) {
+        return reject(err);
+      });
+  });
 }
 
 //Function that calls the listPuzzles get
 export function listPuzzles() {
-    return new Promise((resolve, reject) => {
-        axios.get('/api/listPuzzles')
-            .then(function(res) {
-                return resolve(res);
-            })
-            .catch(function(err) {
-                return reject(err);
-            })
-    });
+  return new Promise((resolve, reject) => {
+    axios
+      .get("/api/listPuzzles")
+      .then(function (res) {
+        return resolve(res);
+      })
+      .catch(function (err) {
+        return reject(err);
+      });
+  });
 }

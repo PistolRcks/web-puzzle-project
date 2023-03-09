@@ -7,21 +7,21 @@ const request = Supertest(myApp);
 
 // mock the database module AND hashing
 jest.mock("../../server/db");
-jest.mock("crypto");
-
-// mock data hashing function
-Crypto.pbkdf2.mockImplementation(
-  (pass, salt, iter, keylen, digest, callback) => {
-    // assuming the only password we'll be using is "letmein"!
-    if (pass === "letmein") {
-      // return the "hashed" password
-      callback(null, Buffer.from("hashed", "utf8"));
-    } else {
-      // return an incorrect password
-      callback(null, Buffer.from("badPassword", "utf8"));
+jest.mock("crypto", () => {
+  return {
+    ...jest.requireActual("crypto"),
+    pbkdf2: (pass, salt, iter, keylen, digest, callback) => {
+      // assuming the only password we'll be using is "letmein"!
+      if (pass === "letmein") {
+        // return the "hashed" password
+        callback(null, Buffer.from("hashed", "utf8"));
+      } else {
+        // return an incorrect password
+        callback(null, Buffer.from("badPassword", "utf8"));
+      }
     }
   }
-);
+});
 
 describe("Tests for user login", () => {
   beforeAll(() => {
@@ -56,10 +56,8 @@ describe("Tests for user login", () => {
       password: "letmein",
     });
 
-    console.log(response.text);
-
     expect(db.get.mock.lastCall[0]).toBe(
-      "SELECT hashed_password, salt FROM User WHERE username = ?"
+      "SELECT hashed_password, salt, user_id FROM User WHERE username = ?"
     );
     expect(db.get.mock.lastCall[1]).toEqual("bob");
     expect(response.statusCode).toEqual(500);
@@ -80,7 +78,7 @@ describe("Tests for user login", () => {
     });
 
     expect(db.get.mock.lastCall[0]).toBe(
-      "SELECT hashed_password, salt FROM User WHERE username = ?"
+      "SELECT hashed_password, salt, user_id FROM User WHERE username = ?"
     );
     expect(db.get.mock.lastCall[1]).toEqual("alice");
     expect(response.statusCode).toEqual(200);
@@ -101,7 +99,7 @@ describe("Tests for user login", () => {
     });
 
     expect(db.get.mock.lastCall[0]).toBe(
-      "SELECT hashed_password, salt FROM User WHERE username = ?"
+      "SELECT hashed_password, salt, user_id FROM User WHERE username = ?"
     );
     expect(db.get.mock.lastCall[1]).toEqual("alice");
     expect(response.statusCode).toEqual(401);

@@ -9,11 +9,17 @@ const { db } = require("../db");
  * @returns Nothing.
  */
 function listPuzzles(req, res) {
+  const { userID, username } = req.session;
+
   db.all(`SELECT * FROM Puzzle`, (err, rows) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.status(200).send(rows);
+      res.status(200).send({
+        userID,
+        username,
+        rows
+      });
     }
   });
 }

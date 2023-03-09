@@ -42,8 +42,7 @@ function signup(req, res, next) {
     "sha256",
     async function (err, hashedPassword) {
       if (err) {
-        res.status(500).send(err);
-        return;
+        return res.status(500).send(err);
       }
 
       // insert new user into database

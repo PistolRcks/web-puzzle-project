@@ -1,6 +1,7 @@
 .Error {
   text-align: center;
   overflow: auto;
+  background-color: white;
   color: black;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }

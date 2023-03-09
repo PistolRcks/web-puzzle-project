@@ -22,10 +22,8 @@ export default function PageRoutes() {
     <>
     <Routes>
       <Route index element={<LandingPage />} />
-      <Route element={<Verify />}>
-        <Route path="/Puzzle/Selection" element={<PuzzleSelectionPage />} />
-        <Route path="/Puzzle/1" element={<Puzzle1Page />} />
-      </Route>
+      <Route path="/Puzzle/Selection" element={<Verify><PuzzleSelectionPage /></Verify>} />
+      <Route path="/Puzzle/1" element={<Verify><Puzzle1Page /></Verify>} />
     </Routes>
     </>
   );
