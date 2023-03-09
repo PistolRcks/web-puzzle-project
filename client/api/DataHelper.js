@@ -49,3 +49,18 @@ export function listPuzzles() {
             })
     });
 }
+
+//Function that calls the googleLogin post
+export async function googleLogin(googleIdToken) {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/googleLogin', {
+            googleIdToken,
+        })
+        .then(function(res) {
+            return resolve(res);
+        })
+        .catch(function(err) {
+            return reject(err);
+        })
+    });
+}
