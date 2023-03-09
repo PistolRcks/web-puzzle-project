@@ -5,6 +5,20 @@ const request = require("supertest");
 
 jest.mock("../../server/db");
 
+// mock the middleware, specifically mock the auth check to "create" the session
+jest.mock("../../server/middleware", () => {
+  return {
+    redirectBundleManifest: jest.fn((req, res, next) => {
+      next();
+    }),
+    logRouteAndCheckAuthorization: jest.fn((req, res, next) => {
+      req.session.userID = 1;
+      req.session.username = 'alice';
+      next();
+    })
+  }
+})
+
 /**
  * Helper function to insert test puzzles into db
  * @param {int} k - Number of test puzzles to insert
@@ -28,9 +42,10 @@ beforeAll(() => {
 describe("Puzzles endpoint", () => {
   test("Response 200 - successful query", async () => {
     const res = await request(app).get("/api/listPuzzles");
+    console.log(res.body)
 
     expect(res.statusCode).toEqual(200); // status code should be 200
-    expect(res.body).toEqual(
+    expect(res.body.rows).toEqual(
       // res should contain all inserted puzzles
       expect.arrayContaining([
         expect.objectContaining(

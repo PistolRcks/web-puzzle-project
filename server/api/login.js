@@ -7,16 +7,17 @@ function login(req, res, next) {
     return;
   }
 
+  const { username, password } = req.body;
+
   // select existing user in database
   db.get(
-    "SELECT hashed_password, salt FROM User WHERE username = ?",
-    req.body.username,
+    "SELECT hashed_password, salt, user_id FROM User WHERE username = ?",
+    username,
     function (err, row) {
       // if entered username isn't found, send error
       if (err) {
         // TODO: Eventually place more speciic errors in here
-        res.status(500).send(err);
-        return;
+        return res.status(500).send(err);
       }
 
       if (!row) {
@@ -24,11 +25,11 @@ function login(req, res, next) {
         return;
       }
 
-      const { hashed_password: hashedPassword, salt } = row;
+      const { hashed_password: hashedPassword, salt, user_id: userID } = row;
 
       // if entered username is found, encrypt entered password with existing salt
       Crypto.pbkdf2(
-        req.body.password,
+        password,
         salt,
         310000,
         32,
@@ -37,15 +38,16 @@ function login(req, res, next) {
           // if an error was made upon doing this, send an error
           if (err) {
             // TODO: send specific errors eventually
-            res.status(500).send(err);
-            return;
+            return res.status(500).send(err);
           }
           // if the attempted password matches the existing password, let user know login
           // was a success, otherwise send an error
           if (Buffer.compare(attemptedPassword, hashedPassword) === 0) {
-            // TODO (fixme): We're currently sending no text! It crashes tests for no fucking reason!!!
-            // TODO (fixme): If you can figure it out, be my guest!!! Otherwise, status 200 should be enough to say you're ok
-            res.status(200).send();
+            // Store the userID and username for use on the front and back end
+            req.session.userID = userID;
+            req.session.username = username;
+
+            res.status(200).send('OK');
           } else {
             res.status(401).send(err);
           }
