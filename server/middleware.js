@@ -14,7 +14,7 @@ const redirectBundleManifest = (req, res, next) => {
     "bundle.js",
     "bundle.css",
     "manifest.json",
-    "favicon.ico",
+    "puzzle-piece-icon.ico",
   ];
 
   redirectFileNames.forEach((fileName) => {
@@ -44,8 +44,7 @@ const logRouteAndCheckAuthorization = (req, res, next) => {
     "/bundle.css",
     "/bundle.js",
     "/manifest.json",
-    "/logo192.png",
-    "./favicon.ico",
+    "/puzzle-piece-icon.ico",
   ];
 
   console.log(`${req.method} at ${req.path}`);
