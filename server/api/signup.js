@@ -4,6 +4,7 @@ const {
 } = require("../../utilities/AccountValidators");
 const { db } = require("../db");
 const Crypto = require("crypto");
+const { login } = require("./login");
 
 /**
  * The callback function for the /api/signup POST route. Signs up a user into the database.
@@ -64,7 +65,7 @@ function signup(req, res, next) {
             return; // end prematurely
           }
           // TODO (integration): After correctly signing up, log the user in
-          res.status(200).send(`Successfully signed user ${username} up!`);
+          login(req, res, next);
         }
       )
     }

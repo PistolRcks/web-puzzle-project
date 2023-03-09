@@ -7,6 +7,11 @@ const App = require("../../server/index");
 const request = Supertest(App);
 
 jest.mock("../../server/db");
+jest.mock("../../server/api/login", () => {
+  return {
+    login: jest.fn((req, res, next) => { return res.status(200).send("OK")})
+  }
+});
 
 // mock the middleware, specifically mock the auth check to "create" the session
 jest.mock("../../server/middleware", () => {
