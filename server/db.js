@@ -16,7 +16,8 @@ function initDatabase(fp) {
       user_id INTEGER PRIMARY KEY AUTOINCREMENT, \
       username TEXT UNIQUE, \
       hashed_password BLOB, \
-      salt BLOB \
+      salt BLOB, \
+      google_id TEXT \
     )"
     );
 
