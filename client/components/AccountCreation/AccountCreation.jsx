@@ -7,6 +7,7 @@ import {
 import './AccountCreation.css';
 import { accountCreation } from "../../api/DataHelper";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -16,6 +17,9 @@ const initialFormData = Object.freeze({
 });
 
 function AccountCreation(props) {
+
+  const [passwordLength, setPasswordLength] = useState(false);
+  const [uppercaseLetter, setUppercaseLetter] = useState(false);
   //formData is an object that holds username, password, confirmPassword
   const [formData, updateFormData] = React.useState(initialFormData);
   const navigate = useNavigate();
@@ -27,6 +31,7 @@ function AccountCreation(props) {
       [e.target.name]: e.target.value.trim(),
     });
   };
+
   //Whenever the submit button is clicked, this checks to make sure the passwords match and calls another func
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -92,6 +97,14 @@ function AccountCreation(props) {
         >
           Create Account
         </Button>
+      </Row>
+      <Row>
+        <Form.Text>
+          Password Requirements: <br/>
+          Only letters, numbers, and underscores are allowed <br/>
+          At least 8 characters long: 
+          {passwordLength ? "✓" : "X"}
+        </Form.Text>
       </Row>
     </Form>
   );
