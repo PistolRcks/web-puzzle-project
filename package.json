@@ -25,6 +25,7 @@
     "start": "npm run build && node ./server/server.js",
     "test": "jest --coverage",
     "build": "esbuild --bundle --minify --target=ES6 --loader:.png=dataurl --loader:.jpg=dataurl --outfile=public/bundle.js client/app.jsx",
+    "generate-docs": "jsdoc --configure jsdocs.json --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
+    "clean-jsdoc-theme": "^4.2.6",
     "jest": "^29.4.2",
     "jest-environment-jsdom": "^29.4.2",
     "supertest": "^6.3.3"
