@@ -11,14 +11,39 @@ const { db } = require("../db");
 function listPuzzles(req, res) {
   const { userID, username } = req.session;
 
-  db.all(`SELECT * FROM Puzzle`, (err, rows) => {
+  //up.progress, p.puzzle_id, p.title, p.description
+
+  const puzzleListQuery = `
+      SELECT *
+      FROM Puzzle
+    `;
+
+  const userPuzzleCompletionQuery = `
+    SELECT progress, puzzle_id 
+    FROM User_Puzzle
+    WHERE user_id = ${userID}
+    `;
+
+  db.all(puzzleListQuery, (err, rows) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.status(200).send({
-        userID,
-        username,
-        rows
+      // sort the rows by puzzle ID
+      rows = rows.sort((a, b) => { return a.puzzle_id - b.puzzle_id })
+
+      db.all(userPuzzleCompletionQuery, (err, userPuzzleCompletion) => {
+        if (err) {
+          res.status(500).send(err)
+        } else {
+          userPuzzleCompletion = userPuzzleCompletion.sort((a, b) => { return a.puzzle_id - b.puzzle_id})
+
+          res.status(200).send({
+            userID,
+            username,
+            puzzles: rows,
+            userPuzzleCompletion
+          });
+        }
       });
     }
   });
