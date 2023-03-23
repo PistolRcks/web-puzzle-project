@@ -11,6 +11,7 @@
     "bootstrap": "^5.2.3",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.6",
+    "esbuild-envfile-plugin": "^1.0.5",
     "express": "^4.18.2",
     "jwt-decode": "^3.1.2",
     "mdb-react-ui-kit": "^5.1.0",
@@ -18,14 +19,13 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
-    "react-scripts": "5.0.1",
     "sqlite3": "^5.1.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "npm run build && node ./server/server.js",
     "test": "jest --coverage",
-    "build": "esbuild --bundle --minify --target=ES6 --loader:.png=dataurl --loader:.jpg=dataurl --outfile=public/bundle.js client/app.jsx",
+    "build": "node ./esbuild.config.mjs",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
