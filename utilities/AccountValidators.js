@@ -4,8 +4,6 @@
     has a lowercase letter
     has a digit
 
-    If these requirements are not met, throws an error displaying what is missing
-    Returns true if these conditions are met
 */
 const checkPasswordRequirements = (pass) => {
   let reqs = [false, false, false, false, true];
@@ -24,7 +22,7 @@ const checkPasswordRequirements = (pass) => {
     reqs[3] = true;
   }
   //If the password contains anything else other than letters, numbers, and underscores, this evaluates false
-  if ((/^\w+$/.test(passStr))) {
+  if (/^\w+$/.test(passStr)) {
     reqs[4] = false;
   }
   return reqs;
@@ -32,16 +30,14 @@ const checkPasswordRequirements = (pass) => {
 
 const checkUsernameRequirements = (user) => {
   let userStr = String(user);
-  if (userStr.length < 5) {
-    throw Error("Your username needs to be at least 5 characters");
+  let reqs = [false, true];
+  if (userStr.length > 4) {
+    reqs[0] = true;
   }
   if (/^\w+$/.test(userStr)) {
-    return true;
-  } else {
-    throw Error(
-      "Your username contains illegal characters, please make sure it contains letters, numbers, and underscores only"
-    );
+    reqs[1] = false
   }
+  return reqs;
 };
 
 module.exports = { checkUsernameRequirements, checkPasswordRequirements };

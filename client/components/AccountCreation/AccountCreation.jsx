@@ -18,11 +18,19 @@ const initialFormData = Object.freeze({
 
 function AccountCreation(props) {
 
+  //Use states for password validation
+  //TODO: Make this a single useState of arrays
   const [passwordLength, setPasswordLength] = useState(false);
   const [passwordUpper, setPasswordUpper] = useState(false);
   const [passwordLower, setPasswordLower] = useState(false);
   const [passwordNumber, setPasswordNumber] = useState(false);
   const [passwordSpecial, setPasswordSpecial] = useState(true);
+
+  //Use states for username validation
+  const [usernameLength, setUsernameLength] = useState(false);
+  const [usernameSpecial, setUsernameSpecial] = useState(false);
+
+  //Use states for form validation
   const [isPasswordGood, setIsPasswordGood] = useState(false);
   const [isUsernameGood, setIsUsernameGood] = useState(false);
   const [isConfirmPasswordGood, setIsConfirmPasswordGood] = useState(false);
@@ -41,12 +49,31 @@ useEffect(() => {
   if(!reqs.includes(false)) {
     setIsPasswordGood(true);
   }
-}, [formData.password, formData.confirmPassword]);
+  else {
+    setIsPasswordGood(false);
+  }
+}, [formData.password]);
 
 useEffect(() => {
   const reqs = checkUsernameRequirements(formData.username);
-  
+  setUsernameLength(reqs[0]);
+  setUsernameSpecial(reqs[1]);
+  if(!reqs.includes(false)) {
+    setIsUsernameGood(true);
+  }
+  else {
+    setIsUsernameGood(false);
+  }
 }, [formData.username])
+
+useEffect(() => {
+  if(formData.password == formData.confirmPassword) {
+    setIsConfirmPasswordGood(true);
+  }
+  else {
+    setIsConfirmPasswordGood(false);
+  }
+}, [formData.confirmPassword])
 
   //Whenever username or confirmPassword input boxes change, this saves the new data to formData
   const handleChange = (e) => {
