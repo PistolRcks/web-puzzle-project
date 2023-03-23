@@ -1,3 +1,10 @@
 .create-account-button {
     width: fit-content;
 }
+
+.AccountCreation__password-req-false {
+    color: red;
+}
+.AccountCreation__password-req-true {
+    color: green;
+}
