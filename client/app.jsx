@@ -9,6 +9,8 @@ import EntryPoint from './EntryPoint.jsx';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
+import { GOOGLE_OAUTH_CLIENTID } from "env";
+
 // Start point for the entire front end of the web app
 //console.log(process.env.GOOGLE_OAUTH_CLIENTID)
 
@@ -16,5 +18,5 @@ createRoot(
   document.getElementById('root')
   
 ).render(
-  <GoogleOAuthProvider clientId = "493401844468-vdnblepq77sjvjgjjsebd6i1ufmjt3l2.apps.googleusercontent.com"> <EntryPoint/></GoogleOAuthProvider>
+  <GoogleOAuthProvider clientId = {GOOGLE_OAUTH_CLIENTID}> <EntryPoint/></GoogleOAuthProvider>
 )
