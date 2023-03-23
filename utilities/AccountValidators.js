@@ -3,7 +3,6 @@
     has an uppercase letter
     has a lowercase letter
     has a digit
-
 */
 const checkPasswordRequirements = (pass) => {
   let reqs = [false, false, false, false, true];
@@ -23,6 +22,9 @@ const checkPasswordRequirements = (pass) => {
   }
   //If the password contains anything else other than letters, numbers, and underscores, this evaluates false
   if (/^\w+$/.test(passStr)) {
+    reqs[4] = true;
+  }
+  else {
     reqs[4] = false;
   }
   return reqs;
@@ -35,7 +37,10 @@ const checkUsernameRequirements = (user) => {
     reqs[0] = true;
   }
   if (/^\w+$/.test(userStr)) {
-    reqs[1] = false
+    reqs[1] = true;
+  }
+  else {
+    reqs[1] = false;
   }
   return reqs;
 };

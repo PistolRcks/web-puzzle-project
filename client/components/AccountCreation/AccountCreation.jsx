@@ -81,6 +81,9 @@ useEffect(() => {
       ...formData,
       [e.target.name]: e.target.value.trim()
     });
+    console.log("Password" + isPasswordGood)
+    console.log("Username" + isUsernameGood)
+    console.log("Confirm" + isConfirmPasswordGood)
   };
 
   //Whenever the submit button is clicked, this checks to make sure the passwords match and calls another func
@@ -145,7 +148,7 @@ useEffect(() => {
           type="submit"
           onClick={handleSubmit}
           data-testid="submitButton"
-          disabled={isPasswordGood && isConfirmPasswordGood && isUsernameGood ? false : true}
+          disabled={(isPasswordGood && isUsernameGood && isConfirmPasswordGood) ? false : true}
         >
           Create Account
         </Button>
@@ -154,7 +157,7 @@ useEffect(() => {
         <Form.Text>
           Password Requirements:
         </Form.Text>
-        <Form.Text className= {passwordSpecial ? "AccountCreation__password-req-false" : "AccountCreation__password-req-true"}>
+        <Form.Text className= {passwordSpecial ? "AccountCreation__password-req-true" : "AccountCreation__password-req-false"}>
         Only letters, numbers, and underscores are allowed
         </Form.Text>
         <Form.Text className= {passwordLength ? "AccountCreation__password-req-true" : "AccountCreation__password-req-false"}>
