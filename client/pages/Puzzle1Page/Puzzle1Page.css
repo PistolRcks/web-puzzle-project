@@ -3,6 +3,50 @@ body {
     background-color: #2f3e46;
 }
 
+.content {
+    margin-left: 0px;
+    margin-right: 0px;
+    /* width: 90vw; */
+}
+
+.flex-column {
+    color: #e8f1e8;
+}
+
+li {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    font-size: large;
+}
+
+.main-block {
+    color: #2f3e46;
+    height: 550px;
+    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 20px;
+}
+
+.page-title {
+    margin: 15px;
+    font-size: xx-large;
+}
+
 .puzzle1 {
     color: #e8f1e8;
+    overflow: auto;
+}
+
+.side-nav {
+    color: #e8f1e8;
+    list-style-type: none;
+    padding-top: 25%;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+.top-right-buttons {
+    margin-top: 13px;
+    margin-right: 0px;
 }
