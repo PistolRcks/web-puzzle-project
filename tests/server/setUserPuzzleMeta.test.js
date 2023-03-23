@@ -21,17 +21,28 @@ jest.mock("../../server/middleware", () => {
   }
 })
 
-describe("Tests /api/userPuzzle/progress route", () => {
-    const badInput = `Error: Malformed input - required key "progress" or "puzzle_id" not found in request body.`;
+describe("Tests /api/userPuzzleMeta route", () => {
+    const badInput = `Error: Malformed input - required key "progress", "puzzle_id", or "time" not found in request body.`;
 
     beforeEach(() => {
-        //jest.spyOn(console, "log").mockImplementation();
+        jest.spyOn(console, "log").mockImplementation();
         jest.spyOn(console, "error").mockImplementation();
     })
     
     test("Error 400 - Missing `progress` in `req.body`", async () => {
-        const res = await request.post("/api/userPuzzle/progress").send({
-            puzzle_id: 1
+        const res = await request.post("/api/userPuzzleMeta").send({
+            puzzle_id: 1,
+            time: 0
+        });
+        
+        expect(res.statusCode).toEqual(400);
+        expect(res.text).toEqual(badInput);
+    })
+    
+    test("Error 400 - Missing `time` in `req.body`", async () => {
+        const res = await request.post("/api/userPuzzleMeta").send({
+            puzzle_id: 1,
+            progress: 1
         });
         
         expect(res.statusCode).toEqual(400);
@@ -39,8 +50,9 @@ describe("Tests /api/userPuzzle/progress route", () => {
     })
 
     test("Error 400 - Missing `puzzle_id` in `req.body`", async () => {
-        const res = await request.post("/api/userPuzzle/progress").send({
-            progress: 1
+        const res = await request.post("/api/userPuzzleMeta").send({
+            progress: 1,
+            time: 0
         });
         
         expect(res.statusCode).toEqual(400);
@@ -53,9 +65,10 @@ describe("Tests /api/userPuzzle/progress route", () => {
             callback("Error!", null);
         });
 
-        const res = await request.post("/api/userPuzzle/progress").send({
+        const res = await request.post("/api/userPuzzleMeta").send({
             puzzle_id: 1,
-            progress: 1
+            progress: 1,
+            time: 0
         });
 
         expect(res.statusCode).toEqual(500);
@@ -68,9 +81,10 @@ describe("Tests /api/userPuzzle/progress route", () => {
             callback(null, null);
         });
         
-        const res = await request.post("/api/userPuzzle/progress").send({
+        const res = await request.post("/api/userPuzzleMeta").send({
             puzzle_id: 1,
-            progress: 1
+            progress: 1,
+            time: 0
         });
         
         expect(res.statusCode).toEqual(400);
@@ -88,9 +102,10 @@ describe("Tests /api/userPuzzle/progress route", () => {
             callback("Error!");
         });
 
-        const res = await request.post("/api/userPuzzle/progress").send({
+        const res = await request.post("/api/userPuzzleMeta").send({
             puzzle_id: 1,
-            progress: 1
+            progress: 1,
+            time: 0
         });
 
         expect(res.statusCode).toEqual(500);
@@ -108,13 +123,13 @@ describe("Tests /api/userPuzzle/progress route", () => {
             callback(null);
         });
         
-
-        const res = await request.post("/api/userPuzzle/progress").send({
+        const res = await request.post("/api/userPuzzleMeta").send({
             puzzle_id: 1,
-            progress: 1
+            progress: 1,
+            time: 0
         });
 
         expect(res.statusCode).toEqual(200);
-        expect(res.text).toEqual(`Completion between user_id 1 and puzzle_id 1 successfully updated.`);
+        expect(res.text).toEqual(`Metadata between user_id 1 and puzzle_id 1 successfully updated.`);
     })
 })
