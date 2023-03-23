@@ -1,5 +1,4 @@
 import Supertest from "supertest";
-import * as Crypto from "crypto";
 import { db } from "../../server/db";
 
 const myApp = require("../../server/index");
@@ -12,96 +11,94 @@ jest.mock("crypto", () => {
     ...jest.requireActual("crypto"),
     pbkdf2: (pass, salt, iter, keylen, digest, callback) => {
       // assuming the only password we'll be using is "letmein"!
-      if (pass === "letmein") {
-        // return the "hashed" password
-        callback(null, Buffer.from("hashed", "utf8"));
-      } else {
-        // return an incorrect password
-        callback(null, Buffer.from("badPassword", "utf8"));
-      }
+     callback(null, Buffer.from(pass, "utf8"));
     }
   }
 });
 
-describe("Tests for user login", () => {
+describe("Tests for POST at /api/login", () => {
+  const correctPassword = "correctPassword";
+  const incorrectPassword = "incorrectPassword";
+  
   beforeAll(() => {
     jest.spyOn(console, "log").mockImplementation();
     jest.spyOn(console, "error").mockImplementation();
   });
 
-  it("login - Missing Password 400", async () => {
-    const response = await request.post("/api/login").send({
-      username: "missingPassword",
-    });
+  test("400 - Missing Password", async () => {
+    const response = await request.post("/api/login")
+      .send({
+        username: "missingPassword",
+      });
 
     expect(response.statusCode).toEqual(400);
   });
 
-  it("login - Missing Username 400", async () => {
-    const response = await request.post("/api/login").send({
-      password: "missingUsername",
-    });
+  test("400 - Missing Username", async () => {
+    const response = await request.post("/api/login")
+      .send({
+        password: "missingUsername",
+      });
 
     expect(response.statusCode).toEqual(400);
   });
 
-  it("login - Invalid username 500", async () => {
+  test("500 - Invalid username", async () => {
     // mock the database response
     db.get = jest.fn((query, params, callback) => {
       callback(null, null);
     });
 
-    const response = await request.post("/api/login").send({
-      username: "bob",
-      password: "letmein",
-    });
+    const response = await request.post("/api/login")
+      .send({
+        username: "bob",
+        password: "letmein",
+      });
 
-    expect(db.get.mock.lastCall[0]).toBe(
-      "SELECT hashed_password, salt, user_id FROM User WHERE username = ?"
-    );
+    expect(db.get.mock.lastCall[0]).toBe("SELECT hashed_password, salt, user_id FROM User WHERE username = ?");
     expect(db.get.mock.lastCall[1]).toEqual("bob");
     expect(response.statusCode).toEqual(500);
   });
 
-  it("login - Successful login 200", async () => {
+  it("401 - Unauthorized login", async () => {
     // mock the database response
     db.get = jest.fn((query, params, callback) => {
       callback(null, {
-        hashed_password: Buffer.from("hashed", "utf8"),
+        hashed_password: Buffer.from(correctPassword, "utf8"),
         salt: "salt",
+        user_id: 1
       });
     });
 
-    const response = await request.post("/api/login").send({
-      username: "alice",
-      password: "letmein",
-    });
-
-    expect(db.get.mock.lastCall[0]).toBe(
-      "SELECT hashed_password, salt, user_id FROM User WHERE username = ?"
-    );
-    expect(db.get.mock.lastCall[1]).toEqual("alice");
-    expect(response.statusCode).toEqual(200);
-  });
-
-  it("login - Unauthorized login 401", async () => {
-    // mock the database response
-    db.get = jest.fn((query, params, callback) => {
-      callback(null, {
-        hashed_password: Buffer.from("hashed", "utf8"),
-        salt: "salt",
+    const response = await request.post("/api/login")
+      .send({
+        username: "alice",
+        password: incorrectPassword,
       });
-    });
 
-    const response = await request.post("/api/login").send({
-      username: "alice",
-      password: "letmeout",
-    });
-
-    expect(db.get.mock.lastCall[0]).toBe(
-      "SELECT hashed_password, salt, user_id FROM User WHERE username = ?"
-    );
+    expect(db.get.mock.lastCall[0]).toBe("SELECT hashed_password, salt, user_id FROM User WHERE username = ?");
     expect(db.get.mock.lastCall[1]).toEqual("alice");
     expect(response.statusCode).toEqual(401);
+  });
+
+  it("200 - Successful login", async () => {
+    // mock the database response
+    db.get = jest.fn((query, params, callback) => {
+      callback(null, {
+        hashed_password: Buffer.from(correctPassword, "utf8"),
+        salt: "salt",
+        user_id: 1
+      });
+    });
+
+    const response = await request.post("/api/login")
+      .send({
+        username: "alice",
+        password: correctPassword,
+      });
+
+    expect(db.get.mock.lastCall[0]).toBe("SELECT hashed_password, salt, user_id FROM User WHERE username = ?");
+    expect(db.get.mock.lastCall[1]).toEqual("alice");
+    expect(response.statusCode).toEqual(200);
   });
 });
