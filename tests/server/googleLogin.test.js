@@ -13,7 +13,7 @@ describe("Test insertUser", () => {
 
   beforeEach(async () => {
     // get the last user user_id
-    await db.get("select max(user_id) as m from User where hashed_password is NULL", function (err, row) {
+    await db.get("select max(user_id) as m from User", function (err, row) {
       if (err) throw err;
       lastID = row["m"];
     });
@@ -26,29 +26,19 @@ describe("Test insertUser", () => {
       });
   });
 
-//   test("Standard user: username found in database", (done) => {
-//     const salt = Crypto.randomBytes(16);
-//     Crypto.pbkdf2(
-//       "password1",
-//       salt,
-//       310000,
-//       32,
-//       "sha256",
-//       function (err, hashedPassword) {
-//         insertUser(db, "username1", hashedPassword, salt, async () => {
-//           // lastID+1 doesn't work in this test for some reason
-//           db.get(
-//             `select username as u from User where username="username1"`,
-//             function (err, row) {
-//               if (err) throw err;
-//               expect(row["u"]).toEqual("username1");
-//               done();
-//             }
-//           );
-//         });
-//       }
-//     );
-//   });
+  test("Standard user: username found in database", (done) => {
+    insertUser(db, "username1", async () => {
+      // lastID+1 doesn't work in this test for some reason
+      db.get(
+        `select username as u from User where username="username1"`,
+        function (err, row) {
+          if (err) throw err;
+          expect(row["u"]).toEqual("username1");
+          done();
+        }
+      );
+    });
+  });
 
 //   test("Standard user: salt found in database", (done) => {
 //     const salt = Crypto.randomBytes(16); // TODO: shouldn't be random, will fix later
