@@ -5,16 +5,17 @@ import x from "../../assets/x.png";
 import check from "../../assets/check.png";
 import "./PuzzleItem.css";
 
-export function PuzzleItem({ puzzle }) {
+export function PuzzleItem({ puzzle, puzzleCompletion }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const { puzzle_id: puzzleID, title: puzzleTitle, description: puzzleDescription } = puzzle;
+  const isCompleted = puzzleCompletion ? puzzleCompletion.progress === 1 : false;
 
   const puzzleText = (
     <>
-      {/* <img src={isCompleted ? check : x} height="22" alt={String(isCompleted)} />*/ }
+      <img className="PuzzleItem__img" src={isCompleted ? check : x} height="22" alt={String(isCompleted)} />
       {`Puzzle ${puzzleID} - ${puzzleTitle}`}
     </>
   );

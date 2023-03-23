@@ -30,6 +30,8 @@ function dataHelper(k) {
       `INSERT INTO Puzzle VALUES (${i}, "test puzzle ${i}", "test description ${i}")`
     );
   }
+
+  db.run(`INSERT INTO User_Puzzle VALUES (1, 1, NULL, 1)`)
 }
 
 // block console logging, generate mock data
@@ -45,37 +47,43 @@ describe("Puzzles endpoint", () => {
     console.log(res.body)
 
     expect(res.statusCode).toEqual(200); // status code should be 200
-    expect(res.body.rows).toEqual(
-      // res should contain all inserted puzzles
-      expect.arrayContaining([
-        expect.objectContaining(
+    expect(res.body).toEqual(
+      {
+        userID: 1,
+        username: 'alice',
+        puzzles: [
+            {
+              puzzle_id: 1,
+              title: "test puzzle 1",
+              description: "test description 1",
+            },
+            {
+              puzzle_id: 2,
+              title: "test puzzle 2",
+              description: "test description 2",
+            },
+            {
+              puzzle_id: 3,
+              title: "test puzzle 3",
+              description: "test description 3",
+            },
+            {
+              puzzle_id: 4,
+              title: "test puzzle 4",
+              description: "test description 4",
+            },
+            {
+              puzzle_id: 5,
+              title: "test puzzle 5",
+              description: "test description 5",
+            },
+        ],
+        userPuzzleCompletion: [
           {
-            puzzle_id: 1,
-            title: "test puzzle 1",
-            description: "test description 1",
-          },
-          {
-            puzzle_id: 2,
-            title: "test puzzle 2",
-            description: "test description 2",
-          },
-          {
-            puzzle_id: 3,
-            title: "test puzzle 3",
-            description: "test description 3",
-          },
-          {
-            puzzle_id: 4,
-            title: "test puzzle 4",
-            description: "test description 4",
-          },
-          {
-            puzzle_id: 5,
-            title: "test puzzle 5",
-            description: "test description 5",
+            progress: 1,
+            puzzle_id: 1
           }
-        ),
-      ])
-    );
+        ]
+      });
   });
 });
