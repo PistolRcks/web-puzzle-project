@@ -35,6 +35,7 @@ function listPuzzles(req, res) {
         if (err) {
           res.status(500).send(err)
         } else {
+          // sort by puzzle ID
           userPuzzleCompletion = userPuzzleCompletion.sort((a, b) => { return a.puzzle_id - b.puzzle_id})
 
           res.status(200).send({
