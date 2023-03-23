@@ -12,7 +12,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GOOGLE_OAUTH_CLIENTID } from "env";
 
 // Start point for the entire front end of the web app
-//console.log(process.env.GOOGLE_OAUTH_CLIENTID)
 
 createRoot(
   document.getElementById('root')

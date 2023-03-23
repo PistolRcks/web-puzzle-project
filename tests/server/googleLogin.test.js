@@ -28,7 +28,6 @@ describe("Test insertUser", () => {
 
   test("Standard user: username found in database", (done) => {
     insertUser(db, "username1", async () => {
-      // lastID+1 doesn't work in this test for some reason
       db.get(
         `select username as u from User where username="username1"`,
         function (err, row) {
