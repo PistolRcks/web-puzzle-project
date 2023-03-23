@@ -77,4 +77,4 @@ async function insertUser(db, username, callback) {
   );
 }
 
-module.exports = { googleLogin };
+module.exports = { googleLogin, insertUser };

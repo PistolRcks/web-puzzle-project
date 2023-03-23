@@ -13,7 +13,7 @@ describe("Test insertUser", () => {
 
   beforeEach(async () => {
     // get the last user user_id
-    await db.get("select max(user_id) as m from User where hashedPassword is NULL", function (err, row) {
+    await db.get("select max(user_id) as m from User where hashed_password is NULL", function (err, row) {
       if (err) throw err;
       lastID = row["m"];
     });
