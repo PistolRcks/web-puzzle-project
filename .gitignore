@@ -12,6 +12,8 @@
 /build
 bundle.js
 public/bundle.css
+public/*.png
+public/*.jpg
 
 # secrets
 .env
