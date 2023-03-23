@@ -1,13 +1,14 @@
-import React from "react";
-import Link from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Error404Page() {
+function Error404Page() {
   return (
-    <div>
-      <h1>Error 404: Page Not Found</h1>
-      <Link to="./LandingPage" className="btn btn-primary">
-        Return to Home Page
-      </Link>
+    <div data-testid="error-404-page">
+      <h1>404 Not Found</h1>
+      <p>Sorry, the page you requested could not be found.</p>
+      <Link to="/">Go to Homepage</Link>
     </div>
   );
 }
+
+export default Error404Page;

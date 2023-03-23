@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage/LandingPage.jsx'
 import Puzzle1Page from './pages/Puzzle1Page/Puzzle1Page';
 import PuzzleSelectionPage from './pages/PuzzleSelectionPage/PuzzleSelectionPage.jsx';
 import Verify from './components/Verify/Verify.jsx';
+import Error404Page from './pages/Error 404 Page/Error404Page.jsx';
 
 export default function PageRoutes() {
   /**
@@ -24,6 +25,7 @@ export default function PageRoutes() {
       <Route index element={<LandingPage />} />
       <Route path="/Puzzle/Selection" element={<Verify><PuzzleSelectionPage /></Verify>} />
       <Route path="/Puzzle/1" element={<Verify><Puzzle1Page /></Verify>} />
+      <Route path="*" element={<Verify><Error404Page /></Verify>} />
     </Routes>
     </>
   );
