@@ -29,29 +29,24 @@ async function googleLogin(req, res, next) {
 }
 
 async function googleSignup(username) {
-
-  // check that signup data is real
   if (!username ) {
     res.status(400).send("Error: Username not set!");
     return;
   }
-      // insert new user into database
       await insertUser(
         db,
         username,
         (err, user) => {
           if (err) {
-            // 19 is SQLITE_CONSTRAINT, should be username constraint
             if (err.errno == 19) {
               res.status(400).send("Error: Username already exists!")
-            } else { // idk how to test for this branch
+            } else {
               res
                 .status(500)
                 .send(`Error: Failed to insert new user!\nSpecific error: ${err}`);
             }
-            return; // end prematurely
+            return;
           }
-          // TODO (integration): After correctly signing up, log the user in
           res.status(200).send(`Successfully signed user ${username} up!`);
         }
       )
