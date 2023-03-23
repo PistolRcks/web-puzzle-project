@@ -29,19 +29,40 @@ function setUserPuzzleProgress(req, res, next) {
   const { progress, puzzle_id: puzzleID } = req.body;
   const { userID } = req.session;
 
-  // update the value in the database
-  db.run(
-    "UPDATE UserPuzzle SET progress = ? WHERE user_id = ? AND puzzle_id = ?",
-    [progress, userID, puzzleID],
-    function (err) {
-        // throw errors if there's an issue
-        if (err) {
-            res.status(500).send(err);
-            return;
-        }
+  // check that the specific UserPuzzle exists
+  db.get(
+    "SELECT * FROM UserPuzzle WHERE user_id = ? AND puzzle_id = ?",
+    [userID, puzzleID],
+    function (err, row) {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
 
-        // if it's done then we're fine!
-        res.status(200).send(`Completion between user ${userID} and puzzle ${puzzleID} successfully updated.`);
+      if (!row) {
+        res.status(400).send(`Error: UserPuzzle relation does not exist for user_id ${userID} and puzzle_id ${puzzleID}.`);
+        return;
+      } else {
+        // update the value in the database
+        db.run(
+          "UPDATE UserPuzzle SET progress = ? WHERE user_id = ? AND puzzle_id = ?",
+          [progress, userID, puzzleID],
+          function (err) {
+            // throw errors if there's an issue
+            if (err) {
+              res.status(500).send(err);
+              return;
+            }
+
+            // if it's done then we're fine!
+            res
+              .status(200)
+              .send(
+                `Completion between user_id ${userID} and puzzle_id ${puzzleID} successfully updated.`
+              );
+          }
+        );
+      }
     }
   );
 }
