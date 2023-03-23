@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Error404Page from '../Error404Page';
-import LandingPage from '../LandingPage';
+import { Error404Page } from '../../Error404Page/Error404Page.jsx';
+import { LandingPage } from '../LandingPage';
 
 describe("Tests for Error 404 page", () => {
   test("renders Error404Page component when a 404 error occurs", () => {
