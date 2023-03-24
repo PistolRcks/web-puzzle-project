@@ -11,11 +11,10 @@ export function PuzzleItem({ puzzle, puzzleCompletion }) {
   const handleShow = () => setShow(true);
 
   const { puzzle_id: puzzleID, title: puzzleTitle, description: puzzleDescription } = puzzle;
-  const isCompleted = puzzleCompletion ? puzzleCompletion.progress === 1 : false;
 
   const puzzleText = (
     <>
-      <img className="PuzzleItem__img" src={isCompleted ? check : x} height="22" alt={String(isCompleted)} />
+      <img className="PuzzleItem__img" src={puzzleCompletion?.progress ? check : x} height="22" alt={puzzleCompletion?.progress ? 'true' : 'false'} />
       {`Puzzle ${puzzleID} - ${puzzleTitle}`}
     </>
   );
