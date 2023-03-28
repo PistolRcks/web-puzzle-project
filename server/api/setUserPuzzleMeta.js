@@ -16,10 +16,12 @@ const { db } = require("../db");
  * @param {Function} next - The next() function used in the callback.
  */
 function setUserPuzzleMeta(req, res, next) {
+  // get the data we need; we should already be authorized so there should already be a session
+  const { userID } = req.session;
   const { progress, puzzle_id: puzzleID, time } = req.body;
 
   // safety net - check for required key existence
-  if (!(progress && puzzleID && time)) {
+  if (!("progress" in req.body && "puzzle_id" in req.body && "time" in req.body)) {
     res
       .status(400)
       .send(
@@ -37,9 +39,6 @@ function setUserPuzzleMeta(req, res, next) {
       );
     return;
   }
-
-  // get the data we need; we should already be authorized so there should already be a session
-  const { userID } = req.session;
 
   // check that the specific User_Puzzle exists
   db.get(
