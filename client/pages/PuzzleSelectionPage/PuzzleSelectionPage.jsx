@@ -15,17 +15,19 @@ export default function PuzzleSelectionPage() {
   const [puzzles, setPuzzles] = useState([{puzzle_id:1, title:"title", description:"description"}]);
   const [hasResponded, setHasResponded] = useState(false);
   const [userID, setUserID] = useState(-1);
-  const [userName, setUsername] = useState("");
+  const [, setUsername] = useState("");
+  const [userPuzzleCompletion, setUserPuzzleCompletion] = useState([])
 
   //If puzzles is still default, this evaluates to true
   //hasResponded makes sure that if there is 1 puzzle in the DB that we don't accidentally
   //infinitely call the api for puzzles (ran into this issue during testing)
-  if(puzzles.length == 1 && !hasResponded) {
+  if(puzzles.length === 1 && !hasResponded) {
     listPuzzles()
     .then((res) => {
-      setPuzzles(res.data.rows);
+      setPuzzles(res.data.puzzles);
       setUserID(res.data.userID)
       setUsername(res.data.username)
+      setUserPuzzleCompletion(res.data.userPuzzleCompletion)
       setHasResponded(true);
     })
     .catch((err) => {
@@ -57,7 +59,7 @@ export default function PuzzleSelectionPage() {
       <div>
         <Form>
           {puzzles.map((puzzle) => {
-            return <PuzzleItem puzzle={puzzle} />;
+            return <PuzzleItem puzzle={puzzle} puzzleCompletion={userPuzzleCompletion.find(upc => upc.puzzle_id === puzzle.puzzle_id)} />;
           })}
         </Form>
       </div>
