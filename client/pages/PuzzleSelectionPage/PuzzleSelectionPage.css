@@ -11,6 +11,14 @@
   position: fixed;
   z-index: 2;
 }
+.logOut {
+  float: right;
+  padding: 25px;
+  right: 90px;
+  position: fixed;
+  z-index: 2;
+  
+}
 
 .puzzleSelectionPage__button {
   background-color: #52796f;

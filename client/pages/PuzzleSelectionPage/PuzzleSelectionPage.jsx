@@ -19,9 +19,21 @@ export default function PuzzleSelectionPage() {
           </Button>
         </Link>
       </div>
+      <div className="logOut">
+        <Link
+          to="/"
+          onClick={() => alert("You have been logged out")}
+        >
+          <Button className="puzzleSelectionPage__button" width="150">
+            Log Out
+          </Button>
+        </Link>
+      </div>
+
       <Container fluid className="puzzleSelectionPage__selection-header">
         <p className="puzzleSelectionPage__selection-title">Puzzle Selection</p>
       </Container>
+
       {
         // TODO: This link will likely not work until we know how we are handling
         // TODO: user authentication and managing the userID after logging in
@@ -31,6 +43,7 @@ export default function PuzzleSelectionPage() {
           <img src={userIcon} alt="User profile" height="75" />
         </Link>
       </div>
+
       <div>
         <Form>
           {puzzles.map((puzzle) => {
