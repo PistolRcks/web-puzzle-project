@@ -1,8 +1,8 @@
 const { db } = require("../../server/db");
-const Supertest = require("supertest");
 
-const App = require("../../server/index");
-const request = Supertest(App);
+const app = require("../../server/index");
+const Supertest = require("supertest");
+const request = Supertest(app);
 
 jest.mock("../../server/db");
 jest.mock("../../server/api/login", () => {
@@ -42,8 +42,8 @@ describe("Tests for POST at /api/signup", () => {
 
   // block console logging
   beforeAll(() => {
-    // jest.spyOn(console, "log").mockImplementation();
-    // jest.spyOn(console, "error").mockImplementation();
+    jest.spyOn(console, "log").mockImplementation();
+    jest.spyOn(console, "error").mockImplementation();
   });
 
   test("200 - Successful Insert", async () => {

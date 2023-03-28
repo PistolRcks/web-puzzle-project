@@ -1,8 +1,8 @@
-const Supertest = require("supertest");
 const { db } = require( "../../server/db");
 
-const myApp = require("../../server/index");
-const request = Supertest(myApp);
+const app = require("../../server/index");
+const Supertest = require("supertest");
+const request = Supertest(app);
 
 // mock the database module
 jest.mock("../../server/db");
