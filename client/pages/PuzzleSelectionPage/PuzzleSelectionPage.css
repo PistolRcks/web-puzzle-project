@@ -12,9 +12,8 @@
   z-index: 2;
 }
 .logOut {
-  float: right;
-  padding: 25px;
-  right: 90px;
+  float: left;
+  padding: 15px;
   position: fixed;
   z-index: 2;
   

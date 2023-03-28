@@ -12,16 +12,6 @@ export default function PuzzleSelectionPage() {
 
   return (
     <div className="puzzleSelectionPage min-vh-100 min-vw-100">
-      <div className="puzzleSelectionPage__backButton">
-        <Link to="/">
-          <Button className="puzzleSelectionPage__button" width="150">
-            <img src={back} alt="back" width="22" height="22" /> Back
-          </Button>
-        </Link>
-      </div>
-      {
-        //logout button with alert when logged out
-      }
       <div className="logOut">
         <Link to="/" onClick={() => alert("You have been logged out")}>
           <Button className="puzzleSelectionPage__button" width="150">
@@ -29,7 +19,16 @@ export default function PuzzleSelectionPage() {
           </Button>
         </Link>
       </div>
+      {/*logout button with alert when logged out
 
+        <div className="logOut">
+          <Link to="/" onClick={() => alert("You have been logged out")}>
+            <Button className="puzzleSelectionPage__button" width="150">
+              Log Out
+            </Button>
+          </Link>
+        </div>
+        */}
       <Container fluid className="puzzleSelectionPage__selection-header">
         <p className="puzzleSelectionPage__selection-title">Puzzle Selection</p>
       </Container>
