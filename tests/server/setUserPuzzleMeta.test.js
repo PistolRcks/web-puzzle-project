@@ -26,8 +26,8 @@ describe("Tests /api/userPuzzleMeta route", () => {
   const badType = `Error: Malformed input - key "progress", "puzzle_id", or "time" is not a Number.`;
 
   beforeAll(() => {
-    //jest.spyOn(console, "log").mockImplementation();
-    //jest.spyOn(console, "error").mockImplementation();
+    jest.spyOn(console, "log").mockImplementation();
+    jest.spyOn(console, "error").mockImplementation();
   });
 
   test("Error 400 - Missing `progress` in `req.body`", async () => {

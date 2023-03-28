@@ -21,7 +21,9 @@ function setUserPuzzleMeta(req, res, next) {
   const { progress, puzzle_id: puzzleID, time } = req.body;
 
   // safety net - check for required key existence
-  if (!("progress" in req.body && "puzzle_id" in req.body && "time" in req.body)) {
+  if (
+    !("progress" in req.body && "puzzle_id" in req.body && "time" in req.body)
+  ) {
     res
       .status(400)
       .send(
@@ -73,35 +75,43 @@ function setUserPuzzleMeta(req, res, next) {
       } else {
         // User_Puzzle does not exist; make User_Puzzle
         // but first check that the Puzzle we want to insert exists
-        db.get("SELECT * FROM Puzzle WHERE puzzle_id = ?", [puzzleID], function (err, row) {
-          if (err) {
-            res.status(500).send(err);
-            return;
-          }
-          
-          if (!row) {
-            res.status(400).send(`Puzzle with "puzzle_id" ${puzzleID} does not exist. Not inserting.`)
-          } else {
-            // now, since the Puzzle exists, we can do this
-            db.run(
-              "INSERT INTO User_Puzzle VALUES (?, ?, ?, ?)",
-              [userID, puzzleID, time, progress],
-              function (err) {
-                if (err) {
-                  res.status(500).send(err);
-                  return;
-                }
+        db.get(
+          "SELECT * FROM Puzzle WHERE puzzle_id = ?",
+          [puzzleID],
+          function (err, row) {
+            if (err) {
+              res.status(500).send(err);
+              return;
+            }
 
-                // if it's done then we're fine!
-                res
-                  .status(200)
-                  .send(
-                    `User_Puzzle relation between user_id ${userID} and puzzle_id ${puzzleID} successfully created.`
-                  );
-              }
-            )
+            if (!row) {
+              res
+                .status(400)
+                .send(
+                  `Puzzle with "puzzle_id" ${puzzleID} does not exist. Not inserting.`
+                );
+            } else {
+              // now, since the Puzzle exists, we can do this
+              db.run(
+                "INSERT INTO User_Puzzle VALUES (?, ?, ?, ?)",
+                [userID, puzzleID, time, progress],
+                function (err) {
+                  if (err) {
+                    res.status(500).send(err);
+                    return;
+                  }
+
+                  // if it's done then we're fine!
+                  res
+                    .status(200)
+                    .send(
+                      `User_Puzzle relation between user_id ${userID} and puzzle_id ${puzzleID} successfully created.`
+                    );
+                }
+              );
+            }
           }
-        })
+        );
       }
     }
   );
