@@ -16,7 +16,7 @@ const { login } = require("./login");
  * @returns Nothing.
  */
 function signup(req, res, next) {
-  var { username, password } = req.body;
+  const { username, password } = req.body;
 
   // check that signup data is real
   if (!username || !password) {
@@ -41,7 +41,7 @@ function signup(req, res, next) {
     310000,
     32,
     "sha256",
-    async function (err, hashedPassword) {
+    async (err, hashedPassword) => {
       if (err) {
         return res.status(500).send(err);
       }
@@ -52,10 +52,10 @@ function signup(req, res, next) {
         username,
         hashedPassword,
         salt,
-        (err, user) => {
+        (err) => {
           if (err) {
             // 19 is SQLITE_CONSTRAINT, should be username constraint
-            if (err.errno == 19) {
+            if (err.errno === 19) {
               res.status(400).send("Error: Username already exists!")
             } else { // idk how to test for this branch
               res
@@ -64,7 +64,7 @@ function signup(req, res, next) {
             }
             return; // end prematurely
           }
-          // TODO (integration): After correctly signing up, log the user in
+          // Log the user in
           login(req, res, next);
         }
       )
@@ -87,23 +87,14 @@ async function insertUser(db, username, hashedPassword, salt, callback) {
   await db.run(
     "INSERT INTO User (username, hashed_password, salt) VALUES (?, ?, ?)",
     [username, hashedPassword, salt],
-    function (err) {
-      var user = {};
-
+    (err) => {
       // throw an error if there's an issue
       if (err) {
-        callback(err, user);
+        callback(err);
         return;
       }
 
-      // create a user object, handle it elsewhere
-      // TODO: Perhaps this should also generate a user token at this time?
-      user = {
-        user_id: this.lastID,
-        username: username,
-      };
-
-      callback(err, user);
+      callback(err);
     }
   );
 }
