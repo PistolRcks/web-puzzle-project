@@ -18,8 +18,6 @@ const initialFormData = Object.freeze({
 
 function AccountCreation(props) {
 
-  const [lastUsed, setLastUsed] = useState("username");
-
   //Use states for password validation
   const [passwordValidation, setPasswordValidation] = useState([false, false, false, false, true]);
 
@@ -33,8 +31,12 @@ function AccountCreation(props) {
   const [isConfirmPasswordGood, setIsConfirmPasswordGood] = useState(false);
 
   //formData is an object that holds username, password, confirmPassword
-  const [formData, updateFormData] = React.useState(initialFormData);
+  const [formData, updateFormData] = useState(initialFormData);
   const navigate = useNavigate();
+
+  //useEffects hook into these, I promise
+  const [passwordCounter, updatePasswordCounter] = useState(0);
+  const [usernameCounter, updateUsernameCounter] = useState(0);
 
   const usernameDisplay = (
     <Row>
@@ -70,56 +72,57 @@ function AccountCreation(props) {
       <Form.Text className= {passwordValidation[1] ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
         At least 1 number
       </Form.Text>
+      <Form.Text className= {isConfirmPasswordGood ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
+        Passwords match
+      </Form.Text>
     </Row>
     );
-  
-    const confirmPasswordDisplay = (
-      <Row>
-        <Form.Text>
-          Confirm Password Requirements:
-        </Form.Text>
-        <Form.Text className = {isConfirmPasswordGood ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
-          Passwords Match
-        </Form.Text>
-      </Row>
-    )
 
+    //What gets displayed
     const [requirementsDisplay, setRequirementsDisplay] = useState(usernameDisplay);
-  
+
+  //These useEffects change what requirements are displayed
   useEffect(() => {
-    if(lastUsed == "password") {
-      setRequirementsDisplay(passwordDisplay);
-    }
-    else if(lastUsed == "username") {
-      setRequirementsDisplay(usernameDisplay);
-    }
-    else {
-      setRequirementsDisplay(confirmPasswordDisplay);
-    }
-  }, [lastUsed])
+    setRequirementsDisplay(usernameDisplay);
+  }, [usernameCounter]);
 
   useEffect(() => {
-    setPasswordValidation(checkPasswordRequirements(formData.password));
+    setRequirementsDisplay(passwordDisplay);
+  }, [passwordCounter]);
+  
+  //These useEffects control the css on the requirements
+  useEffect(() => {
     if(!passwordValidation.includes(false)) {
       setIsPasswordGood(true);
     }
     else {
       setIsPasswordGood(false);
     }
-  }, [formData.password]);
+  }, [passwordValidation]);
 
   useEffect(() => {
-    const reqs = checkUsernameRequirements(formData.username);
-    setUsernameLength(reqs[0]);
-    setUsernameSpecial(reqs[1]);
     if(usernameLength && usernameSpecial) {
       setIsUsernameGood(true);
     }
     else {
       setIsUsernameGood(false);
     }
+  }, [usernameLength, usernameSpecial])
+
+  //Validates password
+  useEffect(() => {
+    setPasswordValidation(checkPasswordRequirements(formData.password));
+  }, [formData.password]);
+
+  //Validates username
+  useEffect(() => {
+    const reqs = checkUsernameRequirements(formData.username);
+    setUsernameLength(reqs[0]);
+    setUsernameSpecial(reqs[1]);
+    updateUsernameCounter(usernameCounter+1);
   }, [formData.username])
 
+  //Validates confirmPassword
   useEffect(() => {
     if(formData.password == formData.confirmPassword) {
       setIsConfirmPasswordGood(true);
@@ -127,6 +130,7 @@ function AccountCreation(props) {
     else {
       setIsConfirmPasswordGood(false);
     }
+    updatePasswordCounter(passwordCounter+1);
   }, [formData.confirmPassword, formData.password])
 
   //Whenever username or confirmPassword input boxes change, this saves the new data to formData
@@ -135,30 +139,20 @@ function AccountCreation(props) {
       ...formData,
       [e.target.name]: e.target.value.trim()
     });
-    setLastUsed(e.target.name);
   };
 
   //Whenever the submit button is clicked, this checks to make sure the passwords match and calls another func
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      if (formData.password !== formData.confirmPassword) {
-        alert("YOUR PASSWORDS DO NOT MATCH");
-      } else if (
-        checkPasswordRequirements(formData.password) &&
-        checkUsernameRequirements(formData.username)
-      ) {
-        //TODO: Required for flaky test. Should be removed in the future
-        console.log("Hey this code works");
-        accountCreation(formData)
-          .then(() => {
-            navigate("/Puzzle/Selection")
-          })
-          .catch((err) => {
-            alert(err)
-          })
-        props.close();
-      }
+      accountCreation(formData)
+        .then(() => {
+          navigate("/Puzzle/Selection")
+        })
+        .catch((err) => {
+          alert(err)
+        })
+      props.close();
     } catch (error) {
       alert(error.message);
     }
@@ -200,7 +194,7 @@ function AccountCreation(props) {
           type="submit"
           onClick={handleSubmit}
           data-testid="submitButton"
-          disabled={false}
+          disabled={isConfirmPasswordGood && isPasswordGood && isUsernameGood ? false : true}
         >
           Create Account
         </Button>
