@@ -18,13 +18,10 @@ const initialFormData = Object.freeze({
 
 function AccountCreation(props) {
 
+  const [lastUsed, setLastUsed] = useState("username");
+
   //Use states for password validation
-  //TODO: Make this a single useState of arrays
-  const [passwordLength, setPasswordLength] = useState(false);
-  const [passwordUpper, setPasswordUpper] = useState(false);
-  const [passwordLower, setPasswordLower] = useState(false);
-  const [passwordNumber, setPasswordNumber] = useState(false);
-  const [passwordSpecial, setPasswordSpecial] = useState(true);
+  const [passwordValidation, setPasswordValidation] = useState([false, false, false, false, true]);
 
   //Use states for username validation
   const [usernameLength, setUsernameLength] = useState(false);
@@ -39,41 +36,98 @@ function AccountCreation(props) {
   const [formData, updateFormData] = React.useState(initialFormData);
   const navigate = useNavigate();
 
-useEffect(() => {
-  const reqs = checkPasswordRequirements(formData.password);
-  setPasswordLength(reqs[0]);
-  setPasswordNumber(reqs[1]);
-  setPasswordUpper(reqs[2]);
-  setPasswordLower(reqs[3]);
-  setPasswordSpecial(reqs[4]);
-  if(!reqs.includes(false)) {
-    setIsPasswordGood(true);
-  }
-  else {
-    setIsPasswordGood(false);
-  }
-}, [formData.password]);
+  const usernameDisplay = (
+    <Row>
+      <Form.Text>
+        Username Requirments:
+      </Form.Text>
+      <Form.Text className = {usernameSpecial ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
+        Only letters, numbers, and underscores are allowed
+      </Form.Text>
+      <Form.Text className = {usernameLength ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
+        At least 5 characters long
+      </Form.Text>
+    </Row>
+    );
+  
+    const passwordDisplay = (
+    <Row>
+      <Form.Text>
+        Password Requirements:
+      </Form.Text>
+      <Form.Text className= {passwordValidation[4] ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
+      Only letters, numbers, and underscores are allowed
+      </Form.Text>
+      <Form.Text className= {passwordValidation[0] ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
+        At least 8 characters long
+      </Form.Text>
+      <Form.Text className= {passwordValidation[2] ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
+        At least 1 uppercase letter
+      </Form.Text>
+      <Form.Text className= {passwordValidation[3] ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
+        At least 1 lowercase letter
+      </Form.Text>
+      <Form.Text className= {passwordValidation[1] ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
+        At least 1 number
+      </Form.Text>
+    </Row>
+    );
+  
+    const confirmPasswordDisplay = (
+      <Row>
+        <Form.Text>
+          Confirm Password Requirements:
+        </Form.Text>
+        <Form.Text className = {isConfirmPasswordGood ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
+          Passwords Match
+        </Form.Text>
+      </Row>
+    )
 
-useEffect(() => {
-  const reqs = checkUsernameRequirements(formData.username);
-  setUsernameLength(reqs[0]);
-  setUsernameSpecial(reqs[1]);
-  if(!reqs.includes(false)) {
-    setIsUsernameGood(true);
-  }
-  else {
-    setIsUsernameGood(false);
-  }
-}, [formData.username])
+    const [requirementsDisplay, setRequirementsDisplay] = useState(usernameDisplay);
+  
+  useEffect(() => {
+    if(lastUsed == "password") {
+      setRequirementsDisplay(passwordDisplay);
+    }
+    else if(lastUsed == "username") {
+      setRequirementsDisplay(usernameDisplay);
+    }
+    else {
+      setRequirementsDisplay(confirmPasswordDisplay);
+    }
+  }, [lastUsed])
 
-useEffect(() => {
-  if(formData.password == formData.confirmPassword) {
-    setIsConfirmPasswordGood(true);
-  }
-  else {
-    setIsConfirmPasswordGood(false);
-  }
-}, [formData.confirmPassword])
+  useEffect(() => {
+    setPasswordValidation(checkPasswordRequirements(formData.password));
+    if(!passwordValidation.includes(false)) {
+      setIsPasswordGood(true);
+    }
+    else {
+      setIsPasswordGood(false);
+    }
+  }, [formData.password]);
+
+  useEffect(() => {
+    const reqs = checkUsernameRequirements(formData.username);
+    setUsernameLength(reqs[0]);
+    setUsernameSpecial(reqs[1]);
+    if(usernameLength && usernameSpecial) {
+      setIsUsernameGood(true);
+    }
+    else {
+      setIsUsernameGood(false);
+    }
+  }, [formData.username])
+
+  useEffect(() => {
+    if(formData.password == formData.confirmPassword) {
+      setIsConfirmPasswordGood(true);
+    }
+    else {
+      setIsConfirmPasswordGood(false);
+    }
+  }, [formData.confirmPassword, formData.password])
 
   //Whenever username or confirmPassword input boxes change, this saves the new data to formData
   const handleChange = (e) => {
@@ -81,9 +135,7 @@ useEffect(() => {
       ...formData,
       [e.target.name]: e.target.value.trim()
     });
-    console.log("Password" + isPasswordGood)
-    console.log("Username" + isUsernameGood)
-    console.log("Confirm" + isConfirmPasswordGood)
+    setLastUsed(e.target.name);
   };
 
   //Whenever the submit button is clicked, this checks to make sure the passwords match and calls another func
@@ -148,31 +200,12 @@ useEffect(() => {
           type="submit"
           onClick={handleSubmit}
           data-testid="submitButton"
-          disabled={(isPasswordGood && isUsernameGood && isConfirmPasswordGood) ? false : true}
+          disabled={false}
         >
           Create Account
         </Button>
       </Row>
-      <Row>
-        <Form.Text>
-          Password Requirements:
-        </Form.Text>
-        <Form.Text className= {passwordSpecial ? "AccountCreation__password-req-true" : "AccountCreation__password-req-false"}>
-        Only letters, numbers, and underscores are allowed
-        </Form.Text>
-        <Form.Text className= {passwordLength ? "AccountCreation__password-req-true" : "AccountCreation__password-req-false"}>
-          At least 8 characters long
-        </Form.Text>
-        <Form.Text className= {passwordUpper ? "AccountCreation__password-req-true" : "AccountCreation__password-req-false"}>
-          At least 1 uppercase letter
-        </Form.Text>
-        <Form.Text className= {passwordLower ? "AccountCreation__password-req-true" : "AccountCreation__password-req-false"}>
-          At least 1 lowercase letter
-        </Form.Text>
-        <Form.Text className= {passwordNumber ? "AccountCreation__password-req-true" : "AccountCreation__password-req-false"}>
-          At least 1 number
-        </Form.Text>
-      </Row>
+      {requirementsDisplay}
     </Form>
   );
 }
