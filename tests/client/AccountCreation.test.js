@@ -10,6 +10,7 @@ import { BrowserRouter } from "react-router-dom";
 
 describe("Tests for Account Creation", () => {
   beforeAll(() => {
+    jest.spyOn(console, "log").mockImplementation(() => {});
     jest.spyOn(console, "error").mockImplementation(() => {});
   });
   test("Checks for button", () => {
