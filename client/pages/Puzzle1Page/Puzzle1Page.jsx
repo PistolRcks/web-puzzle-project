@@ -1,122 +1,184 @@
-import React, { useState } from 'react';
-import { Button, Card, Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
+import React, { useState, useRef } from 'react';
+import { Button, Carousel, Col, Container, Modal, Overlay, Row, Stack, Tooltip } from 'react-bootstrap';
 import { PuzzleHint } from '../../components/PuzzleHint/PuzzleHint';
 import { PuzzleNavBar } from '../../components/PuzzleNavBar/PuzzleNavBar';
+import frog from "../../assets/frog.jpg";
+import cloud from "../../assets/cloud.jpg";
+import clown from "../../assets/clown.jpg";
+import dino from "../../assets/dino.jpg";
+import food from "../../assets/food.jpg";
 import './Puzzle1Page.css';
 
-// const resizeWindow = () => {
-//     const [width, setWidth] = useState(window.innerWidth);
-
-//     useEffect(() => {
-//         const handleWindowResize = () => setWidth(window.innerWidth);
-//         window.addEventListener("resize", handleWindowResize);
-//         return () => window.removeEventListener("resize", handleWindowResize);
-//     }, []);
-
-//     return { width };
-// }
-
 export default function Puzzle1Page() {
-    // const { width } = resizeWindow();
-    // const breakpoint = 620;
 
-    // return width < breakpoint ? <MobilePuzzle1Page /> : <DesktopPuzzle1Page />;
+    const [showOverlay, setShowOverlay] = useState(false);
+    const [showUnicornHint, setShowUnicornHint] = useState(false);
+    const handleShowUnicornHint = () => {
+        setShowUnicornHint(true);
+        console.log("Here's your secret word: Hippo")   //add secret word here? or it can point
+        //a part of the site that can show the secret word, whichever is easier
+    }
+    const handleCloseUnicornHint = () => setShowUnicornHint(false);
+    const target = useRef(null);
+
     return(
         <>
             <PuzzleNavBar />
             <PuzzleHint />
             <div className="puzzle1 min-vw-100 min-vh-100">
-                {/* <Navbar expand="lg">
-                    <Container>
-                        <Navbar.Brand >something</Navbar.Brand>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="me-auto">
-                                <Nav.Link href="">Hello</Nav.Link>
-                                <Nav.Item>Other stuff</Nav.Item>
-                                <Nav.Item className="button">
-                                    Unicorn
-                                </Nav.Item>
-                                {/* </Col> */}
-                                {/* <Col sm={1} className="top-right-buttons"> */}
-                                    {/* <Nav.Item className="button">
-                                        Oogly
-                                    </Nav.Item>
-                                {/* </Col> */}
-                                {/* <Col sm={1} className="top-right-buttons"> */}
-                                {/* <Button className="button">
-                                    Boogly
-                                </Button>
-                            </Nav>
-                        </Navbar.Collapse>
-
-                    </Container>    
-            </Navbar> */} 
                 <Container className="justify-content-center content">
                     <Row>
-                        <Col sm={7} className="page-title">                  
-                            This looks so bad 
-                        </Col>
-                        <Col sm={1} className="top-right-buttons">
-                            <Button className="button">
-                                Unicorn
-                            </Button>
-                        </Col>
-                        <Col sm={1} className="top-right-buttons">
-                            <Button className="button">
-                                Oogly
-                            </Button>
-                        </Col>
-                        <Col sm={1} className="top-right-buttons">
-                            <Button className="button">
-                                Boogly
-                            </Button>
-                        </Col>
-                    </Row> 
+                        <Stack direction="horizontal" gap={3}>
+                            <div className="page-title">               
+                                Idk what to put here...Cool pictures?
+                            </div>
+                            <div className="ms-auto">
+                                <Button className="button">
+                                    Oogly
+                                </Button>
+                            </div>
+                            <div>
+                                <Button className="button">
+                                    Boogly
+                                </Button>
+                            </div>
+                            <div>
+                                <Button onClick={handleShowUnicornHint} className="button">
+                                    Unicorn
+                                </Button>
+                                <Modal
+                                    show={showUnicornHint}
+                                    onHide={handleCloseUnicornHint}
+                                    backdrop="static"
+                                    size="lg"
+                                    aria-labelledby="contained-modal-title-vcenter"
+                                    centered
+                                    >
+                                    <Modal.Header closeButton>
+                                        <Modal.Title id="contained-modal-title-vcenter">
+                                            Last Hint
+                                        </Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        Check the console to complete the puzzle and find your secret word.
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <p>Click the ? in the bottom left for help opening the console</p>
+                                        <Button 
+                                            className="close-button"
+                                            variant="secondary" 
+                                            onClick={handleCloseUnicornHint}>
+                                                Close
+                                        </Button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </div>
+                        </Stack>
+                    </Row>
                     <Row>
-                        <Col sm={2}>
-                            <Navbar variant="light" expand="lg">
-                                <Container>
-                                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                                    <Navbar.Collapse id="basic-navbar-nav">
-                                        <Nav className="me-auto flex-column side-nav">
-                                            <Nav.Link>One</Nav.Link>
-                                            <Nav.Link>Two</Nav.Link>
-                                            <Nav.Link>Apple</Nav.Link>
-                                            <Nav.Link>Frog</Nav.Link>
-                                            <Nav.Link>Bread</Nav.Link>
-                                        </Nav>
-                                    </Navbar.Collapse>
+                        <Container className="main-block">
+                            <Row>
+                                <Col sm={2}>
+                                    <Stack gap={3} className="side-nav">
+                                        <Button className="button">One</Button>
+                                        <Button className="button">Two</Button>
+                                        <Button className="button">Apple</Button>
+                                        <Button className="button">Frog</Button>
+                                        <Button className="button">Bread</Button>
+                                    </Stack>
+                                </Col>
+                                <Col sm={10}>
+                                    <Carousel>
+                                        <Carousel.Item>
+                                            <img
+                                            className="d-block w-100"
+                                            src={cloud}
+                                            alt="First slide"
+                                            />
+                                            <Carousel.Caption className="carousel-captions">
+                                            <h3>Welcome</h3>
+                                            </Carousel.Caption>
+                                        </Carousel.Item>
 
-                                </Container>    
-                            </Navbar> 
-                        </Col>
-                    {/* <Row> */}
-                        {/* <Col sm={2}>
-                            <Nav expand="lg">
-                                <ul className="side-nav">
-                                    <li>One</li>
-                                    <li>Two</li>
-                                    <li>Apple</li>
-                                    <li>Frog</li>
-                                    <li>Bread</li>
-                                </ul>
-                            </Nav>
-                        </Col> */}
+                                        <Carousel.Item>
+                                            <img
+                                            className="d-block w-100"
+                                            src={dino}
+                                            alt="Second slide"
+                                            />
 
-                        <Col sm={10} expand="lg">
-                            <Card className="main-block">God this looks horrendous</Card>
-                        </Col>
-                        
+                                            <Carousel.Caption className="carousel-captions">
+                                            <h3>Omg dinosaur</h3>
+                                            <p>Scroll to the 5th slide</p>
+                                            </Carousel.Caption>
+                                        </Carousel.Item>
+
+                                        <Carousel.Item>
+                                            <img
+                                            className="d-block w-100"
+                                            src={frog}
+                                            alt="Third slide"
+                                            />
+                                            <Carousel.Caption className="carousel-captions">
+                                            <h3>Oooo froggy</h3>
+                                            </Carousel.Caption>
+                                        </Carousel.Item>
+
+                                        <Carousel.Item>
+                                            <img
+                                            className="d-block w-100"
+                                            src={food}
+                                            alt="Fourth slide"
+                                            />
+                                            <Carousel.Caption className="carousel-captions">
+                                            <h3>I want melon</h3>
+                                            </Carousel.Caption>
+                                        </Carousel.Item>
+
+                                        <Carousel.Item>
+                                            <img
+                                            className="d-block w-100"
+                                            src={clown}
+                                            alt="Fifth slide"
+                                            />
+                                            <Carousel.Caption className="carousel-captions">
+                                            <h3>Welcome to the fifth slide</h3>
+                                            <p>
+                                                Check the bottom right of the screen
+                                            </p>
+                                            </Carousel.Caption>
+                                        </Carousel.Item>
+                                    </Carousel>
+                                </Col>
+                            </Row>
+                            <Row className="blank-space"></Row>
+                            <Row>
+                                <Col sm={10}></Col>
+                                <Col sm={2}>
+                                <Button 
+                                    ref={target} 
+                                    onClick={() => setShowOverlay(!showOverlay)} 
+                                    className="button first-hint"
+                                    >
+                                    Click me
+                                </Button>
+                                <Overlay 
+                                    target={target.current} 
+                                    show={showOverlay} 
+                                    placement="left"
+                                    >
+                                    {(props) => (
+                                        <Tooltip id="overlay-hint" {...props}>
+                                            Click on the word Unicorn
+                                        </Tooltip>
+                                    )}
+                                </Overlay>
+                                </Col>
+                            </Row>
+                        </Container>                         
                     </Row>
 
-                    <div>Look at the bottom right of the screen</div>
-                    <Button className="button">
-                        Click me
-                    </Button>
-                    <div >
-                        Click on the word unicorn
-                    </div>
+
 
                 </Container>
             </div>
