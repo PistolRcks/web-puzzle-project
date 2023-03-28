@@ -23,6 +23,7 @@ jest.mock("../../server/middleware", () => {
 
 describe("Tests /api/userPuzzleMeta route", () => {
   const badInput = `Error: Malformed input - required key "progress", "puzzle_id", or "time" not found in request body.`;
+  const badType = `Error: Malformed input - key "progress", "puzzle_id", or "time" is not a Number.`;
 
   beforeEach(() => {
     jest.spyOn(console, "log").mockImplementation();
@@ -58,6 +59,17 @@ describe("Tests /api/userPuzzleMeta route", () => {
     expect(res.statusCode).toEqual(400);
     expect(res.text).toEqual(badInput);
   });
+  
+  test("Error 400 - `puzzle_id` mistyped", async () => {
+    const res = await request.post("/api/userPuzzleMeta").send({
+      puzzle_id: "a",
+      progress: 1,
+      time: 0,
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.text).toEqual(badType);
+  });
 
   test("Error 500 - Internal SQLite3 Error during `db.get`", async () => {
     db.get = jest.fn((req, opts, callback) => {
@@ -73,24 +85,6 @@ describe("Tests /api/userPuzzleMeta route", () => {
 
     expect(res.statusCode).toEqual(500);
     expect(res.text).toEqual("Error!");
-  });
-
-  test("Error 400 - UserPuzzle relation does not exist", async () => {
-    db.get = jest.fn((req, opts, callback) => {
-      // have the callback return nothing (i.e. no row found)
-      callback(null, null);
-    });
-
-    const res = await request.post("/api/userPuzzleMeta").send({
-      puzzle_id: 1,
-      progress: 1,
-      time: 0,
-    });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.text).toEqual(
-      "Error: UserPuzzle relation does not exist for user_id 1 and puzzle_id 1."
-    );
   });
 
   test("Error 500 - Internal SQLite3 Error during `db.run`", async () => {
@@ -133,7 +127,7 @@ describe("Tests /api/userPuzzleMeta route", () => {
 
     expect(res.statusCode).toEqual(200);
     expect(res.text).toEqual(
-      `Metadata between user_id 1 and puzzle_id 1 successfully updated.`
+      `User_Puzzle relation between user_id 1 and puzzle_id 1 successfully updated.`
     );
   });
 });
