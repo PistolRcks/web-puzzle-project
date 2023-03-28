@@ -36,5 +36,8 @@ describe("Tests for the Puzzle Selection Page", () => {
       puzzleSelectionPage.baseElement.outerHTML.includes("Puzzle 16509")
     ).toBe(false);
   });
-  
+  it("Checks for Log Out button", () => {
+    const puzzleSelectionPage = render(<PuzzleSelectionPage />);
+    expect(puzzleSelectionPage.baseElement.outerHTML).toContain("Log Out");
+  });
 });

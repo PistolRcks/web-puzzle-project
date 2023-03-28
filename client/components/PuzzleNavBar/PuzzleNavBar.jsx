@@ -12,13 +12,6 @@ export function PuzzleNavBar() {
     <>
       <Navbar className="puzzle-nav" variant="dark" expand="lg">
         <Container>
-          <Nav className="logOut">
-            <Link to="/" onClick={() => alert("You have been logged out")}>
-              <Button className="puzzleSelectionPage__button" width="150">
-                Log Out
-              </Button>
-            </Link>
-          </Nav>
           <Navbar.Brand>Puzzle 1</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -33,6 +26,13 @@ export function PuzzleNavBar() {
               <Nav.Link onClick={handleShowDesc}>Puzzle Description</Nav.Link>
             </Nav>
           </Navbar.Collapse>
+          <Nav className="logOutNav">
+            <Link to="/" onClick={() => alert("You have been logged out")}>
+              <Button className="NavBar__button" width="150">
+                Log Out
+              </Button>
+            </Link>
+          </Nav>
         </Container>
       </Navbar>
       <Modal

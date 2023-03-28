@@ -48,16 +48,6 @@ export default function PuzzleSelectionPage() {
         </Link>
       </div>
 
-      {/*logout button with alert when logged out
-
-        <div className="logOut">
-          <Link to="/" onClick={() => alert("You have been logged out")}>
-            <Button className="puzzleSelectionPage__button" width="150">
-              Log Out
-            </Button>
-          </Link>
-        </div>
-        */}
       <Container fluid className="puzzleSelectionPage__selection-header">
         <p className="puzzleSelectionPage__selection-title">Puzzle Selection</p>
       </Container>
