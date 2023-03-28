@@ -4,6 +4,9 @@ import {
   checkUsernameRequirements,
   checkPasswordRequirements,
 } from "../../../utilities/AccountValidators";
+import './AccountCreation.css';
+import { accountCreation } from "../../api/DataHelper";
+import { useNavigate } from "react-router-dom";
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -15,6 +18,7 @@ const initialFormData = Object.freeze({
 function AccountCreation(props) {
   //formData is an object that holds username, password, confirmPassword
   const [formData, updateFormData] = React.useState(initialFormData);
+  const navigate = useNavigate();
 
   //Whenever username or confirmPassword input boxes change, this saves the new data to formData
   const handleChange = (e) => {
@@ -33,8 +37,15 @@ function AccountCreation(props) {
         checkPasswordRequirements(formData.password) &&
         checkUsernameRequirements(formData.username)
       ) {
-        //TODO send the formData to the backend
-        console.log("Hey this code works"); // TODO: Required for flaky test. Should be removed in the future
+        //TODO: Required for flaky test. Should be removed in the future
+        console.log("Hey this code works");
+        accountCreation(formData)
+          .then(() => {
+            navigate("/Puzzle/Selection")
+          })
+          .catch((err) => {
+            alert(err)
+          })
         props.close();
       }
     } catch (error) {
@@ -73,7 +84,8 @@ function AccountCreation(props) {
       </Row>
       <Row>
         <Button
-          variant="primary"
+          className="button create-account-button"
+          variant="secondary"
           type="submit"
           onClick={handleSubmit}
           data-testid="submitButton"

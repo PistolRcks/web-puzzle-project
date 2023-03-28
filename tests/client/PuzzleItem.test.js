@@ -17,8 +17,25 @@ describe("Tests for the Puzzle Item component", () => {
 
   it("Checks for button text", () => {
     const puzzleItem = render(
-      <PuzzleItem puzzle={{ puzzleID: 17, isCompleted: false }} />
+      <PuzzleItem puzzle={{ puzzle_id: 17, title: "title", description: "description" }} />
     );
+
     expect(puzzleItem.baseElement.outerHTML).toContain("Puzzle 17");
+  });
+
+  it("Checks for for uncompleted puzzle", () => {
+    const puzzleItem = render(
+      <PuzzleItem puzzle={{ puzzle_id: 17, title: "title", description: "description" }} puzzleCompletion={{progress: 0, puzzle_id: 1}} />
+    );
+
+    expect(puzzleItem.baseElement.outerHTML).toContain('alt="false"');
+  });
+
+  it("Checks for for completed puzzle", () => {
+    const puzzleItem = render(
+      <PuzzleItem puzzle={{ puzzle_id: 17, title: "title", description: "description" }} puzzleCompletion={{progress: 1, puzzle_id: 1}} />
+    );
+
+    expect(puzzleItem.baseElement.outerHTML).toContain('alt="true"');
   });
 });

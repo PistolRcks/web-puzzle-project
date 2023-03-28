@@ -5,29 +5,27 @@ import x from "../../assets/x.png";
 import check from "../../assets/check.png";
 import "./PuzzleItem.css";
 
-export function PuzzleItem({ puzzle }) {
+export function PuzzleItem({ puzzle, puzzleCompletion }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { puzzleID, isCompleted } = puzzle;
+  const { puzzle_id: puzzleID, title: puzzleTitle, description: puzzleDescription } = puzzle;
 
-  const puzzleText = (
-    <>
-      <img src={isCompleted ? check : x} height="22" alt={String(isCompleted)} /> {`Puzzle ${puzzleID}`}
-    </>
-  );
+  const puzzleText = `Puzzle ${puzzleID} - ${puzzleTitle}`
 
   return (
     <>
       <Row className="mb-3">
         <Form.Group as={Col} controlId={puzzleID}>
           <Button
-            className="puzzleSelectionPage__button puzzleItem__button"
+            className="puzzleSelectionPage__button puzzleItem__button button"
+            variant="secondary"
             onClick={handleShow}
             size="lg"
             style={{ minWidth: "100" }}
           >
+            <img className="PuzzleItem__img" src={puzzleCompletion?.progress ? check : x} height="22" alt={puzzleCompletion?.progress ? 'true' : 'false'} />
             {puzzleText}
           </Button>
           <Modal
@@ -44,13 +42,13 @@ export function PuzzleItem({ puzzle }) {
                 {puzzleText}
               </Modal.Title>
             </Modal.Header>
-            <Modal.Body>This is a modal body</Modal.Body>
+            <Modal.Body>{puzzleDescription}</Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button className="close-button" variant="secondary" onClick={handleClose}>
                 Close
               </Button>
               <Link to={`/Puzzle/${puzzleID}`}>
-                <Button variant="primary" type="submit" onClick={handleClose}>
+                <Button className="button" variant="secondary" type="submit" onClick={handleClose}>
                   Begin
                 </Button>
               </Link>

@@ -5,3 +5,7 @@
 .mb-3 {
   margin: 0;
 }
+
+.PuzzleItem__img {
+  padding-right: 5px;
+}
