@@ -145,6 +145,7 @@ function AccountCreation(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
+      console.log("Hey this code works")
       accountCreation(formData)
         .then(() => {
           navigate("/Puzzle/Selection")

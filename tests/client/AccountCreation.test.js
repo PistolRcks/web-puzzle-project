@@ -45,45 +45,36 @@ describe("Tests for Account Creation", () => {
     expect(wrapper.baseElement.outerHTML).toContain("Confirm Password:");
   });
   test("checkUsernameRequirements with accepted username", () => {
-    expect(checkUsernameRequirements("myUsername")).toBeTruthy();
+    expect(checkUsernameRequirements("myUsername")[0]).toBeTruthy();
+    expect(checkUsernameRequirements("myUsername")[1]).toBeTruthy();
   });
   test("checkUsernameRequirements with username with special characters", () => {
-    expect(() => {
-      checkUsernameRequirements("myUsername$");
-    }).toThrow();
+    expect(!checkUsernameRequirements("myUsername$")[1]).toBeTruthy();
   });
   test("checkUsernameRequirements with username that is too short", () => {
-    expect(() => {
-      checkUsernameRequirements("user");
-    }).toThrow();
+    expect(!checkUsernameRequirements("user")[0]).toBeTruthy();
   });
   test("checkPasswordRequirements with accepted password", () => {
-    expect(checkPasswordRequirements("Password7")).toBeTruthy();
+    expect(checkPasswordRequirements("Password7")[0]).toBeTruthy();
+    expect(checkPasswordRequirements("Password7")[1]).toBeTruthy();
+    expect(checkPasswordRequirements("Password7")[2]).toBeTruthy();
+    expect(checkPasswordRequirements("Password7")[3]).toBeTruthy();
+    expect(checkPasswordRequirements("Password7")[4]).toBeTruthy();
   });
   test("checkPasswordRequirements with password with special characters", () => {
-    expect(() => {
-      checkPasswordRequirements("Password7$");
-    }).toThrow();
+    expect(!checkPasswordRequirements("Password7$")[4]).toBeTruthy();
   });
   test("checkPasswordRequirements with password that is too short", () => {
-    expect(() => {
-      checkPasswordRequirements("Paord7");
-    }).toThrow();
+    expect(!checkPasswordRequirements("Paord7")[0]).toBeTruthy();
   });
   test("checkPasswordRequirements with password with not digits", () => {
-    expect(() => {
-      checkPasswordRequirements("Password");
-    }).toThrow();
+    expect(!checkPasswordRequirements("Password")[1]).toBeTruthy();
   });
   test("checkPasswordRequirements with password with no uppercase", () => {
-    expect(() => {
-      checkPasswordRequirements("password7");
-    }).toThrow();
+    expect(!checkPasswordRequirements("password7")[2]).toBeTruthy();
   });
   test("checkPasswordRequirements with password with no lowercase", () => {
-    expect(() => {
-      checkPasswordRequirements("PASSWORD7");
-    }).toThrow();
+    expect(!checkPasswordRequirements("PASSWORD7")[3]).toBeTruthy();
   });
   test("check to make sure typing in the form and submission works", () => {
     const consoleSpy = jest.spyOn(global.console, "log");
