@@ -6,3 +6,10 @@ a:hover {
     background-color: #52796f;
     position: static;
 }
+.logOut {
+    float: left;
+    padding: 15px;
+    position: fixed;
+    z-index: 2;
+    
+  }
