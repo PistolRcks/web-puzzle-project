@@ -47,6 +47,14 @@ describe("Tests for Puzzle Nav Bar", () => {
             );
             expect(wrapper.baseElement.outerHTML).toContain("Puzzle Description");
     });
+    test("Checks for Log Out", () => {
+        const wrapper = render(
+        <BrowserRouter>
+            <PuzzleNavBar />
+        </BrowserRouter>
+        );
+        expect(wrapper.baseElement.outerHTML).toContain("Log Out");
+    });
 
 });
 
