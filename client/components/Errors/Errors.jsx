@@ -21,3 +21,21 @@ export const Error401 = () => {
     </div>
   );
 }
+
+/**
+ * 
+ * @returns a 404 - Not Found Component
+ */
+export const Error404 = () => {
+  return(
+    <div className="Error min-vh-100 min-vw-100">
+      <h1>404 - Not Found</h1>
+      <Container className= "Error__text-container">
+        <p>The desired page has not been found.</p>
+      </Container>
+      <Link to="/">
+        <Button className="Error__button">Back to Home</Button>
+      </Link>
+    </div>
+  );
+}
