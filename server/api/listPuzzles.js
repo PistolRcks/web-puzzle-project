@@ -9,11 +9,39 @@ const { db } = require("../db");
  * @returns Nothing.
  */
 function listPuzzles(req, res) {
-  db.all(`SELECT * FROM Puzzle`, (err, rows) => {
+  const { userID, username } = req.session;
+
+  //up.progress, p.puzzle_id, p.title, p.description
+
+  const puzzleListQuery = `
+      SELECT *
+      FROM Puzzle
+      ORDER BY puzzle_id
+    `;
+
+  const userPuzzleCompletionQuery = `
+    SELECT progress, puzzle_id 
+    FROM User_Puzzle
+    WHERE user_id = ${userID}
+    ORDER BY puzzle_id
+    `;
+
+  db.all(puzzleListQuery, (err, rows) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.status(200).send(rows);
+      db.all(userPuzzleCompletionQuery, (err, userPuzzleCompletion) => {
+        if (err) {
+          res.status(500).send(err)
+        } else {
+          res.status(200).send({
+            userID,
+            username,
+            puzzles: rows,
+            userPuzzleCompletion
+          });
+        }
+      });
     }
   });
 }

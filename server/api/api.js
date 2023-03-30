@@ -6,11 +6,13 @@ const { listPuzzles } = require("./listPuzzles");
 const { googleLogin } = require("./googleLogin");
 
 const router = new Express.Router();
+
+// Parse the incoming data
 router.use(Express.urlencoded({ extended: true }));
 router.use(Express.json());
 
-router.get("/testRoute", (req, res) => {
-  res.send("success");
+router.get("/verify", (req, res) => {
+  res.status(200).send("Authorized");
 });
 
 router.post("/signup", signup);

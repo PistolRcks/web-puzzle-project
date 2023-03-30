@@ -32,3 +32,4 @@ yarn-error.log*
 # generated artifacts
 *.db
 *.db-journal
+/docs
