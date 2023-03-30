@@ -14,13 +14,12 @@ const redirectBundleManifest = (req, res, next) => {
     "bundle.js",
     "bundle.css",
     "manifest.json",
-    "puzzle-piece-icon.ico",
   ];
 
   const redirectFileTypes = ['.png', '.jpg', '.ico']
 
   redirectFileNames.forEach((fileName) => {
-    if (req.path !== `/${fileName}` && req.path.includes(fileName)) {
+    if (req.path.endsWith(fileName) && req.path !== `/${fileName}`) {
       return res.redirect(`/${fileName}`);
     }
   });
