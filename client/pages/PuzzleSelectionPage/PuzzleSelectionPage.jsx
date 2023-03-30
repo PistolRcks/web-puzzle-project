@@ -6,7 +6,7 @@ import { useState } from "react";
 import back from "../../assets/back-arrow.png";
 
 import { PuzzleItem } from "../../components/PuzzleItem/PuzzleItem.jsx";
-import { listPuzzles } from "../../api/DataHelper";
+import { listPuzzles, logOut } from "../../api/DataHelper";
 import "./PuzzleSelectionPage.css";
 
 export default function PuzzleSelectionPage() {
@@ -41,7 +41,7 @@ export default function PuzzleSelectionPage() {
   return (
     <div className="puzzleSelectionPage min-vh-100 min-vw-100">
       <div className="logOut">
-        <Link to="/" onClick={() => alert("You have been logged out")}>
+        <Link to="/" onClick={logOut}>
           <Button className="puzzleSelectionPage__button" width="150">
             Log Out
           </Button>

@@ -12,26 +12,26 @@ jest.mock("../../server/middleware", () => {
     }),
     logRouteAndCheckAuthorization: jest.fn((req, res, next) => {
       req.session.userID = 1;
-      req.session.username = 'alice';
-      
+      req.session.username = "alice";
+
       next();
-    })
-  }
-})
+    }),
+  };
+});
 
 describe("Test /api/logout route", () => {
-    test("Logout with session", async () => {
-        const res = await request.post("/api/logout").redirects(1);
-        expect(res.statusCode).toEqual(200);  // we should get a redirect
-    })
+  test("Logout with session", async () => {
+    const res = await request.post("/api/logout");
+    expect(res.statusCode).toEqual(200); // we should get a redirect
+  });
 
-    test("Logout with error", async () => {
-      // mock `Session.destroy()` to throw an error
-      jest.spyOn(Session.prototype, "destroy").mockImplementation((callback) => {
-        callback("Error!")
-      })
-      
-      const res = await request.post("/api/logout").redirects(1);
-      expect(res.statusCode).toEqual(500)
-    })
-})
+  test("Logout with error", async () => {
+    // mock `Session.destroy()` to throw an error
+    jest.spyOn(Session.prototype, "destroy").mockImplementation((callback) => {
+      callback("Error!");
+    });
+
+    const res = await request.post("/api/logout");
+    expect(res.statusCode).toEqual(500);
+  });
+});

@@ -26,12 +26,12 @@ export function PuzzleNavBar() {
               <Nav.Link href="/UserProfile">User Profile</Nav.Link>
               <Nav.Link onClick={handleShowDesc}>Puzzle Description</Nav.Link>
             </Nav>
-            <Link onClick={logOut}>
-              <Button className="button" width="150">
+            <Link to="/" onClick={logOut}>
+              <Button className="button" width="150" onClick={logOut}>
                 Log Out
               </Button>
             </Link>
-            </Navbar.Collapse>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
       <Modal
