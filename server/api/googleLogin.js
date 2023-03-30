@@ -20,7 +20,8 @@ async function googleLogin(req, res, next) {
 
       if (!row) {
         // res.status(500).send("Error: Google User not found!");
-        await googleSignup(username);
+        await googleSignup(username, res);
+        return;
       }
 
       res.status(200).send();
@@ -28,7 +29,7 @@ async function googleLogin(req, res, next) {
   );
 }
 
-async function googleSignup(username) {
+async function googleSignup(username, res) {
   if (!username ) {
     res.status(400).send("Error: Username not set!");
     return;
@@ -57,7 +58,7 @@ async function insertUser(db, username, callback) {
     "INSERT INTO User (username) VALUES (?)",
     [username],
     function (err) {
-      var user = {};
+      let user = {};
 
       // throw an error if there's an issue
       if (err) {

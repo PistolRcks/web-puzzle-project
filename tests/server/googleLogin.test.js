@@ -21,9 +21,9 @@ describe("Test insertUser", () => {
 
   test("Standard user: output of insertUser", (done) => {
     insertUser(db, "username", (err, user) => {
-        expect(user).toEqual({ user_id: lastID + 1, username: "username" });
-        done();
-      });
+      expect(user).toEqual({ user_id: lastID + 1, username: "username" });
+      done();
+    });
   });
 
   test("Standard user: username found in database", (done) => {
@@ -43,16 +43,16 @@ describe("Test insertUser", () => {
     // delete id created in test
     await db.run(`delete from User where user_id=${lastID + 1}`);
   });
-// });
+});
 
 const noUNOrPass = "Error: Google Id Not Set!";
 
 describe("Test googleLogin route", () => {
   // block console logging
   beforeAll(() => {
-    jest.spyOn(console, "log").mockImplementation(() => {});
-    jest.spyOn(console, "error").mockImplementation(() => {});
-  }); 
+    jest.spyOn(console, "log").mockImplementation(() => { });
+    jest.spyOn(console, "error").mockImplementation(() => { });
+  });
 
   test("Error 400 - no username", async () => {
     const res = await request.post("/api/googleLogin").send({
@@ -60,7 +60,7 @@ describe("Test googleLogin route", () => {
     expect(res.statusCode).toEqual(400);
     expect(res.text).toEqual(noUNOrPass);
   });
-  
+
   test("Error 400 - username already exists", async () => {
     await request.post("/api/googleLogin").send({
       googleIdToken: "usernameVeryCool1",
@@ -70,31 +70,30 @@ describe("Test googleLogin route", () => {
       googleIdToken: "usernameVeryCool1",
     });
 
-    expect(res.statusCode).toEqual(400);
     expect(res.text).toEqual("Error: Username already exists!");
+    expect(res.statusCode).toEqual(400);
   });
 
-//   test("Response 200 - happy insertion", (done) => {
-//     // this test *may* look a little gross, but this makes sure it hits all the lines of the test
-//     request
-//       .post("/api/signup")
-//       .send({
-//         username: "usernameVeryEpic",
-//         password: "Very1Epic",
-//       })
-//       .then((res) => {
-//         expect(res.statusCode).toEqual(200);
+  test("Response 200 - happy insertion", (done) => {
+    // this test *may* look a little gross, but this makes sure it hits all the lines of the test
+    request
+      .post("/api/googleLogin")
+      .send({
+        googleIdToken: "usernameVeryEpic",
+      })
+      .then((res) => {
+        expect(res.statusCode).toEqual(200);
 
-//         db.get(
-//           `select user_id from User where username="usernameVeryEpic"`,
-//           function (err, row) {
-//             if (err) throw err;
-//             expect(row["user_id"]).toBeDefined(); // we don't know the user_id; however, it should be something
-//             done();
-//           }
-//         );
-//       });
-   });
+        db.get(
+          `select user_id from User where username="usernameVeryEpic"`,
+          function (err, row) {
+            if (err) throw err;
+            expect(row["user_id"]).toBeDefined(); // we don't know the user_id; however, it should be something
+            done();
+          }
+        );
+      });
+  });
 
   // nuke the table afterwards
   afterEach(async () => {
