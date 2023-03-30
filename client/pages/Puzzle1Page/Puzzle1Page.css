@@ -1,47 +1,47 @@
 .blank-space {
-    height: 175px;
+  height: 175px;
 }
 
 body {
-    overflow: auto;
-    background-color: #2f3e46;
+  overflow: auto;
+  background-color: #2f3e46;
 }
 
 .carousel-captions {
-    background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .content {
-    margin-left: 0px;
-    margin-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .first-hint {
-    float: right;
-    font-size: xx-small;
+  float: right;
+  font-size: xx-small;
 }
 
 .main-block {
-    background-color: #e8f1e8;
-    color: #2f3e46;
-    height: fit-content;
-    margin-left: 60px;
-    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 20px;
-    border-radius: 1%;
+  background-color: #e8f1e8;
+  color: #2f3e46;
+  height: fit-content;
+  margin-left: 60px;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 20px;
+  border-radius: 1%;
 }
 
 .page-title {
-    margin: 15px;
-    font-size: xx-large;
+  margin: 15px;
+  font-size: xx-large;
 }
 
 .puzzle1 {
-    color: #e8f1e8;
+  color: #e8f1e8;
 }
 
 .side-nav {
-    list-style-type: none;
-    padding-left: 0px;
-    margin-left: 0px;
+  list-style-type: none;
+  padding-left: 0px;
+  margin-left: 0px;
 }
