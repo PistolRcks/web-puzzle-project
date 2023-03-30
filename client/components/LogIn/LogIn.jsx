@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-//import { Link } from 'react-router-dom';
-import { Link, Routes, Route, useNavigate } from "react-router-dom";
-import { Button, Container, Form, Modal, Row } from "react-bootstrap";
-import PuzzleSelectionPage from "../../pages/PuzzleSelectionPage/PuzzleSelectionPage";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Form, Row } from "react-bootstrap";
 import { logIn } from "../../api/DataHelper";
 import {
   checkUsernameRequirements,
@@ -72,7 +70,7 @@ function LogIn(props) {
         <Link to="/Puzzle/Selection">
           <Button
             className="button"
-            variant="primary"
+            variant="secondary"
             type="submit"
             onClick={handleSubmit}
             data-testid="submitButtonLogin"

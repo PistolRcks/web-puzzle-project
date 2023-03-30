@@ -13,6 +13,11 @@ export default function Puzzle1Page() {
 
   const [showOverlay, setShowOverlay] = useState(false);
   const [showTipsHint, setShowTipsHint] = useState(false);
+  const [disableTipsButton, setDisableTipsButton] = useState(true);
+  const handleShowOverlay = () => {
+    setShowOverlay(!showOverlay);
+    setDisableTipsButton(false);
+  }
   const handleShowTipsHint = () => {
     setShowTipsHint(true);
     console.log("Here's your secret word: Hippo")   //add secret word here? or it can point
@@ -33,17 +38,21 @@ export default function Puzzle1Page() {
                 How to Photoshop like a Pro
               </div>
               <div className="ms-auto">
-                <Button className="button">
+                <Button className="button" variant="secondary">
                   Tutorial
                 </Button>
               </div>
               <div>
-                <Button className="button">
+                <Button className="button" variant="secondary">
                   Software
                 </Button>
               </div>
               <div>
-                <Button onClick={handleShowTipsHint} className="button">
+                <Button 
+                  disabled={disableTipsButton}
+                  onClick={handleShowTipsHint}
+                  variant="secondary" 
+                  className="button">
                   Tips
                 </Button>
                 <Modal
@@ -80,12 +89,12 @@ export default function Puzzle1Page() {
             <Container className="main-block">
               <Row>
                 <Col sm={2}>
-                  <Stack gap={3} className="side-nav">
-                    <Button className="button">One</Button>
-                    <Button className="button">Two</Button>
-                    <Button className="button">Apple</Button>
-                    <Button className="button">Frog</Button>
-                    <Button className="button">Bread</Button>
+                  <Stack gap={5} className="side-nav">
+                    <Button className="button" variant="secondary">Ideas</Button>
+                    <Button className="button" variant="secondary">FAQs</Button>
+                    <Button className="button" variant="secondary">About</Button>
+                    <Button className="button" variant="secondary">Contact Us</Button>
+                    <Button className="button" variant="secondary">Help</Button>
                   </Stack>
                 </Col>
                 <Col sm={10}>
@@ -109,8 +118,7 @@ export default function Puzzle1Page() {
                       />
 
                       <Carousel.Caption className="carousel-captions">
-                        <h3>Omg dinosaur</h3>
-                        <p>Scroll to the 5th slide</p>
+                        <h3>Scroll to the 5th slide</h3>
                       </Carousel.Caption>
                     </Carousel.Item>
 
@@ -132,7 +140,7 @@ export default function Puzzle1Page() {
                       alt="Fourth slide"
                       />
                       <Carousel.Caption className="carousel-captions">
-                        <h3>I want melon</h3>
+                        <h3>Yummy</h3>
                       </Carousel.Caption>
                     </Carousel.Item>
 
@@ -155,8 +163,9 @@ export default function Puzzle1Page() {
                 <Col sm={10}></Col>
                 <Col sm={2}>
                   <Button 
-                    ref={target} 
-                    onClick={() => setShowOverlay(!showOverlay)} 
+                    ref={target}
+                    onClick={handleShowOverlay}
+                    variant="secondary"
                     className="button first-hint"
                     >
                     Click me
@@ -168,7 +177,7 @@ export default function Puzzle1Page() {
                     >
                     {(props) => (
                       <Tooltip id="overlay-hint" {...props}>
-                        Click on the word Unicorn
+                        Click on the word Tips
                       </Tooltip>
                     )}
                   </Overlay>

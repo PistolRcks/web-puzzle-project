@@ -32,7 +32,9 @@ body {
 }
 
 .page-title {
-  margin: 15px;
+  margin-left: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   font-size: xx-large;
 }
 
@@ -44,4 +46,5 @@ body {
   list-style-type: none;
   padding-left: 0px;
   margin-left: 0px;
+  margin-top: 35px;
 }

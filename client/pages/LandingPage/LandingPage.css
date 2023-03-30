@@ -21,6 +21,11 @@ a {
   margin: 5px;
 }
 
+.button:disabled {
+  color: #FFFFFF;
+  background-color: #73a99b;
+}
+
 .button:hover {
   background-color: #354f52;
 }
