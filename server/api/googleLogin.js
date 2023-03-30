@@ -18,7 +18,7 @@ async function googleLogin(req, res, next) {
   const username = req.body.googleIdToken;
   // select existing user in database
   db.get(
-    "SELECT username, user_id FROM User WHERE username = ?",
+    "SELECT user_id FROM User WHERE username = ?",
     username,
     async function (err, row) {
       // if entered username isn't found, send error
@@ -33,6 +33,8 @@ async function googleLogin(req, res, next) {
         await googleSignup(req, res, username);
         return;
       }
+      // console.log(row);
+      // console.log(userID);
       const { user_id: userID } = row;
       req.session.userID = userID;
       req.session.username = username;
