@@ -14,14 +14,24 @@ const redirectBundleManifest = (req, res, next) => {
     "bundle.js",
     "bundle.css",
     "manifest.json",
-    "puzzle-piece-icon.ico",
   ];
 
+  const redirectFileTypes = ['.png', '.jpg', '.ico']
+
   redirectFileNames.forEach((fileName) => {
-    if (req.path !== `/${fileName}` && req.path.includes(fileName)) {
+    if (req.path.endsWith(fileName) && req.path !== `/${fileName}`) {
       return res.redirect(`/${fileName}`);
     }
   });
+
+  redirectFileTypes.forEach((fileType => {
+    const lastSlashIndex = req.path.lastIndexOf('/');
+    const fileName = req.path.slice(lastSlashIndex + 1);
+
+    if (req.path.endsWith(fileType) && req.path !== `/${fileName}`) {
+      return res.redirect(`/${fileName}`)
+    }
+  }))
 
   next();
 };
@@ -52,11 +62,8 @@ const logRouteAndCheckAuthorization = (req, res, next) => {
   // !If the route is not for a favicon or the Landing Page and the user is not logged in, they are unauthorized
   // Note: For some reason, we have to check if the response has been sent. I'm assuming express-session also sends a 401 response,
   //       but this function essentially tells it which routes need a session token.
-  if (
-    !exceptedRoutes.includes(req.path) &&
-    !req.session?.userID &&
-    !res.headersSent
-  ) {
+  const isExceptedRoute = !exceptedRoutes.includes(req.path) && !req.path.endsWith('.png') && !req.path.endsWith('.jpg')
+  if (isExceptedRoute && !req.session?.userID && !res.headersSent) {
     return res
       .status(401)
       .sendFile(path.join(__dirname, "../public", "index.html"));
