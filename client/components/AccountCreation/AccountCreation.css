@@ -1,3 +1,9 @@
 .create-account-button {
     width: fit-content;
 }
+.AccountCreation__req-false {
+    color: red;
+}
+.AccountCreation__req-true {
+    color: green;
+}

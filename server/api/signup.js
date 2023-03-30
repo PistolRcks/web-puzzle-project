@@ -1,6 +1,6 @@
 const {
-  checkUsernameRequirements,
-  checkPasswordRequirements,
+  checkUsernameServer,
+  checkPasswordServer,
 } = require("../../utilities/AccountValidators");
 const { db } = require("../db");
 const Crypto = require("crypto");
@@ -26,8 +26,8 @@ function signup(req, res, next) {
 
   // test username and password; should throw an error if there's an issue
   try {
-    checkUsernameRequirements(username);
-    checkPasswordRequirements(password);
+    checkUsernameServer(username);
+    checkPasswordServer(password);
   } catch (error) {
     res.status(400).send(error.message);
     return;

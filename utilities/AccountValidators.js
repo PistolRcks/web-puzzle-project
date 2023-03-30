@@ -3,11 +3,49 @@
     has an uppercase letter
     has a lowercase letter
     has a digit
-
-    If these requirements are not met, throws an error displaying what is missing
-    Returns true if these conditions are met
 */
 const checkPasswordRequirements = (pass) => {
+  let reqs = [false, false, false, false, true];
+  let passStr = String(pass);
+
+  if (passStr.length > 7) {
+    reqs[0] = true;
+  }
+  if (/\d/.test(passStr)) {
+    reqs[1] = true;
+  }
+  if (/[A-Z]/.test(passStr)) {
+    reqs[2] = true;
+  }
+  if (/[a-z]/.test(passStr)) {
+    reqs[3] = true;
+  }
+  //If the password contains anything else other than letters, numbers, and underscores, this evaluates false
+  if (/^\w+$/.test(passStr)) {
+    reqs[4] = true;
+  }
+  else {
+    reqs[4] = false;
+  }
+  return reqs;
+};
+
+const checkUsernameRequirements = (user) => {
+  let userStr = String(user);
+  let reqs = [false, true];
+  if (userStr.length > 4) {
+    reqs[0] = true;
+  }
+  if (/^\w+$/.test(userStr)) {
+    reqs[1] = true;
+  }
+  else {
+    reqs[1] = false;
+  }
+  return reqs;
+};
+
+const checkPasswordServer = (pass) => {
   let passStr = String(pass);
   let length = "X";
   let uppercase = "X";
@@ -53,7 +91,7 @@ const checkPasswordRequirements = (pass) => {
   }
 };
 
-const checkUsernameRequirements = (user) => {
+const checkUsernameServer = (user) => {
   let userStr = String(user);
   if (userStr.length < 5) {
     throw Error("Your username needs to be at least 5 characters");
@@ -67,4 +105,4 @@ const checkUsernameRequirements = (user) => {
   }
 };
 
-module.exports = { checkUsernameRequirements, checkPasswordRequirements };
+module.exports = { checkUsernameRequirements, checkPasswordRequirements, checkPasswordServer, checkUsernameServer };
