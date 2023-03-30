@@ -58,6 +58,21 @@ export function logIn(userData) {
   });
 }
 
+//Function that calls the logout post
+export function logOut(userData) {
+  console.log("yes this is getting called smile")
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/api/logout")
+      .then(function (res) {
+        return resolve(res);
+      })
+      .catch(function (err) {
+        return reject(err);
+      });
+  });
+}
+
 //Function that calls the listPuzzles get
 export function listPuzzles() {
   return new Promise((resolve, reject) => {

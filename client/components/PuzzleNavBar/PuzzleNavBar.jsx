@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Navbar, Nav, Modal } from "react-bootstrap";
+import { logOut } from "../../api/DataHelper";
 import "./PuzzleNavBar.css";
 
 export function PuzzleNavBar() {
@@ -25,7 +26,7 @@ export function PuzzleNavBar() {
               <Nav.Link href="/UserProfile">User Profile</Nav.Link>
               <Nav.Link onClick={handleShowDesc}>Puzzle Description</Nav.Link>
             </Nav>
-            <Link to="/" onClick={() => alert("You have been logged out")}>
+            <Link onClick={logOut}>
               <Button className="button" width="150">
                 Log Out
               </Button>
