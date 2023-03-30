@@ -130,9 +130,9 @@ export default function LandingPage() {
             <div className='center'>
             <GoogleLogin
   onSuccess={async credentialResponse => {
-    console.log(credentialResponse);
+    // console.log(credentialResponse);
     const decoded = jwt_decode(credentialResponse.credential);
-    console.log(decoded.sub);
+    // console.log(decoded.sub);
     await googleLogin(decoded.sub);
     navigate("/Puzzle/Selection");
   }}
