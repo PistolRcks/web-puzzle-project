@@ -41,7 +41,7 @@ function AccountCreation(props) {
   const usernameDisplay = (
     <Row>
       <Form.Text>
-        Username Requirments:
+        Username Requirements:
       </Form.Text>
       <Form.Text className = {usernameSpecial ? "AccountCreation__req-true" : "AccountCreation__req-false"}>
         Only letters, numbers, and underscores are allowed
