@@ -50,8 +50,8 @@ const noUNOrPass = "Error: Google Id Not Set!";
 describe("Test googleLogin route", () => {
   // block console logging
   beforeAll(() => {
-    jest.spyOn(console, "log").mockImplementation(() => { });
-    jest.spyOn(console, "error").mockImplementation(() => { });
+    // jest.spyOn(console, "log").mockImplementation(() => { });
+    // jest.spyOn(console, "error").mockImplementation(() => { });
   });
 
   test("Error 400 - no username", async () => {

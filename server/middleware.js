@@ -50,6 +50,7 @@ const logRouteAndCheckAuthorization = (req, res, next) => {
   const exceptedRoutes = [
     "/api/login",
     "/api/signup",
+    "/api/googleLogin",
     "/",
     "/bundle.css",
     "/bundle.js",
