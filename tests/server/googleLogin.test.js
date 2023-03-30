@@ -39,96 +39,40 @@ describe("Test insertUser", () => {
     });
   });
 
-//   test("Standard user: salt found in database", (done) => {
-//     const salt = Crypto.randomBytes(16); // TODO: shouldn't be random, will fix later
-//     Crypto.pbkdf2(
-//       "password2",
-//       salt,
-//       310000,
-//       32,
-//       "sha256",
-//       function (err, hashedPassword) {
-//         insertUser(db, "username2", hashedPassword, salt, () => {
-//           db.get(
-//             `select salt as s from User where username="username2"`,
-//             function (err, row) {
-//               if (err) throw err;
-//               expect(row["s"]).toEqual(salt);
-//               done();
-//             }
-//           );
-//         });
-//       }
-//     );
-//   });
-
-//   afterEach(async () => {
-//     // delete id created in test
-//     await db.run(`delete from User where user_id=${lastID + 1}`);
-//   });
+  afterEach(async () => {
+    // delete id created in test
+    await db.run(`delete from User where user_id=${lastID + 1}`);
+  });
 // });
 
-// const noUNOrPass = "Error: Username or password not set!";
+const noUNOrPass = "Error: Google Id Not Set!";
 
-// describe("Test signup route", () => {
-//   // block console logging
-//   beforeAll(() => {
-//     jest.spyOn(console, "log").mockImplementation(() => {});
-//     jest.spyOn(console, "error").mockImplementation(() => {});
-//   }); 
+describe("Test googleLogin route", () => {
+  // block console logging
+  beforeAll(() => {
+    jest.spyOn(console, "log").mockImplementation(() => {});
+    jest.spyOn(console, "error").mockImplementation(() => {});
+  }); 
+
+  test("Error 400 - no username", async () => {
+    const res = await request.post("/api/googleLogin").send({
+    });
+    expect(res.statusCode).toEqual(400);
+    expect(res.text).toEqual(noUNOrPass);
+  });
   
-//   test("Error 400 - no username or password", async () => {
-//     const res = await request.post("/api/signup").send({});
-//     expect(res.statusCode).toEqual(400);
-//     expect(res.text).toEqual(noUNOrPass);
-//   });
+  test("Error 400 - username already exists", async () => {
+    await request.post("/api/googleLogin").send({
+      googleIdToken: "usernameVeryCool1",
+    });
 
-//   test("Error 400 - no password", async () => {
-//     const res = await request.post("/api/signup").send({
-//       username: "username",
-//     });
-//     expect(res.statusCode).toEqual(400);
-//     expect(res.text).toEqual(noUNOrPass);
-//   });
+    const res = await request.post("/api/googleLogin").send({
+      googleIdToken: "usernameVeryCool1",
+    });
 
-//   test("Error 400 - no username", async () => {
-//     const res = await request.post("/api/signup").send({
-//       password: "password",
-//     });
-//     expect(res.statusCode).toEqual(400);
-//     expect(res.text).toEqual(noUNOrPass);
-//   });
-
-//   test("Error 400 - bad username", async () => {
-//     const res = await request.post("/api/signup").send({
-//       username: "un$",
-//       password: "Very1Epic!",
-//     });
-//     expect(res.statusCode).toEqual(400);
-//   });
-
-//   test("Error 400 - bad password", async () => {
-//     const res = await request.post("/api/signup").send({
-//       username: "usernameVeryEpic",
-//       password: "password",
-//     });
-//     expect(res.statusCode).toEqual(400);
-//   });
-  
-//   test("Error 400 - username already exists", async () => {
-//     await request.post("/api/signup").send({
-//         username: "usernameVeryCool1",
-//         password: "Very1Epic",
-//     });
-
-//     const res = await request.post("/api/signup").send({
-//         username: "usernameVeryCool1",
-//         password: "Very1Epic",
-//     });
-
-//     expect(res.statusCode).toEqual(400);
-//     expect(res.text).toEqual("Error: Username already exists!");
-//   });
+    expect(res.statusCode).toEqual(400);
+    expect(res.text).toEqual("Error: Username already exists!");
+  });
 
 //   test("Response 200 - happy insertion", (done) => {
 //     // this test *may* look a little gross, but this makes sure it hits all the lines of the test
@@ -150,7 +94,7 @@ describe("Test insertUser", () => {
 //           }
 //         );
 //       });
-//   });
+   });
 
   // nuke the table afterwards
   afterEach(async () => {
