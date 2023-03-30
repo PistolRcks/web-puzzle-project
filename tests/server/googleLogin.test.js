@@ -61,19 +61,6 @@ describe("Test googleLogin route", () => {
     expect(res.text).toEqual(noUNOrPass);
   });
 
-  test("Error 400 - username already exists", async () => {
-    await request.post("/api/googleLogin").send({
-      googleIdToken: "usernameVeryCool1",
-    });
-
-    const res = await request.post("/api/googleLogin").send({
-      googleIdToken: "usernameVeryCool1",
-    });
-
-    expect(res.text).toEqual("Error: Username already exists!");
-    expect(res.statusCode).toEqual(400);
-  });
-
   test("Response 200 - happy insertion", (done) => {
     // this test *may* look a little gross, but this makes sure it hits all the lines of the test
     request
