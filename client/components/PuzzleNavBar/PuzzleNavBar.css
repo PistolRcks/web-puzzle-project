@@ -6,19 +6,3 @@ a:hover {
     background-color: #52796f;
     position: static;
 }
-.logOutNav {
-    float: right;
-    padding: 1320px;
-    position: fixed;
-    z-index: 2;
-    
-  }
-  .NavBar__button {
-    background-color: #52796f;
-    border-color: #52796f;
-    color: #e8f1e8;
-    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    max-width: 400px;
-    overflow: hidden;
-    white-space: nowrap;
-  }
