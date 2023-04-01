@@ -46,6 +46,7 @@ function LogIn(props) {
           .catch(() => {
             setErrors(true);
           });
+        console.log("Hey this code works");
       }
     } catch (error) {
       alert(error.message);
