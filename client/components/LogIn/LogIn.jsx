@@ -85,7 +85,10 @@ function LogIn(props) {
         </Button>
       </Row>
       <Row>
-        <Form.Text className={errors ? "error-true" : "error-false"}>
+        <Form.Text
+          className={errors ? "error-true" : "error-false"}
+          data-testid="logInError"
+        >
           Incorrect username or password
         </Form.Text>
       </Row>
