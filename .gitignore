@@ -18,6 +18,8 @@ public/*.jpg
 # secrets
 .env
 cert.pem
+csr.pem
+key.pem
 
 # misc
 .DS_Store
