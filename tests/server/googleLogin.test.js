@@ -44,6 +44,19 @@ describe("Test insertUser", () => {
     });
   });
 
+  test("Error 400 - username already exists", async () => {
+    await request.post("/api/googleLogin").send({
+      googleIdToken: "usernameVeryCool1",
+    });
+
+    const res = await request.post("/api/testGoogleLogin").send({
+      googleIdToken: "usernameVeryCool1",
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.text).toEqual("Error: Username already exists!");
+  });
+
   afterEach(async () => {
     // delete id created in test
     await db.run(`delete from User where user_id=${lastID + 1}`);

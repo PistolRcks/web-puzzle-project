@@ -43,6 +43,11 @@ async function googleLogin(req, res, next) {
   );
 }
 
+async function testGoogleLogin(req, res, next) {
+  const username = req.body.googleIdToken;
+  await googleSignup(req, res, username);
+}
+
 async function googleSignup(req, res, username) {
   if (!username ) {
     res.status(400).send("Error: Username not set!");
@@ -104,4 +109,4 @@ async function insertUser(db, username, callback) {
   );
 }
 
-module.exports = { googleLogin, insertUser };
+module.exports = { googleLogin, insertUser, testGoogleLogin};
