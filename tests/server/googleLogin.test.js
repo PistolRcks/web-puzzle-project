@@ -11,6 +11,11 @@ jest.mock("../../server/db");
 describe("Test insertUser", () => {
   var lastID = -1;
 
+  beforeAll(() => {
+    jest.spyOn(console, "log").mockImplementation(() => { });
+    jest.spyOn(console, "error").mockImplementation(() => { });
+  });
+
   beforeEach(async () => {
     // get the last user user_id
     await db.get("select max(user_id) as m from User", function (err, row) {
@@ -45,20 +50,20 @@ describe("Test insertUser", () => {
   });
 });
 
-const noUNOrPass = "Error: Google Id Not Set!";
+const noGoogleID = "Error: Google Id Not Set!";
 
 describe("Test googleLogin route", () => {
   // block console logging
   beforeAll(() => {
-    // jest.spyOn(console, "log").mockImplementation(() => { });
-    // jest.spyOn(console, "error").mockImplementation(() => { });
+    jest.spyOn(console, "log").mockImplementation(() => { });
+    jest.spyOn(console, "error").mockImplementation(() => { });
   });
 
   test("Error 400 - no username", async () => {
     const res = await request.post("/api/googleLogin").send({
     });
     expect(res.statusCode).toEqual(400);
-    expect(res.text).toEqual(noUNOrPass);
+    expect(res.text).toEqual(noGoogleID);
   });
 
   test("Response 200 - happy insertion", (done) => {

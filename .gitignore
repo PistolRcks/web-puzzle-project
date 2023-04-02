@@ -17,6 +17,7 @@ public/*.jpg
 
 # secrets
 .env
+cert.pem
 
 # misc
 .DS_Store
