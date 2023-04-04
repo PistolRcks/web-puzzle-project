@@ -51,7 +51,6 @@ const logRouteAndCheckAuthorization = (req, res, next) => {
     "/api/login",
     "/api/signup",
     "/api/googleLogin",
-    "/api/testGoogleLogin",
     "/",
     "/bundle.css",
     "/bundle.js",

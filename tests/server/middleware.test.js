@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 const app = require("../../server/index");
 const Supertest = require("supertest");
 const request = Supertest(app);
@@ -19,8 +23,13 @@ describe("Tests for middleware.js", () => {
     expect(response.statusCode).toBe(200);
   });
 
-  test("302 - Get bundle.js", async () => {
+  test("302 - File Redirect - Get bundle.js", async () => {
     const response = await request.get('/Puzzle/Selection/bundle.js');
+    expect(response.statusCode).toBe(302);
+  });
+
+  test("302 - Image Redirect - Get check.png", async () => {
+    const response = await request.get('/Puzzle/Selection/check.png');
     expect(response.statusCode).toBe(302);
   });
 

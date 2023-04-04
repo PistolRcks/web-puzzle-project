@@ -131,7 +131,7 @@ describe("Tests for POST at /api/word", () => {
         blah: []
       });
 
-    expect(response.statusCode).toEqual(400);
+    expect(response.statusCode).toBe(400);
     expect(response.text).toBe("Error: Malformed JSON. Make sure that the `words` array exists in the root of the request.");
   });
 
@@ -147,7 +147,7 @@ describe("Tests for POST at /api/word", () => {
       ]
     });
 
-    expect(response.statusCode).toEqual(500);
+    expect(response.statusCode).toBe(500);
     expect(response.text).toBe("Status code returned from API as 418!");
   });
 });

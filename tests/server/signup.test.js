@@ -58,7 +58,7 @@ describe("Tests for POST at /api/signup", () => {
         password
       });
 
-    expect(response.statusCode).toEqual(200);
+    expect(response.statusCode).toBe(200);
   });
 
   test("400 - Missing Username and Password", async () => {
@@ -120,8 +120,8 @@ describe("Tests for POST at /api/signup", () => {
         password
       });
 
-    expect(response.statusCode).toEqual(400);
-    expect(response.text).toEqual("Error: Username already exists!");
+    expect(response.statusCode).toBe(400);
+    expect(response.text).toBe("Error: Username already exists!");
   });
 
   test("500 - Crypto Error", async () => {
@@ -150,7 +150,7 @@ describe("Tests for POST at /api/signup", () => {
         password
       });
 
-    expect(response.statusCode).toEqual(500);
+    expect(response.statusCode).toBe(500);
     expect(response.text).toContain("Error: Failed to insert new user!\nSpecific error:")
   });
 });
