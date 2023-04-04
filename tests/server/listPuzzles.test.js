@@ -1,4 +1,4 @@
-import { db } from "../../server/db";
+const { db } = require("../../server/db");
 
 const app = require("../../server/index");
 const Supertest = require("supertest");
@@ -48,7 +48,7 @@ describe("Tests for GET at /api/listPuzzles", () => {
   });
 
   test("200 - Success", async () => {
-    jest.spyOn(db, "all").mockImplementationOnce((query, callback) => {
+    db.all = jest.fn().mockImplementationOnce((query, callback) => {
       callback(null, rows)
     })
 
@@ -69,7 +69,7 @@ describe("Tests for GET at /api/listPuzzles", () => {
   });
 
   test("500 - Puzzle Table Error", async () => {
-    jest.spyOn(db, "all").mockImplementationOnce((query, callback) => {
+    db.all = jest.fn().mockImplementationOnce((query, callback) => {
       callback("Error", null)
     });
 
@@ -79,11 +79,11 @@ describe("Tests for GET at /api/listPuzzles", () => {
   });
 
   test("500 - User_Puzzle Table Error", async () => {
-    jest.spyOn(db, "all").mockImplementationOnce((query, callback) => {
+    db.all = jest.fn().mockImplementationOnce((query, callback) => {
       callback(null, rows)
     });
 
-    jest.spyOn(db, "all").mockImplementationOnce((query, callback) => {
+    db.all = jest.fn().mockImplementationOnce((query, callback) => {
       callback("Error", null)
     });
 

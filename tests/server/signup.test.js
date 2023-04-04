@@ -8,16 +8,16 @@ const request = Supertest(app);
 jest.mock("../../server/db");
 jest.mock("../../server/api/login", () => {
   return {
-    login: jest.fn((req, response) => { return response.status(200).send("OK") })
+    login: jest.fn((req, res) => { return res.status(200).send("OK") })
   }
 });
 // mock the middleware, specifically mock the auth check to "create" the session
 jest.mock("../../server/middleware", () => {
   return {
-    redirectBundleManifest: jest.fn((req, response, next) => {
+    redirectBundleManifest: jest.fn((req, res, next) => {
       next();
     }),
-    logRouteAndCheckAuthorization: jest.fn((req, response, next) => {
+    logRouteAndCheckAuthorization: jest.fn((req, res, next) => {
       req.session.userID = 1;
       req.session.username = 'alice';
       next();
@@ -109,9 +109,9 @@ describe("Tests for POST at /api/signup", () => {
   });
 
   test("400 - Existing Username", async () => {
-    db.run = jest.fn((query, params, _callback) => {
+    db.run = jest.fn((query, params, callback) => {
       // errno 19 means the user already exists
-      _callback({ errno: 19 });
+      callback({ errno: 19 });
     });
 
     const response = await request.post(route)
@@ -125,8 +125,8 @@ describe("Tests for POST at /api/signup", () => {
   });
 
   test("500 - Database Failure", async () => {
-    db.run = jest.fn((query, params, _callback) => {
-      _callback("Error");
+    db.run = jest.fn((query, params, callback) => {
+      callback("Error");
     });
 
     const response = await request.post(route)

@@ -8,7 +8,7 @@ const request = Supertest(app);
 
 jest.mock("../../server/api/login", () => {
   return {
-    login: jest.fn((req, response) => { return response.status(200).send("OK") })
+    login: jest.fn((req, res) => { return res.status(200).send("OK") })
   }
 });
 

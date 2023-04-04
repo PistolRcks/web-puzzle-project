@@ -43,7 +43,7 @@ async function googleLogin(req, res, next) {
 }
 
 async function googleSignup(req, res, username) {
-  await insertUser(
+  await insertGoogleUser(
     db,
     username,
     (err, user) => {
@@ -69,7 +69,7 @@ async function googleSignup(req, res, username) {
  *                   `error` will be null if there is no error.
  * @returns Nothing.
  */
-async function insertUser(db, username, callback) {
+async function insertGoogleUser(db, username, callback) {
   await db.run(
     "INSERT INTO User (username) VALUES (?)",
     [username],
