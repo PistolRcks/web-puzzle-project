@@ -22,7 +22,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
       env:
-        GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+        GOOGLE_OAUTH_CLIENTID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
