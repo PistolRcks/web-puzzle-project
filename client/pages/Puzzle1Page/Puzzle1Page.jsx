@@ -7,23 +7,35 @@ import cloud from "../../assets/cloud.jpg";
 import clown from "../../assets/clown.jpg";
 import dino from "../../assets/dino.jpg";
 import food from "../../assets/food.jpg";
+import facebook from "../../assets/facebook.png";
+import instagram from "../../assets/instagram.png";
+import tiktok from "../../assets/tiktok.png";
+import email from "../../assets/gmail.png";
 import "./Puzzle1Page.css";
 
 export default function Puzzle1Page() {
 
   const [showOverlay, setShowOverlay] = useState(false);
   const [showTipsHint, setShowTipsHint] = useState(false);
+  const [showComplete, setShowComplete] = useState(false);
   const [disableTipsButton, setDisableTipsButton] = useState(true);
+  const [disableContactButton, setDisableContactButton] = useState(true);
+  const handleCloseComplete = () => setShowComplete(false);
+  const handleShowComplete = () => setShowComplete(true);  
+  const target = useRef(null);
+
   const handleShowOverlay = () => {
     setShowOverlay(!showOverlay);
     setDisableTipsButton(false);
   }
   const handleShowTipsHint = () => {
     setShowTipsHint(true);
-    console.log("Here's your secret word: Hippo");
+    console.log("Click on Contact Us");
   }
-  const handleCloseTipsHint = () => setShowTipsHint(false);
-  const target = useRef(null);
+  const handleCloseTipsHint = () => {
+    setShowTipsHint(false);
+    setDisableContactButton(false);
+  }
 
   return(
     <>
@@ -65,18 +77,19 @@ export default function Puzzle1Page() {
                   >
                   <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                      Last Hint
+                      Hint
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    Check the console to complete the puzzle and find your secret word.
+                    Check the console
                   </Modal.Body>
                   <Modal.Footer>
-                    <p>Click the ? in the bottom left for help opening the console</p>
+                    <p>Click the ? on the bottom left for help opening the console</p>
                     <Button 
                       className="close-button"
                       variant="secondary" 
                       onClick={handleCloseTipsHint}
+                      data-testid="close-hint-modal"
                       >
                       Close
                     </Button>
@@ -90,13 +103,82 @@ export default function Puzzle1Page() {
               <Row>
                 <Col sm={2}>
                   <Stack gap={5} className="side-nav">
-                    <Button className="button" variant="secondary">Ideas</Button>
-                    <Button className="button" variant="secondary">FAQs</Button>
-                    <Button className="button" variant="secondary">About</Button>
-                    <Button className="button" variant="secondary">Contact Us</Button>
-                    <Button className="button" variant="secondary">Help</Button>
+                    <Button 
+                      className="button" 
+                      variant="secondary"
+                      >
+                      Ideas
+                    </Button>
+                    <Button 
+                      className="button" 
+                      variant="secondary"
+                      >
+                      FAQs
+                    </Button>
+                    <Button 
+                      className="button" 
+                      variant="secondary"
+                      >
+                      About
+                    </Button>
+                    <Button 
+                      className="button disabled-contact-us" 
+                      disabled={disableContactButton}
+                      variant="secondary"
+                      onClick={handleShowComplete}
+                      data-testid="contact-us"
+                      >
+                      Contact Us
+                    </Button>
+                    <Button 
+                      className="button" 
+                      variant="secondary"
+                      >
+                      Help
+                    </Button>
                   </Stack>
                 </Col>
+                <Modal
+                  show={showComplete}
+                  onHide={handleCloseComplete}
+                  backdrop="static"
+                  keyboard={false}
+                  size="lg"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  >
+                  <Modal.Header>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                      Congratulations!
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    You have completed Puzzle 1!
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button 
+                      className="button"
+                      variant="secondary" 
+                      onClick={handleCloseComplete}
+                      >
+                      Close
+                    </Button>
+                    <Button 
+                      className="button"
+                      variant="secondary" 
+                      onClick={handleCloseComplete}
+                      >
+                      Restart Puzzle
+                    </Button>
+                    <Button 
+                      className="button"
+                      variant="secondary" 
+                      onClick={handleCloseComplete}
+                      >
+                      Next Puzzle
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
                 <Col sm={10}>
                   <Carousel>
                     <Carousel.Item>
@@ -152,7 +234,7 @@ export default function Puzzle1Page() {
                       />
                       <Carousel.Caption className="carousel-captions">
                         <h3>Welcome to the fifth slide</h3>
-                        <p>Check the bottom right of the screen</p>
+                        <p>Click the Email button</p>
                       </Carousel.Caption>
                     </Carousel.Item>
                   </Carousel>
@@ -160,16 +242,24 @@ export default function Puzzle1Page() {
               </Row>
               <Row className="blank-space"></Row>
               <Row>
-                <Col sm={10}></Col>
-                <Col sm={2}>
+                <Col sm={9}></Col>
+                <Col sm={3}>
+                <Button className="social-buttons button">
+                    <img src={facebook} alt="facebook"  width="35" height="35"/>
+                  </Button>
+                  <Button className="social-buttons button">
+                    <img src={instagram} alt="instagram"  width="35" height="35"/>
+                  </Button>
+                  <Button className="social-buttons button">
+                    <img src={tiktok} alt="tiktok" width="35" height="35"/>
+                  </Button>
                   <Button 
                     ref={target}
                     onClick={handleShowOverlay}
-                    variant="secondary"
-                    className="button first-hint"
+                    className="social-buttons button"
                     data-testid="click-me"
                     >
-                    Click me
+                    <img src={email} alt="email"  width="35" height="35"/>
                   </Button>
                   <Overlay 
                     target={target.current} 

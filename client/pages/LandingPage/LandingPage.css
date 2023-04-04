@@ -23,7 +23,8 @@ a {
 
 .button:disabled {
   color: #FFFFFF;
-  background-color: #73a99b;
+  opacity: 100%;
+  background-color: #52796f;
 }
 
 .button:hover {

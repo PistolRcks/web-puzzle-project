@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Container, Form, Modal } from 'react-bootstrap';
 import puzzlePiece from "../../assets/puzzle-piece.png";
 import "./LandingPage.css";
 import { AccountCreation } from '../../components/AccountCreation/AccountCreation';
-import {LogIn} from '../../components/LogIn/LogIn';
+import { LogIn } from '../../components/LogIn/LogIn';
 import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 import { googleLogin } from "../../api/DataHelper";

@@ -80,13 +80,14 @@ describe("Tests for Puzzle 1 Page", () => {
     expect(wrapper.baseElement.outerHTML).toContain("Help");
 
   });
-  test("Checks for click me button", () => {
+  test("Checks Contact Us button is disabled", () => {
     const wrapper = render(
       <BrowserRouter>
         <Puzzle1Page />
       </BrowserRouter>
       );
-    expect(wrapper.baseElement.outerHTML).toContain("Click me");
+    const contactButton = screen.getByTestId("contact-us");
+    expect(contactButton).toBeDisabled();
   });
   test("Checks for Tooltip on click me button", () => {
     const wrapper = render(
@@ -111,7 +112,22 @@ describe("Tests for Puzzle 1 Page", () => {
     userEvent.click(clickMeButton);
     const tipsButton = screen.getByTestId("tips");
     userEvent.click(tipsButton);
-    expect(consoleSpy).toBeCalledWith("Here's your secret word: Hippo");
+    expect(consoleSpy).toBeCalledWith("Click on Contact Us");
+  });
+  test("Checks Contact Us is enabled when it should be", () => {
+    const wrapper = render(
+      <BrowserRouter>
+        <Puzzle1Page />
+      </BrowserRouter>
+      );
+    const clickMeButton = screen.getByTestId("click-me");
+    userEvent.click(clickMeButton);
+    const tipsButton = screen.getByTestId("tips");
+    userEvent.click(tipsButton);
+    const closeButton = screen.getByTestId("close-hint-modal");
+    userEvent.click(closeButton);
+    const contactButton = screen.getByTestId("contact-us");
+    expect(contactButton).toBeEnabled();
   });
   test("Checks tips button is disabled", () => {
     const wrapper = render(
