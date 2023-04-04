@@ -244,19 +244,26 @@ export default function Puzzle1Page() {
               <Row>
                 <Col sm={9}></Col>
                 <Col sm={3}>
-                <Button className="social-buttons button">
+                <Button 
+                  className="social-buttons button"
+                  variant="secondary">
                     <img src={facebook} alt="facebook"  width="35" height="35"/>
                   </Button>
-                  <Button className="social-buttons button">
+                  <Button 
+                    className="social-buttons button"
+                    variant="secondary">
                     <img src={instagram} alt="instagram"  width="35" height="35"/>
                   </Button>
-                  <Button className="social-buttons button">
+                  <Button 
+                    className="social-buttons button"
+                    variant="secondary">
                     <img src={tiktok} alt="tiktok" width="35" height="35"/>
                   </Button>
                   <Button 
                     ref={target}
                     onClick={handleShowOverlay}
                     className="social-buttons button"
+                    variant="secondary"
                     data-testid="click-me"
                     >
                     <img src={email} alt="email"  width="35" height="35"/>
