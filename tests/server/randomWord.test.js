@@ -20,7 +20,7 @@ jest.mock("../../server/middleware", () => {
   }
 })
 
-describe("Test /api/word route", () => {
+describe("Tests for POST at /api/word", () => {
   const route = "/api/word";
 
   beforeEach(() => {
@@ -37,7 +37,7 @@ describe("Test /api/word route", () => {
 
     axios.get.mockResolvedValueOnce({ data: data, status: 200 });
 
-    const res = await request.get(route)
+    const response = await request.get(route)
       .send({
         words: [
           {
@@ -47,7 +47,7 @@ describe("Test /api/word route", () => {
       });
 
     expect(axios.get.mock.lastCall[1]).toEqual({ params: { length: -1, number: 2 } });
-    expect(res.text).toEqual(JSON.stringify([data]));
+    expect(response.text).toBe(JSON.stringify([data]));
   });
 
   test("200 - Object within 'words' does not contain property 'numWords'", async () => {
@@ -57,7 +57,7 @@ describe("Test /api/word route", () => {
 
     axios.get.mockResolvedValueOnce({ data: data, status: 200 });
 
-    const res = await request.get(route)
+    const response = await request.get(route)
       .send({
         words: [
           {
@@ -67,7 +67,7 @@ describe("Test /api/word route", () => {
       });
 
     expect(axios.get.mock.lastCall[1]).toEqual({ params: { length: 5, number: 1 } });
-    expect(res.text).toEqual(JSON.stringify([data]));
+    expect(response.text).toBe(JSON.stringify([data]));
   });
 
   test("200 - Proper usage with one requirement set", async () => {
@@ -78,7 +78,7 @@ describe("Test /api/word route", () => {
 
     axios.get.mockResolvedValueOnce({ data: data, status: 200 });
 
-    const res = await request.get(route)
+    const response = await request.get(route)
       .send({
         words: [
           {
@@ -89,7 +89,7 @@ describe("Test /api/word route", () => {
       });
 
     expect(axios.get.mock.lastCall[1]).toEqual({ params: { length: 5, number: 2 } });
-    expect(res.text).toEqual(JSON.stringify([data]));
+    expect(response.text).toBe(JSON.stringify([data]));
   });
 
   test("200 - Proper usage with multiple requirement sets", async () => {
@@ -106,7 +106,7 @@ describe("Test /api/word route", () => {
 
     axios.get.mockResolvedValueOnce({ data: data2, status: 200 });
 
-    const res = await request.get(route)
+    const response = await request.get(route)
       .send({
         words: [
           {
@@ -122,23 +122,23 @@ describe("Test /api/word route", () => {
 
     expect(axios.get.mock.calls[0][1]).toEqual({ params: { length: 5, number: 2 } });
     expect(axios.get.mock.calls[1][1]).toEqual({ params: { length: 4, number: 1 } });
-    expect(res.text).toEqual(JSON.stringify([data1, data2]));
+    expect(response.text).toBe(JSON.stringify([data1, data2]));
   });
 
   test("400 - Invalid input", async () => {
-    const res = await request.get(route)
+    const response = await request.get(route)
       .send({
         blah: []
       });
 
-    expect(res.statusCode).toEqual(400);
-    expect(res.text).toEqual("Error: Malformed JSON. Make sure that the `words` array exists in the root of the request.");
+    expect(response.statusCode).toEqual(400);
+    expect(response.text).toBe("Error: Malformed JSON. Make sure that the `words` array exists in the root of the request.");
   });
 
   test("500 - Random Word API failed", async () => {
     axios.get.mockResolvedValueOnce({ status: 418 });
 
-    const res = await request.get(route).send({
+    const response = await request.get(route).send({
       words: [
         {
           numWords: 2,
@@ -147,7 +147,7 @@ describe("Test /api/word route", () => {
       ]
     });
 
-    expect(res.statusCode).toEqual(500);
-    expect(res.text).toEqual("Status code returned from API as 418!");
+    expect(response.statusCode).toEqual(500);
+    expect(response.text).toBe("Status code returned from API as 418!");
   });
 });

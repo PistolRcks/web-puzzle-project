@@ -20,7 +20,7 @@ jest.mock("../../server/middleware", () => {
   }
 });
 
-describe("Puzzles endpoint", () => {
+describe("Tests for GET at /api/listPuzzles", () => {
   const route = "/api/listPuzzles";
   const rows = [
     {

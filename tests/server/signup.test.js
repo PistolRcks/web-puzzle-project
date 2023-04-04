@@ -1,4 +1,5 @@
 const { db } = require("../../server/db");
+const crypto = require("crypto");
 
 const app = require("../../server/index");
 const Supertest = require("supertest");
@@ -121,6 +122,21 @@ describe("Tests for POST at /api/signup", () => {
 
     expect(response.statusCode).toEqual(400);
     expect(response.text).toEqual("Error: Username already exists!");
+  });
+
+  test("500 - Crypto Error", async () => {
+    jest.spyOn(crypto, "pbkdf2")
+      .mockImplementationOnce((pass, salt, iter, keylen, digest, callback) => {
+        callback("Error", null);
+      });
+
+    const response = await request.post(route)
+      .send({
+        username,
+        password
+      });
+
+    expect(response.statusCode).toBe(500);
   });
 
   test("500 - Database Failure", async () => {

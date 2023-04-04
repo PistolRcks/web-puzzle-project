@@ -19,6 +19,11 @@ describe("Tests for middleware.js", () => {
     expect(response.statusCode).toBe(200);
   });
 
+  test("302 - Get bundle.js", async () => {
+    const response = await request.get('/Puzzle/Selection/bundle.js');
+    expect(response.statusCode).toBe(302);
+  });
+
   test("401 - Unauthorized", async () => {
     const response = await request.get("/api/verify");
     expect(response.statusCode).toBe(401);

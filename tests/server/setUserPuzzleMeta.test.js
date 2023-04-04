@@ -20,7 +20,7 @@ jest.mock("../../server/middleware", () => {
   };
 });
 
-describe("Tests /api/userPuzzleMeta route", () => {
+describe("Tests for POST at /api/userPuzzleMeta", () => {
   const route = "/api/userPuzzleMeta";
   const invalidInput = `Error: Malformed input - required key "progress", "puzzle_id", or "time" not found in request body.`;
   const invalidType = `Error: Malformed input - key "progress", "puzzle_id", or "time" is not a Number.`;

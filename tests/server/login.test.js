@@ -1,4 +1,5 @@
 const { db } = require( "../../server/db");
+const crypto = require("crypto");
 
 const app = require("../../server/index");
 const Supertest = require("supertest");
@@ -84,6 +85,29 @@ describe("Tests for POST at /api/login", () => {
 
     expect(db.get.mock.lastCall[1]).toBe(username);
     expect(response.statusCode).toBe(401);
+  });
+
+  test("500 - Crypto Error", async () => {
+    jest.spyOn(crypto, "pbkdf2")
+      .mockImplementationOnce((pass, salt, iter, keylen, digest, callback) => {
+        callback("Error", null);
+      });
+
+    db.get = jest.fn((query, params, callback) => {
+      callback(null, {
+        hashed_password: Buffer.from(password, "utf8"),
+        salt: "salt",
+        user_id: userID
+      });
+    });
+
+    const response = await request.post(route)
+      .send({
+        username,
+        password,
+      });
+
+      expect(response.statusCode).toBe(500);
   });
 
   test("500 - Database Error", async () => {
