@@ -1,0 +1,10 @@
+.login-button {
+    width: fit-content;
+}
+.error-true{
+    visibility: visible;
+}
+
+.error-false{
+    visibility: hidden;
+}

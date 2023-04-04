@@ -1,11 +1,14 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Button, Form, Row } from "react-bootstrap";
+import React, { Component, useState, useEffect } from "react";
+//import { Link } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from "react-router-dom";
+import { Button, Container, Form, Modal, Row } from "react-bootstrap";
+import PuzzleSelectionPage from "../../pages/PuzzleSelectionPage/PuzzleSelectionPage";
 import { logIn } from "../../api/DataHelper";
 import {
   checkUsernameRequirements,
   checkPasswordRequirements,
 } from "../../../utilities/AccountValidators";
+import "./LogIn.css";
 
 //Default values for form data
 const initialFormData = Object.freeze({
@@ -14,8 +17,12 @@ const initialFormData = Object.freeze({
 });
 function LogIn(props) {
   //formData is an object that holds username, password, confirmPassword
-  const [formData, updateFormData] = React.useState(initialFormData);
+  const [formData, updateFormData] = useState(initialFormData);
   const navigate = useNavigate();
+
+  // use state that holds a boolean to display an error message if the user submits an invalid username or password
+  const [errors, setErrors] = useState(false);
+
   //Whenever username or confirmPassword input boxes change, this saves the new data to formData
   const handleChange = (e) => {
     updateFormData({
@@ -27,19 +34,20 @@ function LogIn(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      if(checkUsernameRequirements(formData.username) &&
-      checkPasswordRequirements(formData.password)) {
-        logIn(formData)
-        .then((res) => {
-          //TODO: The api will have to send me back something here so I have have a userID on the front end
-          navigate("/Puzzle/Selection");
-        })
-        .catch((err) => {
-          alert(err)
-        })
+      if (
+        checkUsernameRequirements(formData.username) &&
+        checkPasswordRequirements(formData.password)
+      ) {
+        logIn(formData) // if formData contains valid credentials, log in and send the user to puzzle selection
+          .then(() => {
+            //TODO: The api will have to send me back something here so I have have a userID on the front end
+            navigate("/Puzzle/Selection");
+          }) // if formData doesn't contain valid credentials, set errors to true
+          .catch(() => {
+            setErrors(true);
+          });
+        console.log("Hey this code works");
       }
-      console.log("Hey this code works");
-      props.close();
     } catch (error) {
       alert(error.message);
     }
@@ -65,19 +73,24 @@ function LogIn(props) {
           onChange={handleChange}
         />
       </Row>
-
       <Row>
-        <Link to="/Puzzle/Selection">
-          <Button
-            className="button"
-            variant="secondary"
-            type="submit"
-            onClick={handleSubmit}
-            data-testid="submitButtonLogin"
-          >
-            Log In
-          </Button>
-        </Link>
+        <Button
+          className="button login-button"
+          variant="primary"
+          type="submit"
+          onClick={handleSubmit}
+          data-testid="submitButtonLogin"
+        >
+          Log In
+        </Button>
+      </Row>
+      <Row>
+        <Form.Text
+          className={errors ? "error-true" : "error-false"}
+          data-testid="logInError"
+        >
+          Incorrect username or password
+        </Form.Text>
       </Row>
     </Form>
   );
