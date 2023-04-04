@@ -1,6 +1,7 @@
 const Express = require("express");
 const { signup } = require("./signup");
 const { login } = require("./login");
+const { logout } = require("./logout")
 const { randomWord } = require("./randomWord");
 const { listPuzzles } = require("./listPuzzles");
 const { setUserPuzzleMeta } = require("./setUserPuzzleMeta");
@@ -19,6 +20,8 @@ router.get("/verify", (req, res) => {
 router.post("/signup", signup);
 
 router.post("/login", login);
+
+router.post("/logout", logout);
 
 router.get("/word", randomWord);
 

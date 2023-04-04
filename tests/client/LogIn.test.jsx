@@ -1,7 +1,8 @@
 import { LogIn } from "../../client/components/LogIn/LogIn";
-import { render, screen } from "@testing-library/react";
+import { getByTestId, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
+import "@testing-library/jest-dom";
 
 describe("Tests for Log In", () => {
   beforeAll(() => {
@@ -52,5 +53,24 @@ describe("Tests for Log In", () => {
     userEvent.click(submitButton);
 
     expect(consoleSpy).toBeCalledWith("Hey this code works");
+  });
+
+  test("check for error message", () => {
+    const wrapper = render(
+      <BrowserRouter>
+        <LogIn></LogIn>
+      </BrowserRouter>
+    );
+
+    const inputUsername = screen.getByTestId("usernameLogin");
+    userEvent.type(inputUsername, "");
+
+    const inputPassword = screen.getByTestId("passwordLogin");
+    userEvent.type(inputPassword, "");
+
+    const submitButton = screen.getByTestId("submitButtonLogin");
+    userEvent.click(submitButton);
+
+    expect(screen.getByTestId("logInError")).toBeVisible();
   });
 });
