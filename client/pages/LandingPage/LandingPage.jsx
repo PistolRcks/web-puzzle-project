@@ -25,17 +25,17 @@ export default function LandingPage() {
     confirmPassword: ""
   }); 
 
-    const [formData, updateFormData] = React.useState(initialFormData);
+  const [formData, updateFormData] = React.useState(initialFormData);
   
     
-    const handleChange = (e) => {
-        updateFormData({
-            ...formData,
-            [e.target.name]: e.target.value.trim()
-        });
-    }
+  const handleChange = (e) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim()
+    });
+  }
 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
   return (
     <div className="app min-vh-100 min-vw-100" data-testid="landing-1">
@@ -131,20 +131,20 @@ export default function LandingPage() {
           </Button>
         </Modal.Footer>
       </Modal>
-            <div className='center'>
-            <GoogleLogin
-  onSuccess={async credentialResponse => {
-    // console.log(credentialResponse);
-    const decoded = jwt_decode(credentialResponse.credential);
-    // console.log(decoded.sub);
-    await googleLogin(decoded.sub);
-    navigate("/Puzzle/Selection");
-  }}
-  onError={() => {
-    console.log('Login Failed');
-  }}
-/>;
-</div>
+      <div className='center'>
+        <GoogleLogin
+          onSuccess={async credentialResponse => {
+          // console.log(credentialResponse);
+          const decoded = jwt_decode(credentialResponse.credential);
+          // console.log(decoded.sub);
+          await googleLogin(decoded.sub);
+          navigate("/Puzzle/Selection");
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        />;
+      </div>
     </div>
     
   );
