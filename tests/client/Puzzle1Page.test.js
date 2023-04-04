@@ -1,5 +1,6 @@
-import {render} from "@testing-library/react";
+import {render, screen, getByTestId} from "@testing-library/react";
 import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
 import { PuzzleNavBar } from "../../client/components/PuzzleNavBar/PuzzleNavBar";
 import { BrowserRouter } from "react-router-dom";
 import Puzzle1Page from "../../client/pages/Puzzle1Page/Puzzle1Page";
@@ -87,44 +88,39 @@ describe("Tests for Puzzle 1 Page", () => {
       );
     expect(wrapper.baseElement.outerHTML).toContain("Click me");
   });
-  // test("Checks for Tooltip on click me button", () => {
-  //   const wrapper = render(
-  //     <BrowserRouter>
-  //       <Puzzle1Page />
-  //     </BrowserRouter>
-  //     );
-  //   expect(wrapper.baseElement.outerHTML).toContain("Click on the word Tips");
-  // });
-  // test('click', () => {
-  //   render(
-  //     <div>
-  //       <label htmlFor="checkbox">Check</label>
-  //       <input id="" type="checkbox" />
-  //     </div>,
-  //   )
-  
-  //   userEvent.click(screen.getByText('Click me'))
-  //   expect(screen.getByLabelText('Click me')).toBe()
-  // });
-  // test("Checks for secret word in console", () => {
-  //   const consoleSpy = jest.spyOn(global.console, "log");
-  //   const wrapper = render(
-  //     <BrowserRouter>
-  //       <Puzzle1Page />
-  //     </BrowserRouter>
-  //     );
-      
-  //     wrapper.find("Click me").props().onClick();
-  //     wrapper.find("Tips").props().onClick();
-  //   expect(consoleSpy).toBeCalledWith("Here is your secret word: Hippo");
-  //});
+  test("Checks for Tooltip on click me button", () => {
+    const wrapper = render(
+      <BrowserRouter>
+        <Puzzle1Page />
+      </BrowserRouter>
+      );
+    const clickMeButton = screen.getByTestId("click-me");
+    userEvent.click(clickMeButton);
+    expect(wrapper.baseElement.outerHTML).toContain("Click on the word Tips");
+  });
+  test("Checks for secret word in console", () => {
+    const consoleSpy = jest.spyOn(global.console, "log");
+    const close = jest.fn();
+
+    const wrapper = render(
+      <BrowserRouter>
+        <Puzzle1Page close={close}/>
+      </BrowserRouter>
+      );
+    const clickMeButton = screen.getByTestId("click-me");
+    userEvent.click(clickMeButton);
+    const tipsButton = screen.getByTestId("tips");
+    userEvent.click(tipsButton);
+    expect(consoleSpy).toBeCalledWith("Here's your secret word: Hippo");
+  });
   test("Checks tips button is disabled", () => {
     const wrapper = render(
       <BrowserRouter>
         <Puzzle1Page />
       </BrowserRouter>
       );
-    expect(wrapper.find("Tips")).toBeDisabled();
+    const tipsButton = screen.getByTestId("tips");
+    expect(tipsButton).toBeDisabled();
   });
 
 });

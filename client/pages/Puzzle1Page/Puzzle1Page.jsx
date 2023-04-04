@@ -20,8 +20,7 @@ export default function Puzzle1Page() {
   }
   const handleShowTipsHint = () => {
     setShowTipsHint(true);
-    console.log("Here's your secret word: Hippo")   //add secret word here? or it can point
-    //a part of the site that can show the secret word, whichever is easier
+    console.log("Here's your secret word: Hippo");
   }
   const handleCloseTipsHint = () => setShowTipsHint(false);
   const target = useRef(null);
@@ -51,6 +50,7 @@ export default function Puzzle1Page() {
                 <Button 
                   disabled={disableTipsButton}
                   onClick={handleShowTipsHint}
+                  data-testid="tips"
                   variant="secondary" 
                   className="button">
                   Tips
@@ -167,6 +167,7 @@ export default function Puzzle1Page() {
                     onClick={handleShowOverlay}
                     variant="secondary"
                     className="button first-hint"
+                    data-testid="click-me"
                     >
                     Click me
                   </Button>
