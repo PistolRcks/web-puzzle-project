@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-//import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Form, Modal } from 'react-bootstrap';
 import puzzlePiece from "../../assets/puzzle-piece.png";
 import "./LandingPage.css";
 import { AccountCreation } from '../../components/AccountCreation/AccountCreation';
 import {LogIn} from '../../components/LogIn/LogIn';
+import { GoogleLogin } from '@react-oauth/google';
+import jwt_decode from "jwt-decode";
+import { googleLogin } from "../../api/DataHelper";
+
 
 export default function LandingPage() {
     const [showLogin, setShowLogin] = useState(false);
@@ -30,8 +34,8 @@ export default function LandingPage() {
             [e.target.name]: e.target.value.trim()
         });
     }
-    
 
+    const navigate = useNavigate()
 
     return (
         <div className="app min-vh-100 min-vw-100" data-testid="landing-1">
@@ -123,6 +127,20 @@ export default function LandingPage() {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            <div className='center'>
+            <GoogleLogin
+  onSuccess={async credentialResponse => {
+    // console.log(credentialResponse);
+    const decoded = jwt_decode(credentialResponse.credential);
+    // console.log(decoded.sub);
+    await googleLogin(decoded.sub);
+    navigate("/Puzzle/Selection");
+  }}
+  onError={() => {
+    console.log('Login Failed');
+  }}
+/>;
+</div>
         </div>
       
     );
