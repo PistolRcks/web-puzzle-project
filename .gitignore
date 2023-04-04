@@ -14,9 +14,14 @@
 /build
 bundle.js
 public/bundle.css
+public/*.png
+public/*.jpg
 
 # secrets
 .env
+cert.pem
+csr.pem
+key.pem
 
 # misc
 .DS_Store
