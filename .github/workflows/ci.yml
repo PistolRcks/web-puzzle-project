@@ -21,6 +21,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Create and Populate dotenv 
+      run: |
+        touch .env
+        echo GOOGLE_OAUTH_CLIENTID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }} >> .env
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test

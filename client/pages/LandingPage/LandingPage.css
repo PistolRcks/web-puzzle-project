@@ -30,6 +30,12 @@ a {
   background-color: #354f52;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .close-button {
   background-color: #2f3e46;
   border-style: none;
