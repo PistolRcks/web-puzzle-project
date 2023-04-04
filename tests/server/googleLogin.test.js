@@ -54,7 +54,7 @@ describe("Tests for POST at /api/googleLogin", () => {
     expect(response.text).toBe(noGoogleID);
   });
 
-  test("500 - db.get Error", async () => {
+  test("500 - Internal SQLite3 Error during `db.get`", async () => {
     db.get = jest.fn((query, params, callback) => {
       callback("Error", null);
     });
@@ -67,7 +67,7 @@ describe("Tests for POST at /api/googleLogin", () => {
       expect(response.statusCode).toBe(500);
   });
 
-  test("500 - db.run Error", async () => {
+  test("500 - Internal SQLite3 Error during `db.run`", async () => {
     db.get = jest.fn((query, params, callback) => {
       callback(null, null);
     });

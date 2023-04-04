@@ -124,21 +124,6 @@ describe("Tests for POST at /api/signup", () => {
     expect(response.text).toBe("Error: Username already exists!");
   });
 
-  test("500 - Crypto Error", async () => {
-    jest.spyOn(crypto, "pbkdf2")
-      .mockImplementationOnce((pass, salt, iter, keylen, digest, callback) => {
-        callback("Error", null);
-      });
-
-    const response = await request.post(route)
-      .send({
-        username,
-        password
-      });
-
-    expect(response.statusCode).toBe(500);
-  });
-
   test("500 - Database Failure", async () => {
     db.run = jest.fn((query, params, _callback) => {
       _callback("Error");
@@ -152,5 +137,20 @@ describe("Tests for POST at /api/signup", () => {
 
     expect(response.statusCode).toBe(500);
     expect(response.text).toContain("Error: Failed to insert new user!\nSpecific error:")
+  });
+
+  test("500 - Internal Crypto Error during `crypto.pbkdf2`", async () => {
+    jest.spyOn(crypto, "pbkdf2")
+      .mockImplementationOnce((pass, salt, iter, keylen, digest, callback) => {
+        callback("Error", null);
+      });
+
+    const response = await request.post(route)
+      .send({
+        username,
+        password
+      });
+
+    expect(response.statusCode).toBe(500);
   });
 });

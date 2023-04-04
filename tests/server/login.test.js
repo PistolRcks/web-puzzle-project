@@ -29,7 +29,7 @@ describe("Tests for POST at /api/login", () => {
     jest.spyOn(console, "error").mockImplementation();
   });
 
-  it("200 - Successful login", async () => {
+  test("200 - Successful login", async () => {
     // mock the database response
     db.get = jest.fn((query, params, callback) => {
       callback(null, {
@@ -67,7 +67,7 @@ describe("Tests for POST at /api/login", () => {
     expect(response.statusCode).toBe(400);
   });
 
-  it("401 - Unauthorized login", async () => {
+  test("401 - Unauthorized login", async () => {
     // mock the database response
     db.get = jest.fn((query, params, callback) => {
       callback(null, {
@@ -87,7 +87,22 @@ describe("Tests for POST at /api/login", () => {
     expect(response.statusCode).toBe(401);
   });
 
-  test("500 - Crypto Error", async () => {
+  test("500 - Database Error", async () => {
+    db.get = jest.fn((query, params, callback) => {
+      callback("Error", null);
+    });
+
+    const response = await request.post(route)
+      .send({
+        username,
+        password
+      })
+
+      expect(db.get.mock.lastCall[1]).toBe(username);
+      expect(response.statusCode).toBe(500);
+  });
+
+  test("500 - Internal Crypto Error during `crypto.pbkdf2`", async () => {
     jest.spyOn(crypto, "pbkdf2")
       .mockImplementationOnce((pass, salt, iter, keylen, digest, callback) => {
         callback("Error", null);
@@ -107,21 +122,6 @@ describe("Tests for POST at /api/login", () => {
         password,
       });
 
-      expect(response.statusCode).toBe(500);
-  });
-
-  test("500 - Database Error", async () => {
-    db.get = jest.fn((query, params, callback) => {
-      callback("Error", null);
-    });
-
-    const response = await request.post(route)
-      .send({
-        username,
-        password
-      })
-
-      expect(db.get.mock.lastCall[1]).toBe(username);
       expect(response.statusCode).toBe(500);
   });
 

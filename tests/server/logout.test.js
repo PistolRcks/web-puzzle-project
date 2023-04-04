@@ -1,7 +1,7 @@
-import Supertest from "supertest";
-import { Session } from "express-session";
+const { Session } = require("express-session");
 
 const App = require("../../server/index");
+const Supertest = require("supertest");
 const request = Supertest(App);
 
 // mock the middleware, specifically mock the auth check to "create" the session
@@ -19,19 +19,21 @@ jest.mock("../../server/middleware", () => {
   };
 });
 
-describe("Test /api/logout route", () => {
-  test("Logout with session", async () => {
-    const res = await request.post("/api/logout");
-    expect(res.statusCode).toEqual(200); // we should get a redirect
+describe("Tests for POST at /api/logout", () => {
+  const route = "/api/logout";
+
+  test("200 - Logged Out", async () => {
+    const response = await request.post(route);
+    expect(response.statusCode).toBe(200); // we should get a redirect
   });
 
   test("Logout with error", async () => {
     // mock `Session.destroy()` to throw an error
     jest.spyOn(Session.prototype, "destroy").mockImplementation((callback) => {
-      callback("Error!");
+      callback("Error");
     });
 
-    const res = await request.post("/api/logout");
-    expect(res.statusCode).toEqual(500);
+    const response = await request.post(route);
+    expect(response.statusCode).toBe(500);
   });
 });
