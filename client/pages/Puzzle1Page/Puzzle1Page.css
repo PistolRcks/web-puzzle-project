@@ -1,5 +1,5 @@
 .blank-space {
-  height: 175px;
+  height: 145px;
 }
 
 body {
@@ -50,8 +50,6 @@ body {
 }
 
 .social-buttons {
-  /* background-color: #52796f;
-  border-color: #52796f; */
   width: 45px;
   height: 45px;
   padding: 0px;
