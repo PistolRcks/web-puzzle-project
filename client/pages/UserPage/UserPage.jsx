@@ -8,7 +8,7 @@ export default function UserPage () {
     return(
         <div className="UserPage">
             <div>
-                <img src = {userIcon} />
+                <img src = {userIcon} height="75" />
             </div>
         </div>
     )
