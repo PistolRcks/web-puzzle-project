@@ -33,14 +33,14 @@ describe("Tests for GET at /api/listPuzzles", () => {
       title: "Title 2",
       description: "Description 2"
     }
-  ]
+  ];
 
   const userPuzzleCompletion = [
     {
       progress: 1,
       puzzle_id: 1
     }
-  ]
+  ];
 
   beforeAll(() => {
     jest.spyOn(console, "log").mockImplementation();
@@ -49,12 +49,10 @@ describe("Tests for GET at /api/listPuzzles", () => {
 
   test("200 - Success", async () => {
     db.all = jest.fn().mockImplementationOnce((query, callback) => {
-      callback(null, rows)
-    })
-
-    jest.spyOn(db, "all").mockImplementationOnce((query, callback) => {
-      callback(null, userPuzzleCompletion)
-    })
+      callback(null, rows);
+    }).mockImplementationOnce((query, callback) => {
+      callback(null, userPuzzleCompletion);
+    });
 
     const response = await request.get(route);
 
@@ -70,7 +68,7 @@ describe("Tests for GET at /api/listPuzzles", () => {
 
   test("500 - Puzzle Table Error", async () => {
     db.all = jest.fn().mockImplementationOnce((query, callback) => {
-      callback("Error", null)
+      callback("Error", null);
     });
 
     const response = await request.get(route);
@@ -80,11 +78,9 @@ describe("Tests for GET at /api/listPuzzles", () => {
 
   test("500 - User_Puzzle Table Error", async () => {
     db.all = jest.fn().mockImplementationOnce((query, callback) => {
-      callback(null, rows)
-    });
-
-    db.all = jest.fn().mockImplementationOnce((query, callback) => {
-      callback("Error", null)
+      callback(null, rows);
+    }).mockImplementationOnce((query, callback) => {
+      callback("Error", null);
     });
 
     const response = await request.get(route);

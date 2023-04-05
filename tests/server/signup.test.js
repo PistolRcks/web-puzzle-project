@@ -48,8 +48,8 @@ describe("Tests for POST at /api/signup", () => {
   });
 
   test("200 - Successful Insert", async () => {
-    db.run = jest.fn((query, params, _callback) => {
-      _callback(null, { lastID: 1 });
+    db.run = jest.fn((query, params, callback) => {
+      callback(null, { lastID: 1 });
     });
 
     const response = await request.post(route)
