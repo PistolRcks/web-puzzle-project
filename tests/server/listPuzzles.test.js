@@ -1,7 +1,8 @@
-import { db } from "../../server/db";
+const { db } = require("../../server/db");
 
 const app = require("../../server/index");
-const request = require("supertest");
+const Supertest = require("supertest");
+const request = Supertest(app)
 
 jest.mock("../../server/db");
 
@@ -13,55 +14,77 @@ jest.mock("../../server/middleware", () => {
     }),
     logRouteAndCheckAuthorization: jest.fn((req, res, next) => {
       req.session.userID = 1;
-      req.session.username = 'alice';
+      req.session.username = "alice";
       next();
     })
   }
-})
-
-/**
- * Helper function to insert test puzzles into db
- * @param {int} k - Number of test puzzles to insert
- * @returns nothing
- */
-function dataHelper(k) {
-  db.run(
-    `INSERT INTO Puzzle VALUES (1, "test puzzle 1", "test description 1")`
-  );
-
-  db.run(`INSERT INTO User_Puzzle VALUES (1, 1, NULL, 1)`)
-}
-
-// block console logging, generate mock data
-beforeAll(() => {
-  jest.spyOn(console, "log").mockImplementation(() => { });
-  jest.spyOn(console, "error").mockImplementation(() => { });
-  dataHelper();
 });
 
-describe("Puzzles endpoint", () => {
-  test("Response 200 - successful query", async () => {
-    const res = await request(app).get("/api/listPuzzles");
-    console.log(res.body)
+describe("Tests for GET at /api/listPuzzles", () => {
+  const route = "/api/listPuzzles";
+  const rows = [
+    {
+      puzzle_id: 1,
+      title: "Title",
+      description: "Description"
+    },
+    {
+      puzzle_id: 2,
+      title: "Title 2",
+      description: "Description 2"
+    }
+  ];
 
-    expect(res.statusCode).toEqual(200); // status code should be 200
-    expect(res.body).toEqual(
+  const userPuzzleCompletion = [
+    {
+      progress: 1,
+      puzzle_id: 1
+    }
+  ];
+
+  beforeAll(() => {
+    jest.spyOn(console, "log").mockImplementation();
+    jest.spyOn(console, "error").mockImplementation();
+  });
+
+  test("200 - Success", async () => {
+    db.all = jest.fn().mockImplementationOnce((query, callback) => {
+      callback(null, rows);
+    }).mockImplementationOnce((query, callback) => {
+      callback(null, userPuzzleCompletion);
+    });
+
+    const response = await request.get(route);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual(
       {
         userID: 1,
         username: 'alice',
-        puzzles: [
-          {
-            puzzle_id: 1,
-            title: "test puzzle 1",
-            description: "test description 1",
-          }
-        ],
-        userPuzzleCompletion: [
-          {
-            progress: 1,
-            puzzle_id: 1
-          }
-        ]
+        puzzles: rows,
+        userPuzzleCompletion
       });
+  });
+
+  test("500 - Puzzle Table Error", async () => {
+    db.all = jest.fn().mockImplementationOnce((query, callback) => {
+      callback("Error", null);
+    });
+
+    const response = await request.get(route);
+
+    expect(response.statusCode).toBe(500);
+  });
+
+  test("500 - User_Puzzle Table Error", async () => {
+    db.all = jest.fn().mockImplementationOnce((query, callback) => {
+      callback(null, rows);
+    }).mockImplementationOnce((query, callback) => {
+      callback("Error", null);
+    });
+
+    const response = await request.get(route);
+
+    expect(response.statusCode).toBe(500);
   });
 });

@@ -5,7 +5,7 @@ const { logout } = require("./logout")
 const { randomWord } = require("./randomWord");
 const { listPuzzles } = require("./listPuzzles");
 const { setUserPuzzleMeta } = require("./setUserPuzzleMeta");
-const { googleLogin, testGoogleLogin } = require("./googleLogin");
+const { googleLogin } = require("./googleLogin");
 
 const router = new Express.Router();
 
@@ -34,8 +34,6 @@ router.post("/userPuzzleMeta", setUserPuzzleMeta);
 
 
 router.post("/googleLogin", googleLogin);
-
-router.post("/testGoogleLogin", testGoogleLogin);
 
 module.exports = router;
 

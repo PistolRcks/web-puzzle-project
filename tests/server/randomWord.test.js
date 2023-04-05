@@ -1,8 +1,8 @@
-import Supertest from "supertest";
-import axios from "axios";
+const axios = require('axios');
 
-const App = require("../../server/index");
-const request = Supertest(App);
+const app = require("../../server/index");
+const Supertest = require("supertest");
+const request = Supertest(app);
 
 jest.mock("axios");
 
@@ -20,127 +20,134 @@ jest.mock("../../server/middleware", () => {
   }
 })
 
-describe("Test /api/word route", () => {
-    beforeEach(() => {
-        axios.get.mockClear();
-        jest.spyOn(console, "log").mockImplementation();
-        jest.spyOn(console, "error").mockImplementation();
-    })
+describe("Tests for POST at /api/word", () => {
+  const route = "/api/word";
 
-    test("Response 400 - Malformed input", async () => {
-        const res = await request.get("/api/word").send({
-            blah: []
-        });
-        expect(res.statusCode).toEqual(400);
-        expect(res.text).toEqual("Error: Malformed JSON. Make sure that the `words` array exists in the root of the request.");
-    })
-    
-    test("Response 200 - numWords given, not length", async () => {
-        const data = [
-            "word1",
-            "word2"
-        ];
+  beforeEach(() => {
+    axios.get.mockClear();
+    jest.spyOn(console, "log").mockImplementation();
+    jest.spyOn(console, "error").mockImplementation();
+  });
 
-        axios.get.mockResolvedValue({data: data, status: 200});
+  test("200 - Object within 'words' does not contain property 'length'", async () => {
+    const data = [
+      "word1",
+      "word2"
+    ];
 
-        const res = await request.get("/api/word").send({
-            words: [
-                {
-                    numWords: 2
-                }
-            ] 
-        });
+    axios.get.mockResolvedValueOnce({ data: data, status: 200 });
 
-        expect(axios.get.mock.lastCall[1]).toEqual({params: {length: -1, number: 2}});
-        expect(res.text).toEqual(JSON.stringify([data]));
-    })
-    
-    
-    test("Response 200 - length given, not numWords", async () => {
-        const data = [
-            "word1"
-        ];
+    const response = await request.get(route)
+      .send({
+        words: [
+          {
+            numWords: 2
+          }
+        ]
+      });
 
-        axios.get.mockResolvedValue({data: data, status: 200});
+    expect(axios.get.mock.lastCall[1]).toEqual({ params: { length: -1, number: 2 } });
+    expect(response.text).toBe(JSON.stringify([data]));
+  });
 
-        const res = await request.get("/api/word").send({
-            words: [
-                {
-                    length: 5
-                }
-            ] 
-        });
+  test("200 - Object within 'words' does not contain property 'numWords'", async () => {
+    const data = [
+      "word1"
+    ];
 
-        expect(axios.get.mock.lastCall[1]).toEqual({params: {length: 5, number: 1}});
-        expect(res.text).toEqual(JSON.stringify([data]));
-    })
-    
-    test("Response 500 - API failed", async () => {
-        axios.get.mockResolvedValue({status: 418});
+    axios.get.mockResolvedValueOnce({ data: data, status: 200 });
 
-        const res = await request.get("/api/word").send({
-            words: [
-                {
-                    numWords: 2,
-                    length: 5
-                }
-            ] 
-        });
+    const response = await request.get(route)
+      .send({
+        words: [
+          {
+            length: 5
+          }
+        ]
+      });
 
-        expect(res.statusCode).toEqual(500);
-        expect(res.text).toEqual("Status code returned from API as 418!")
-    })
+    expect(axios.get.mock.lastCall[1]).toEqual({ params: { length: 5, number: 1 } });
+    expect(response.text).toBe(JSON.stringify([data]));
+  });
 
-    test("Response 200 - standard usage, singular requirement", async () => {
-        const data = [
-            "word1",
-            "word2"
-        ];
+  test("200 - Proper usage with one requirement set", async () => {
+    const data = [
+      "word1",
+      "word2"
+    ];
 
-        axios.get.mockResolvedValue({data: data, status: 200});
+    axios.get.mockResolvedValueOnce({ data: data, status: 200 });
 
-        const res = await request.get("/api/word").send({
-            words: [
-                {
-                    numWords: 2,
-                    length: 5
-                }
-            ] 
-        });
+    const response = await request.get(route)
+      .send({
+        words: [
+          {
+            numWords: 2,
+            length: 5
+          }
+        ]
+      });
 
-        expect(axios.get.mock.lastCall[1]).toEqual({params: {length: 5, number: 2}});
-        expect(res.text).toEqual(JSON.stringify([data]));
-    })
-    
-    test("Response 200 - standard usage, multiple requirements", async () => {
-        const data1 = [
-            "word1",
-            "word2"
-        ];
+    expect(axios.get.mock.lastCall[1]).toEqual({ params: { length: 5, number: 2 } });
+    expect(response.text).toBe(JSON.stringify([data]));
+  });
 
-        axios.get.mockResolvedValueOnce({data: data1, status: 200});
-        
-        const data2 = [
-            "word"
-        ];
+  test("200 - Proper usage with multiple requirement sets", async () => {
+    const data1 = [
+      "word1",
+      "word2"
+    ];
 
-        axios.get.mockResolvedValueOnce({data: data2, status: 200});
+    axios.get.mockResolvedValueOnce({ data: data1, status: 200 });
 
-        const res = await request.get("/api/word").send({
-            words: [
-                {
-                    numWords: 2,
-                    length: 5
-                },
-                {
-                    numWords: 1,
-                    length: 4
-                }
-            ] 
-        });
+    const data2 = [
+      "word"
+    ];
 
-        expect(axios.get.mock.calls[0][1]).toEqual({params: {length: 5, number: 2}});
-        expect(axios.get.mock.calls[1][1]).toEqual({params: {length: 4, number: 1}});
-        expect(res.text).toEqual(JSON.stringify([data1, data2]));
-    })
-})
+    axios.get.mockResolvedValueOnce({ data: data2, status: 200 });
+
+    const response = await request.get(route)
+      .send({
+        words: [
+          {
+            numWords: 2,
+            length: 5
+          },
+          {
+            numWords: 1,
+            length: 4
+          }
+        ]
+      });
+
+    expect(axios.get.mock.calls[0][1]).toEqual({ params: { length: 5, number: 2 } });
+    expect(axios.get.mock.calls[1][1]).toEqual({ params: { length: 4, number: 1 } });
+    expect(response.text).toBe(JSON.stringify([data1, data2]));
+  });
+
+  test("400 - Invalid input", async () => {
+    const response = await request.get(route)
+      .send({
+        blah: []
+      });
+
+    expect(response.statusCode).toBe(400);
+    expect(response.text).toBe("Error: Malformed JSON. Make sure that the `words` array exists in the root of the request.");
+  });
+
+  test("500 - Random Word API failed", async () => {
+    axios.get.mockResolvedValueOnce({ status: 418 });
+
+    const response = await request.get(route).send({
+      words: [
+        {
+          numWords: 2,
+          length: 5
+        }
+      ]
+    });
+
+    expect(response.statusCode).toBe(500);
+    expect(response.text).toBe("Status code returned from API as 418!");
+  });
+});
