@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Button, Container, Form, Modal, Row } from "react-bootstrap";
+import React from "react";
+import { Button, Form, Row } from "react-bootstrap";
 import {
   checkUsernameRequirements,
   checkPasswordRequirements,
 } from "../../../utilities/AccountValidators";
-import './AccountCreation.css';
+import "./AccountCreation.css";
 import { accountCreation } from "../../api/DataHelper";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";

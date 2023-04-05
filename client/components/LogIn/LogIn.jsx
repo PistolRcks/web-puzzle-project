@@ -1,8 +1,6 @@
-import React, { Component, useState, useEffect } from "react";
-//import { Link } from 'react-router-dom';
-import { Link, Routes, Route, useNavigate } from "react-router-dom";
-import { Button, Container, Form, Modal, Row } from "react-bootstrap";
-import PuzzleSelectionPage from "../../pages/PuzzleSelectionPage/PuzzleSelectionPage";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, Row } from "react-bootstrap";
 import { logIn } from "../../api/DataHelper";
 import {
   checkUsernameRequirements,

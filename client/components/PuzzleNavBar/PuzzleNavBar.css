@@ -1,8 +1,9 @@
 a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .puzzle-nav {
-    background-color: #52796f;
-    position: static;
+  background-color: #354f52;
+  position: static;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
