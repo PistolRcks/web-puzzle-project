@@ -108,7 +108,7 @@ describe("Test insertUser", () => {
   });
 });
 
-const noUNOrPass = "Error: Username or password not set!";
+const noUNOrPass = "Errordafo: Username or password not set!";
 
 describe("Test signup route", () => {
   // block console logging
