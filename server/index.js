@@ -33,7 +33,7 @@ app.use(Express.static('public'))
 
 app.use('/api', dataRouter)
 
-app.get(['/Puzzle/Selection', '/Puzzle/1', '/UserProfile/1', "*" ], (req, res) => {
+app.get(['/Puzzle/Selection', '/Puzzle/1', '/UserProfile/:userid', "*" ], (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'index.html'))
 })
 

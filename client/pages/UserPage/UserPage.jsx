@@ -6,11 +6,11 @@ export default function UserPage () {
 
     return(
         <div className="UserPage">
+             <div>
+                Profile Page
+            </div>
             <div >
                 <img className = "userPage__ProfilePicture" src = {userIcon} height="75" />
-            </div>
-            <div>
-                Profile Page
             </div>
         </div>
     )
