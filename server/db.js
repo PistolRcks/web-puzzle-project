@@ -48,22 +48,7 @@ function initDatabase(fp, puzzles) {
       )
     `);
 
-    const columnsToAdd = {
-      User: [
-        { name: "profile_picture", typeDef: "BLOB"},
-        { name: "profile_picture_top", typeDef: "INTEGER"},
-        { name: "profile_picture_left", typeDef: "INTEGER"}
-      ]
-    }
-  
-    for (const table in columnsToAdd) {
-      columnsToAdd[table].forEach(column => {
-          db.run(`
-            ALTER TABLE ${table}
-            ADD COLUMN ${column.name} ${column.typeDef}
-          `, (err) => { });
-      });
-    }
+    addColumns(db);
 
     // upsert puzzles
     for (let i = 0; i < puzzles.length; i++) {
@@ -86,6 +71,25 @@ function initDatabase(fp, puzzles) {
   });
 
   return db;
+}
+
+const addColumns = (db) => {
+  const columnsToAdd = {
+    User: [
+      { name: "profile_picture", typeDef: "BLOB"},
+      { name: "profile_picture_top", typeDef: "INTEGER"},
+      { name: "profile_picture_left", typeDef: "INTEGER"}
+    ]
+  };
+
+  for (const table in columnsToAdd) {
+    columnsToAdd[table].forEach(column => {
+        db.run(`
+          ALTER TABLE ${table}
+          ADD COLUMN ${column.name} ${column.typeDef}
+        `, (err) => { });
+    });
+  }
 }
 
 // Puzzle makers! Put your puzzle objects in here!
