@@ -39,7 +39,7 @@ export default function Puzzle1Page() {
 
   return(
     <>
-      <PuzzleNavBar />
+      <PuzzleNavBar puzzleNum={1}/>
       <PuzzleHint />
       <div className="puzzle1 min-vw-100 min-vh-100">
         <Container className="justify-content-center content">

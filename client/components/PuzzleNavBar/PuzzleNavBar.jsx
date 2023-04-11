@@ -4,16 +4,17 @@ import { Button, Container, Navbar, Nav, Modal } from "react-bootstrap";
 import { logOut } from "../../api/DataHelper";
 import "./PuzzleNavBar.css";
 
-export function PuzzleNavBar() {
+export function PuzzleNavBar({puzzleNum}) {
   const [showDescription, setShowDesc] = useState(false);
   const handleShowDesc = () => setShowDesc(true);
   const handleCloseDesc = () => setShowDesc(false);
+  console.log(puzzleNum);
 
   return (
     <>
       <Navbar className="puzzle-nav" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand>Puzzle 1</Navbar.Brand>
+          <Navbar.Brand>Puzzle {puzzleNum}</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
