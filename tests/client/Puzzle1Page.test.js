@@ -13,7 +13,9 @@ jest.mock("../../server/api/listPuzzles", () => {
 
 describe("Tests for Puzzle 1 Page", () => {
   beforeAll(() => {
+    jest.spyOn(console, "log").mockImplementation();
     jest.spyOn(console, "error").mockImplementation();
+    window.alert = jest.fn().mockImplementation();
   });
   test("Checks for Puzzle Nav Bar", () => {
     const wrapper = render(
