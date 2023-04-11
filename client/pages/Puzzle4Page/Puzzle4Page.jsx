@@ -21,10 +21,11 @@ export default function Puzzle4Page() {
         });
     }
 
+    const hintObj = [{title: "Opening the Console", steps: ["Right click on the screen and select Inspect", "Once the side bar is open on the right, select Console from the top tabs in the side bar."]}];
     return (
         <>
             <PuzzleNavBar puzzleNum={4} puzzleDesc={puzzleDesc}/>
-            <PuzzleHint/>
+            <PuzzleHint hints={hintObj}/>
         </>
     )
 }
