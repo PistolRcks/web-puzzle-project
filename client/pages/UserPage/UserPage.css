@@ -1,5 +1,39 @@
+.userPage{
+  text-align: center;
+}
 .userPage_ProfilePicture{
   padding: 70px 0;
   border: 3px solid green;
   text-align: center;
+}
+
+.userPage_PageDescription{
+  color: white;
+  text-align: center;
+}
+
+/* .userPage_Header{
+  background-color: #354f52;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 120px;
+  margin-bottom: 45px;
+  position: sticky;
+  top: 0;
+  z-index: 0;
+} */
+
+.userPage_Title{
+  padding-top: 25px;
+  font-size: 40px;
+  color: #e8f1e8;
+}
+
+.userPage_Username{
+  padding-top: 25px;
+  font-size: 25px;
+  color: white;
+}
+
+.userPage_Button{
+  color: lightgreen;
 }
