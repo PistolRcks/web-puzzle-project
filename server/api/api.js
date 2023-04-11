@@ -6,7 +6,7 @@ const { randomWord } = require("./randomWord");
 const { listPuzzles } = require("./listPuzzles");
 const { setUserPuzzleMeta } = require("./setUserPuzzleMeta");
 const { googleLogin } = require("./googleLogin");
-const { getUserInfo, setUserInfo } = require("./userInfo")
+const { getUserInfo, postUserInfo } = require("./userInfo")
 
 const router = new Express.Router();
 
@@ -31,8 +31,8 @@ router.get("/listPuzzles", listPuzzles);
 router.post("/userPuzzleMeta", setUserPuzzleMeta);
 
 // User profile routes
-router.get("/user/:user_id", getUserInfo);
-router.post("/user", setUserInfo)
+router.get("/user/:user_id(\\d+)", getUserInfo);  // user_id must be one or more digits
+router.post("/user", postUserInfo)
 
 router.post("/googleLogin", googleLogin);
 

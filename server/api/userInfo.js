@@ -1,4 +1,5 @@
 // Provides routes to get and set user info for the user profile page
+const { db } = require("../db");
 
 /**
  * The callback function for the /api/user/:user_id GET route. Gets a User's information.
@@ -20,22 +21,76 @@
  *        {
  *          "puzzle_id": the integer id of the puzzle,
  *          "name": "the name of the puzzle",
- *          "time": the integer representation of the time spent in milliseconds 
+ *          "time": the integer representation of the time spent in milliseconds
  *        },
  *        ...
  *      ]
  *    }
  *  ```
  *  For now, `best_times` will return all times, not just the best times.
+ *  If an error occurs, only the key "error" will be sent with an error message.
  */
 function getUserInfo(req, res, next) {
-  /*
-    The endpoint retrieves and sends the current user’s username, profile picture, and top puzzle completion times.
-    The endpoint sends error responses in the event of an error occurring, input failing validation, user not being logged in, etc.
-  */
+  let out = {
+    username: "",
+    profile_picture: "",
+    profile_picture_top: 0,
+    profile_picture_left: 0,
+    best_times: [],
+  };
+
+  const { user_id: userID } = req.params;
+
+  // get User info
+  db.get(
+    "SELECT username, profile_picture, profile_picture_top, profile_picture_left FROM User WHERE user_id=?",
+    [userID],
+    function (err, row) {
+      if (err) {
+        res.status(500).json({error: String(err)});
+        return;
+      }
+
+      if (row) {
+        // FIXME: there's probably a nicer way to do this lol
+        out.username = row.username;
+        out.profile_picture = row.profile_picture;
+        out.profile_picture_top = Number(row.profile_picture_top);
+        out.profile_picture_left = Number(row.profile_picture_left);
+
+        // get User_Puzzle info (only completed puzzles)
+        db.all(
+          "SELECT puzzle_id, name, time FROM User_Puzzle WHERE user_id=? AND progress!=0",
+          [userID],
+          function (err, rows) {
+            if (err) {
+              res.status(500).json({error: String(err)});
+              return;
+            }
+           
+            if (rows) {
+              for (const puzzle of rows) {
+                out.best_times.push(puzzle)
+              }
+              
+              // finally have all our data; send it
+              res.status(200).json(out);
+            } else {
+              // User has no completed puzzles
+              // I think 406 fits the best description
+              res.status(406).json({error: `User with ID ${userID} has no completed puzzles.`})
+            }
+          }
+        );
+      } else {
+        // There isn't a User with that ID
+        res.status(400).json({error: `User with ID ${userID} does not exist.`})
+      }
+    }
+  );
 }
 
-function setUserInfo(req, res, next) {
+function postUserInfo(req, res, next) {
   /*
     The endpoint validates the a user is logged in.
     The endpoint validates the password only contains allowed characters.
@@ -46,5 +101,5 @@ function setUserInfo(req, res, next) {
 
 module.exports = {
   getUserInfo,
-  setUserInfo,
+  postUserInfo,
 };
