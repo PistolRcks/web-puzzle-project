@@ -16,7 +16,7 @@ const Sqlite3 = require("sqlite3");
  * @returns {Database} - The sqlite3.Database object representing the database.
  */
 function initDatabase(fp, puzzles) {
-  var db = new Sqlite3.Database(fp);
+  const db = new Sqlite3.Database(fp);
 
   db.serialize(function () {
     // create the database schema for the app
