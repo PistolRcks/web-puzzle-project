@@ -73,11 +73,13 @@ function initDatabase(fp, puzzles) {
 
 // Puzzle makers! Put your puzzle objects in here!
 const db = initDatabase("./server/puzzle.db", [
-  { // Puzzle 1
+  {
+    // Puzzle 1
     title: "Simon Says",
-    description: "Let's get started! This puzzle will help familiarize you with Web Puzzle Project's puzzle style and UI.\
-    Follow the steps to find the hidden solution!" 
-  }
+    description:
+      "Let's get started! This puzzle will help familiarize you with Web Puzzle Project's puzzle style and UI.\
+      Follow the steps to find the hidden solution!",
+  },
 ]);
 
 module.exports = { db, initDatabase };
