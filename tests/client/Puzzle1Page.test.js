@@ -11,6 +11,7 @@ describe("Tests for Puzzle 1 Page", () => {
     delete window.location;
     window.location = { reload: jest.fn() };
     jest.spyOn(console, "error").mockImplementation();
+    jest.spyOn(console, "log").mockImplementation();
   });
   afterAll(() => {
     window.location = location;
