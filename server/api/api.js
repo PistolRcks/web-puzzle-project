@@ -6,6 +6,7 @@ const { randomWord } = require("./randomWord");
 const { listPuzzles } = require("./listPuzzles");
 const { setUserPuzzleMeta } = require("./setUserPuzzleMeta");
 const { googleLogin } = require("./googleLogin");
+const { getUserInfo, setUserInfo } = require("./userInfo")
 
 const router = new Express.Router();
 
@@ -27,11 +28,11 @@ router.get("/word", randomWord);
 
 router.get("/listPuzzles", listPuzzles);
 
-// UserPuzzle relation metadata update routes
 router.post("/userPuzzleMeta", setUserPuzzleMeta);
 
-// a route for the timer variable might be set here as well
-
+// User profile routes
+router.get("/user/:user_id", getUserInfo);
+router.post("/user", setUserInfo)
 
 router.post("/googleLogin", googleLogin);
 
