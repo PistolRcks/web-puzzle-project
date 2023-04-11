@@ -20,8 +20,7 @@ function signup(req, res, next) {
 
   // check that signup data is real
   if (!username || !password) {
-    res.status(400).send("Error: Username or password not set!");
-    return;
+    return res.status(400).send("Error: Username or password not set!");
   }
 
   // test username and password; should throw an error if there's an issue
@@ -29,8 +28,7 @@ function signup(req, res, next) {
     checkUsernameServer(username);
     checkPasswordServer(password);
   } catch (error) {
-    res.status(400).send(error.message);
-    return;
+    return res.status(400).send(error.message);
   }
 
   const salt = Crypto.randomBytes(16); // salt is required for hashing; it makes
@@ -56,13 +54,11 @@ function signup(req, res, next) {
           if (err) {
             // 19 is SQLITE_CONSTRAINT, should be username constraint
             if (err.errno === 19) {
-              res.status(400).send("Error: Username already exists!")
-            } else { // idk how to test for this branch
-              res
-                .status(500)
+              return res.status(400).send("Error: Username already exists!")
+            } else {
+              return res.status(500)
                 .send(`Error: Failed to insert new user!\nSpecific error: ${err}`);
             }
-            return; // end prematurely
           }
           // Log the user in
           login(req, res, next);
@@ -88,7 +84,6 @@ async function insertUser(db, username, hashedPassword, salt, callback) {
     "INSERT INTO User (username, hashed_password, salt) VALUES (?, ?, ?)",
     [username, hashedPassword, salt],
     (err) => {
-      // throw an error if there's an issue
       if (err) {
         callback(err);
         return;
