@@ -5,6 +5,12 @@ import { PuzzleNavBar } from "../../client/components/PuzzleNavBar/PuzzleNavBar"
 import { BrowserRouter } from "react-router-dom";
 import Puzzle1Page from "../../client/pages/Puzzle1Page/Puzzle1Page";
 
+jest.mock("../../server/api/listPuzzles", () => {
+  return {
+    listPuzzles: jest.fn((req, res) => { return res.status(200).send({puzzles: [{puzzle_id: 1, title: "title", description: "description"}]}) })
+  }
+});
+
 describe("Tests for Puzzle 1 Page", () => {
   const { location } = window;
   beforeAll(() => {
@@ -12,14 +18,16 @@ describe("Tests for Puzzle 1 Page", () => {
     window.location = { reload: jest.fn() };
     jest.spyOn(console, "error").mockImplementation();
     jest.spyOn(console, "log").mockImplementation();
+    window.alert = jest.fn().mockImplementation();
   });
   afterAll(() => {
     window.location = location;
+
   });
   test("Checks for Puzzle Nav Bar", () => {
     const wrapper = render(
     <BrowserRouter>
-      <PuzzleNavBar />
+      <PuzzleNavBar puzzleNum={1} puzzleDesc={"desc"}/>
     </BrowserRouter>
     );
     expect(wrapper.baseElement.outerHTML).toContain("Puzzle 1");
