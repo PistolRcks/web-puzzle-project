@@ -32,7 +32,7 @@ router.post("/userPuzzleMeta", setUserPuzzleMeta);
 
 // User profile routes
 router.get("/user/:user_id(\\d+)", getUserInfo);  // user_id must be one or more digits
-router.post("/user", postUserInfo)
+router.post("/user", postUserInfo)                // always affects the current user; `:user_id` unnecessary
 
 router.post("/googleLogin", googleLogin);
 
