@@ -5,6 +5,12 @@ import { PuzzleNavBar } from "../../client/components/PuzzleNavBar/PuzzleNavBar"
 import { BrowserRouter } from "react-router-dom";
 import Puzzle1Page from "../../client/pages/Puzzle1Page/Puzzle1Page";
 
+jest.mock("../../server/api/listPuzzles", () => {
+  return {
+    listPuzzles: jest.fn((req, res) => { return res.status(200).send({puzzles: [{puzzle_id: 1, title: "title", description: "description"}]}) })
+  }
+});
+
 describe("Tests for Puzzle 1 Page", () => {
   beforeAll(() => {
     jest.spyOn(console, "error").mockImplementation();
