@@ -4,7 +4,7 @@ import { Button, Container, Navbar, Nav, Modal } from "react-bootstrap";
 import { logOut } from "../../api/DataHelper";
 import "./PuzzleNavBar.css";
 
-export function PuzzleNavBar() {
+export function PuzzleNavBar({puzzleNum, puzzleDesc}) {
   const [showDescription, setShowDesc] = useState(false);
   const handleShowDesc = () => setShowDesc(true);
   const handleCloseDesc = () => setShowDesc(false);
@@ -13,7 +13,7 @@ export function PuzzleNavBar() {
     <>
       <Navbar className="puzzle-nav" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand>Puzzle 1</Navbar.Brand>
+          <Navbar.Brand>Puzzle {puzzleNum}</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -44,7 +44,7 @@ export function PuzzleNavBar() {
         <Modal.Header>
           <Modal.Title>Puzzle Description</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Description of the puzzle</Modal.Body>
+        <Modal.Body>{puzzleDesc}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDesc}>
             Close
