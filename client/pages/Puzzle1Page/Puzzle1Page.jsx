@@ -55,10 +55,11 @@ export default function Puzzle1Page() {
     setDisableContactButton(false);
   }
 
+  const hintObj = [{title: "Opening the Console", steps: ["Right click on the screen and select Inspect", "Once the side bar is open on the right, select Console from the top tabs in the side bar."]}];
   return(
     <>
       <PuzzleNavBar puzzleNum={1} puzzleDesc={puzzleDesc}/>
-      <PuzzleHint />
+      <PuzzleHint hints={hintObj}/>
       <div className="puzzle1 min-vw-100 min-vh-100">
         <Container className="justify-content-center content">
           <Row>

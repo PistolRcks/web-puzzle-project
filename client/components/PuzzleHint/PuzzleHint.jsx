@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "./PuzzleHint.css";
 
-export function PuzzleHint(){
+export function PuzzleHint({hints}){
   const [showHint, setShowHint] = useState(false);
   const handleCloseHint = () => setShowHint(false);
-  const handleShowHint = () => setShowHint(true); 
+  const handleShowHint = () => setShowHint(true);
+  
+  //!! The hints prop needs to be an array of hints, each hint is an object that contains:
+  //!! title: "title of hint"
+  //!! steps: ["step1", "step2", "step3"]
+  //!! see puzzle1page for an example
 
   return(
     <>
@@ -26,16 +31,22 @@ export function PuzzleHint(){
         <Modal.Title>Hints</Modal.Title>
       </Modal.Header>
       <Modal.Body className="hint-modal">
-        <h5>Opening the Console</h5>
-        <ol>
-          <li>
-            Right click on the screen and select Inspect
-          </li>
-          <li>
-            Once the side bar is open on the right, select Console
-            from the top tabs in the side bar. 
-          </li>
-        </ol>
+      {hints.map((hint) => {
+            return (
+              <>
+              <h5>{hint.title}</h5>
+              <ol>
+                {hint.steps.map((step) => {
+                  return (
+                    <>
+                    <li>{step}</li>
+                    </>
+                  );
+                })}
+              </ol>
+              </>
+            );
+          })}
       </Modal.Body>
       <Modal.Footer className="hint-modal">
         <Button className="close-button" variant="secondary" onClick={handleCloseHint}>Close</Button>
