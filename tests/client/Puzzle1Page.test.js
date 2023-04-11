@@ -12,10 +12,17 @@ jest.mock("../../server/api/listPuzzles", () => {
 });
 
 describe("Tests for Puzzle 1 Page", () => {
+  const { location } = window;
   beforeAll(() => {
-    jest.spyOn(console, "log").mockImplementation();
+    delete window.location;
+    window.location = { reload: jest.fn() };
     jest.spyOn(console, "error").mockImplementation();
+    jest.spyOn(console, "log").mockImplementation();
     window.alert = jest.fn().mockImplementation();
+  });
+  afterAll(() => {
+    window.location = location;
+
   });
   test("Checks for Puzzle Nav Bar", () => {
     const wrapper = render(
@@ -65,7 +72,7 @@ describe("Tests for Puzzle 1 Page", () => {
     );
     expect(wrapper.baseElement.outerHTML).toContain("How to Photoshop like a Pro");
   });
-  test("Checks for Top right buttons", () => {
+  test("Checks for top right buttons", () => {
     const wrapper = render(
       <BrowserRouter>
         <Puzzle1Page />
@@ -145,6 +152,25 @@ describe("Tests for Puzzle 1 Page", () => {
       );
     const tipsButton = screen.getByTestId("tips");
     expect(tipsButton).toBeDisabled();
+  });
+  test("Checks Restart Puzzle button in completed puzzle modal refreshes the page", () => {
+    const wrapper = render(
+      <BrowserRouter>
+        <Puzzle1Page />
+      </BrowserRouter>
+      );
+    const clickMeButton = screen.getByTestId("click-me");
+    userEvent.click(clickMeButton);
+    const tipsButton = screen.getByTestId("tips");
+    userEvent.click(tipsButton);
+    const closeButton = screen.getByTestId("close-hint-modal");
+    userEvent.click(closeButton);
+    const contactButton = screen.getByTestId("contact-us");
+    userEvent.click(contactButton);
+    const restartButton = screen.getByTestId("restart-puzzle");
+    userEvent.click(restartButton);
+
+    expect(window.location.reload).toHaveBeenCalled();
   });
 
 });

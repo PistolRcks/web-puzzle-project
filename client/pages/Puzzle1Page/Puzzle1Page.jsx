@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Button, Carousel, Col, Container, Modal, Overlay, Row, Stack, Tooltip } from "react-bootstrap";
 import { PuzzleHint } from "../../components/PuzzleHint/PuzzleHint";
 import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
@@ -53,6 +54,10 @@ export default function Puzzle1Page() {
   const handleCloseTipsHint = () => {
     setShowTipsHint(false);
     setDisableContactButton(false);
+  }
+  const handleRestartPuzzle = () => {
+    setShowComplete(false);
+    window.location.reload(true);
   }
 
   const hintObj = [{title: "Opening the Console", steps: ["Right click on the screen and select Inspect", "Once the side bar is open on the right, select Console from the top tabs in the side bar."]}];
@@ -182,20 +187,30 @@ export default function Puzzle1Page() {
                       >
                       Close
                     </Button>
+                    <Link to="/Puzzle/Selection">
+                      <Button
+                        className="button"
+                        variant="secondary"
+                        >
+                        Puzzle Selection Page
+                      </Button>
+                    </Link>
                     <Button 
                       className="button"
                       variant="secondary" 
-                      onClick={handleCloseComplete}
+                      data-testid="restart-puzzle"
+                      onClick={handleRestartPuzzle}
                       >
                       Restart Puzzle
                     </Button>
-                    <Button 
-                      className="button"
-                      variant="secondary" 
-                      onClick={handleCloseComplete}
-                      >
-                      Next Puzzle
-                    </Button>
+                    <Link to="/Puzzle/2">
+                      <Button 
+                        className="button"
+                        variant="secondary" 
+                        >
+                        Next Puzzle
+                      </Button>
+                    </Link>
                   </Modal.Footer>
                 </Modal>
                 <Col sm={10}>
