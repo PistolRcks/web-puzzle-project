@@ -12,7 +12,7 @@ describe("Tests for Puzzle 1 Page", () => {
   test("Checks for Puzzle Nav Bar", () => {
     const wrapper = render(
     <BrowserRouter>
-      <PuzzleNavBar />
+      <PuzzleNavBar puzzleNum={1} puzzleDesc={"desc"}/>
     </BrowserRouter>
     );
     expect(wrapper.baseElement.outerHTML).toContain("Puzzle 1");
