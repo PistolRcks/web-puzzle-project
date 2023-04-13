@@ -11,33 +11,37 @@ const { db } = require("../db");
  * @returns Nothing.
  */
 async function googleLogin(req, res, next) {
-  if (!req.body.googleIdToken) {
+  const username = req.body.googleIdToken;
+
+  if (!username) {
     res.status(400).send("Error: Google Id Not Set!");
     return;
   }
-  const username = req.body.googleIdToken;
+
   // select existing user in database
   db.get(
-    "SELECT user_id FROM User WHERE username = ?",
+    "SELECT user_id, default_pfp_seed, default_pfp_color FROM User WHERE username = ?",
     username,
-    async function (err, row) {
+    async (err, row) => {
       // if entered username isn't found, send error
       if (err) {
         // TODO: Eventually place more speciic errors in here
-        res.status(500).send(err);
-        return;
+        return res.status(500).send(err);
       }
 
       if (!row) {
-        // res.status(500).send("Error: Google User not found!");
-        await googleSignup(req, res, username);
-        return;
+        return await googleSignup(req, res, username);
       }
       
-      const { user_id: userID } = row;
+      const { user_id: userID, 
+              default_pfp_seed: pfpSeed, 
+              default_pfp_color: pfpBackgroundColor } = row;
+              
       req.session.userID = userID;
       req.session.username = username;
-      res.status(200).send();
+      req.session.pfpSeed = pfpSeed;
+      req.session.pfpBackgroundColor = pfpBackgroundColor;
+      return res.status(200).send();
     }
   );
 }
@@ -48,13 +52,16 @@ async function googleSignup(req, res, username) {
     username,
     (err, user) => {
       if (err) {
-        res.status(500)
+        return res.status(500)
           .send(`Error: Failed to insert new user!\nSpecific error: ${err}`);
-        return;
       }
+
       req.session.userID = user.user_id;
       req.session.username = user.username;
-      res.status(200).send(`Successfully signed user ${username} up!`);
+      req.session.pfpSeed = user.pfpSeed;
+      req.session.pfpBackgroundColor = user.pfpBackgroundColor;
+
+      return res.status(200).send(`Successfully signed user ${username} up!`);
     }
   )
 }
@@ -70,25 +77,30 @@ async function googleSignup(req, res, username) {
  * @returns Nothing.
  */
 async function insertGoogleUser(db, username, callback) {
-  await db.run(
-    "INSERT INTO User (username) VALUES (?)",
-    [username],
-    function (err, row) {
-      let user = {};
+  // Generate a random seed for the user's default pfp
+  const diceBearSeed = Math.floor(Math.random() * 100000) + 1;
+  // Generate a random background color for the user's default pfp
+  const diceBearBackgroundColor = Math.floor(Math.random()*16777215).toString(16);
 
-      // throw an error if there's an issue
+  await db.run(
+    `INSERT INTO User 
+    (username, default_pfp_seed, default_pfp_color) 
+    VALUES (?, ?, ?)`,
+    [username, diceBearSeed, diceBearBackgroundColor],
+    (err, row) => {
       if (err) {
-        callback(err, user);
-        return;
+        return callback(err);
       }
 
       // create a user object, handle it elsewhere
-      user = {
+      const user = {
         user_id: this ? this.lastID : row.lastID,
         username: username,
+        pfpSeed: diceBearSeed,
+        pfpBackgroundColor: diceBearBackgroundColor
       };
 
-      callback(err, user);
+      return callback(err, user);
     }
   );
 }

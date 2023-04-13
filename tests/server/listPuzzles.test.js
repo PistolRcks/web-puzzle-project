@@ -15,6 +15,8 @@ jest.mock("../../server/middleware", () => {
     logRouteAndCheckAuthorization: jest.fn((req, res, next) => {
       req.session.userID = 1;
       req.session.username = "alice";
+      req.session.pfpSeed = 1;
+      req.session.pfpBackgroundColor = "000000";
       next();
     })
   }
@@ -61,6 +63,8 @@ describe("Tests for GET at /api/listPuzzles", () => {
       {
         userID: 1,
         username: 'alice',
+        pfpSeed: 1,
+        pfpBackgroundColor: "000000",
         puzzles: rows,
         userPuzzleCompletion
       });
