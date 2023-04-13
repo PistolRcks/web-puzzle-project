@@ -73,6 +73,11 @@ function initDatabase(fp, puzzles) {
   return db;
 }
 
+/**
+ * Adds any columns not in includued when initializing the database.
+ * This allows developers to not delete their existing database in order to add new columns.
+ * @param {Sqlite3.Database} db - the database
+ */
 const addColumns = (db) => {
   const columnsToAdd = {
     User: [
