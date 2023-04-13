@@ -112,7 +112,7 @@ function getUserInfo(req, res, next) {
 function postUserInfo(req, res, next) {
   const { old_password, new_password } = req.body;
 
-  // validate new password
+  // validate new password requirements
   try {
     checkPasswordServer(new_password);
   } catch (e) {

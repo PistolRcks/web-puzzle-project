@@ -16,4 +16,46 @@ jest.mock("../../server/middleware", () => {
   }
 });
 
-test("Tests for userInfo.js")
+describe("Tests for userInfo.js: getUserInfo", () => {
+    test("200 - Normal operation", () => {
+
+    })
+    
+    test("400 - User does not exist", () => {
+
+    })
+
+    test("500 - User info `db.get` error", () => {
+
+    })
+
+    test("500 - User_Puzzle info `db.get` error", () => {
+
+    })
+})
+
+describe("Tests for userInfo.js: postUserInfo", () => {
+    test("200 - Normal operation", () => {
+
+    })
+    
+    test("400 - Password failed to meet requirements", () => {
+
+    })
+    
+    test("500 - Password failed to be hashed", () => {
+
+    })
+
+    test("500 - Password failed to be updated in database", () => {
+
+    })
+
+    test("500 - `db.run` did not throw an error, but User was not updated", () => {
+        
+    })
+
+    test("Non-200 - Password failed to be verified", () => {
+        
+    })
+})
