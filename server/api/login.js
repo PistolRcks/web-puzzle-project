@@ -24,9 +24,9 @@ function login(req, res, next) {
 }
 
 /**
- * Verifies that a password is correct by checking the attempted password with the stored one for that user.
+ * Verifies that a password is correct by checking the attempted password with the stored one for that User.
  * @param {Database} db - The SQLite3 database to search in.
- * @param {String} username - The username which owns the password.
+ * @param {String} username - The username of the User which owns the password.
  * @param {String} password - The attempted password to be verified.
  * @param {Function} callback - Called after completion of the function. Takes in three parameters:
  *  - `Number` status - The status code of the result of verifying the password.

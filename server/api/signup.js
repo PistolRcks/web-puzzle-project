@@ -32,9 +32,10 @@ function signup(req, res, next) {
     res.status(400).send(error.message);
     return;
   }
-
-  const salt = Crypto.randomBytes(16); // salt is required for hashing; it makes
+  
+  // salt is required for hashing; it makes
   // otherwise identical hashes different
+  const salt = Crypto.randomBytes(16); 
   Crypto.pbkdf2(
     password,
     salt,
