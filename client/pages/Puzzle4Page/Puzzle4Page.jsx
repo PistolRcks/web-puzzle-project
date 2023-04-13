@@ -17,6 +17,9 @@ export default function Puzzle4Page() {
         listPuzzles().then((res) => {
             setHasResponded(true);
             setPuzzleDesc(res.data.puzzles[3].description);
+            randomWord({words: [{numWords: 2, length: 5}]}).then((res) => {
+                console.log(res.data);
+            });
         }).catch((err) => {
             alert(err);
         });
