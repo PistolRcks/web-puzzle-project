@@ -20,7 +20,7 @@ const { db } = require("../db");
  *      "best_times": [
  *        {
  *          "puzzle_id": the integer id of the puzzle,
- *          "name": "the name of the puzzle",
+ *          "title": "the title of the puzzle",
  *          "time": the integer representation of the time spent in milliseconds
  *        },
  *        ...
@@ -60,7 +60,12 @@ function getUserInfo(req, res, next) {
 
         // get User_Puzzle info (only completed puzzles)
         db.all(
-          "SELECT puzzle_id, name, time FROM User_Puzzle WHERE user_id=? AND progress!=0",
+          `SELECT puzzle_id, title, time 
+            FROM User_Puzzle
+            JOIN Puzzle USING(puzzle_id) 
+            WHERE user_id=? AND progress!=0
+            ORDER BY time ASC
+          `,
           [userID],
           function (err, rows) {
             if (err) {
