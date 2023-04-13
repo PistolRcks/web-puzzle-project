@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Button, Carousel, Col, Container, Modal, Overlay, Row, Stack, Tooltip } from "react-bootstrap";
+import { Button, Carousel, Col, Container, Form, Modal, Overlay, Row, Stack, Tooltip } from "react-bootstrap";
 import { PuzzleHint } from "../../components/PuzzleHint/PuzzleHint";
 import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
 import frog from "../../assets/frog.jpg";
@@ -20,16 +20,30 @@ export default function Puzzle1Page() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [showTipsHint, setShowTipsHint] = useState(false);
   const [showComplete, setShowComplete] = useState(false);
+  const [timeOnSite, setTimeOnSite] = useState(0);
+  const [stoppedTime, setStoppedTime] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const [disableTipsButton, setDisableTipsButton] = useState(true);
   const [disableContactButton, setDisableContactButton] = useState(true);
   const handleCloseComplete = () => setShowComplete(false);
-  const handleShowComplete = () => setShowComplete(true);  
+  const intervalRef = useRef(null);
   const target = useRef(null);
+  const minutes = Math.floor(timeOnSite / 60);
+  const seconds = timeOnSite % 60;
+
+  // Keeps track of the time spent on the site, starts as soon as the page loads
+  // Time is paused once the puzzle is completed and the time is displayed in the completed modal
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if(isPaused == false){
+        setTimeOnSite(timeOnSite => timeOnSite + 1);
+      }}, 1000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
   //Use state for puzzle description
   const [puzzleDesc, setPuzzleDesc] = useState("");
   const [hasResponded, setHasResponded] = useState(false);
-
 
   //Database call to get the puzzle description on this page
   //Realistically this could be done in a better way, but it would require something
@@ -41,29 +55,34 @@ export default function Puzzle1Page() {
       }).catch((err) => {
           alert(err);
       });
-  }
-
+  };
   const handleShowOverlay = () => {
     setShowOverlay(!showOverlay);
     setDisableTipsButton(false);
-  }
+  };
   const handleShowTipsHint = () => {
     setShowTipsHint(true);
     console.log("Click on Contact Us");
-  }
+  };
   const handleCloseTipsHint = () => {
     setShowTipsHint(false);
     setDisableContactButton(false);
-  }
+  };
   const handleRestartPuzzle = () => {
     setShowComplete(false);
     window.location.reload(true);
-  }
+  };
+  const handleShowComplete = () => {
+    setShowComplete(true); 
+    setIsPaused(true);
+    clearInterval(intervalRef.current);
+    setStoppedTime(timeOnSite);
+  };
 
   const hintObj = [{title: "Opening the Console", steps: ["Right click on the screen and select Inspect", "Once the side bar is open on the right, select Console from the top tabs in the side bar."]}];
   return(
     <>
-      <PuzzleNavBar puzzleNum={1} puzzleDesc={puzzleDesc}/>
+      <PuzzleNavBar puzzleNum={1} puzzleDesc={puzzleDesc} minutes={minutes} seconds={seconds}/>
       <PuzzleHint hints={hintObj}/>
       <div className="puzzle1 min-vw-100 min-vh-100">
         <Container className="justify-content-center content">
@@ -177,7 +196,14 @@ export default function Puzzle1Page() {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    You have completed Puzzle 1!
+                    <Form.Group>
+                      {/* If stoppedTime is not zero, display the message with the time */}
+                      {stoppedTime > 0 && (
+                        <Form.Label>
+                          You have completed Puzzle 1 in {minutes}:{seconds.toString().padStart(2, '0')}!
+                        </Form.Label>
+                      )}
+                    </Form.Group>
                   </Modal.Body>
                   <Modal.Footer>
                     <Button 

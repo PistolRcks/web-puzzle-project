@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Navbar, Nav, Modal } from "react-bootstrap";
+import { Button, Container, Form, Navbar, Nav, Modal } from "react-bootstrap";
 import { logOut } from "../../api/DataHelper";
 import "./PuzzleNavBar.css";
 
-export function PuzzleNavBar({puzzleNum, puzzleDesc}) {
+export function PuzzleNavBar({puzzleNum, puzzleDesc, minutes, seconds}) {
   const [showDescription, setShowDesc] = useState(false);
   const handleShowDesc = () => setShowDesc(true);
   const handleCloseDesc = () => setShowDesc(false);
@@ -25,7 +25,13 @@ export function PuzzleNavBar({puzzleNum, puzzleDesc}) {
               </Link>
               <Nav.Link href="/UserProfile">User Profile</Nav.Link>
               <Nav.Link onClick={handleShowDesc}>Puzzle Description</Nav.Link>
+              <Form>
+                <Form.Group className="timer">
+                  <Form.Label>Time: {minutes}:{seconds.toString().padStart(2, '0')}</Form.Label>
+                </Form.Group>
+              </Form>
             </Nav>
+            
             <Link to="/" onClick={logOut}>
               <Button className="button" width="150" onClick={logOut}>
                 Log Out
