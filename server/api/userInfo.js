@@ -56,11 +56,8 @@ function getUserInfo(req, res, next) {
       }
 
       if (row) {
-        // FIXME: there's probably a nicer way to do this lol
-        out.username = row.username;
-        out.profile_picture = row.profile_picture;
-        out.profile_picture_top = Number(row.profile_picture_top);
-        out.profile_picture_left = Number(row.profile_picture_left);
+        // place row data into the output
+        out = { ...row };
 
         // get User_Puzzle info (only completed puzzles)
         db.all(
@@ -77,20 +74,11 @@ function getUserInfo(req, res, next) {
               return;
             }
 
-            if (rows) {
-              for (const puzzle of rows) {
-                out.best_times.push(puzzle);
-              }
+            // only insert the data we've got if we have it
+            out.best_times = rows ? rows : [];
 
-              // finally have all our data; send it
-              res.status(200).json(out);
-            } else {
-              // User has no completed puzzles
-              // I think 406 fits the best description
-              res.status(406).json({
-                error: `User with ID ${userID} has no completed puzzles.`,
-              });
-            }
+            // finally have all our data; send it
+            res.status(200).json(out);
           }
         );
       } else {
@@ -128,7 +116,7 @@ function postUserInfo(req, res, next) {
   try {
     checkPasswordServer(new_password);
   } catch (e) {
-    res.status(400).send(e);
+    res.status(400).send(e.message);
     return;
   }
 
@@ -167,10 +155,10 @@ function postUserInfo(req, res, next) {
 
                 // "lastID" should be there if we were successful
                 if ("lastID" in this) {
-                  res.status(200).send("Successfully updated password!")
+                  res.status(200).send("Successfully updated password!");
                 } else {
                   // this is terrible and hopefully this should never happen (err should happen first)
-                  res.status(500).send("Error: Password failed to update!")
+                  res.status(500).send("Error: Password failed to update!");
                 }
               }
             );
