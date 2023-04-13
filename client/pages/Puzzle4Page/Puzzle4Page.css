@@ -1,0 +1,11 @@
+.correct {
+    color: rgb(87, 126, 69);
+}
+
+.halfCorrect {
+    color: rgb(104, 91, 34);
+}
+
+.incorrect {
+    color: rgb(93, 100, 104);
+}
