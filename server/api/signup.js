@@ -85,7 +85,7 @@ function signup(req, res, next) {
  */
 async function insertUser(db, username, hashedPassword, salt, callback) {
   await db.run(
-    "INSERT INTO User (username, hashed_password, salt) VALUES (?, ?, ?)",
+    "INSERT INTO User (username, hashed_password, salt, is_oauth) VALUES (?, ?, ?, 0)",
     [username, hashedPassword, salt],
     (err) => {
       // throw an error if there's an issue

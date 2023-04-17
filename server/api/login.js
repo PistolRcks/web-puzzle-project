@@ -11,7 +11,7 @@ function login(req, res, next) {
 
   // select existing user in database
   db.get(
-    "SELECT hashed_password, salt, user_id FROM User WHERE username = ?",
+    "SELECT hashed_password, salt, user_id FROM User WHERE username = ? AND is_oauth = 0",
     username,
     function (err, row) {
       // if entered username isn't found, send error
