@@ -1,6 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 
 import PuzzleSelectionPage from "../../client/pages/PuzzleSelectionPage/PuzzleSelectionPage";
+import { BrowserRouter } from "react-router-dom";
 
 jest.mock("react-router-dom", () => ({
   Link: (props) => {
@@ -10,6 +13,35 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("Tests for the Puzzle Selection Page", () => {
+  const puzzleInfo = {
+    userID: 1,
+    username: 'alice',
+    pfpSeed: 1,
+    pfpBackgroundColor: "000000",
+    puzzles: [
+      {
+        puzzle_id: 1,
+        title: "Title",
+        description: "Description"
+      },
+      {
+        puzzle_id: 2,
+        title: "Title 2",
+        description: "Description 2"
+      }
+    ],
+    userPuzzleCompletion: [
+      {
+        progress: 1,
+        puzzle_id: 1
+      }
+    ]
+  };
+
+  // Mock axios and the response for the "/api/listPuzzles" endpoint
+  const mock = new MockAdapter(axios);
+  mock.onGet("/api/listPuzzles").reply(200, puzzleInfo);
+
   beforeAll(() => {
     window.alert = jest.fn();
     jest.spyOn(console, "log").mockImplementation();
@@ -17,27 +49,38 @@ describe("Tests for the Puzzle Selection Page", () => {
   });
 
   it("Checks for Puzzle Selection header", () => {
-    const puzzleSelectionPage = render(<PuzzleSelectionPage />);
-    expect(puzzleSelectionPage.baseElement.outerHTML).toContain(
+    const { baseElement } = render(<PuzzleSelectionPage />);
+    expect(baseElement.outerHTML).toContain(
       "Puzzle Selection"
     );
   });
 
-  //TODO: Commenting out this test because the puzzle buttons are no longer hard coded
-  //TODO: and all this would test is if the API is working (we already have tests for that)
-  // it("Checks for Puzzle 1 button", () => {
-  //   const puzzleSelectionPage = render(<PuzzleSelectionPage />);
-  //   expect(puzzleSelectionPage.baseElement.outerHTML).toContain("Puzzle 1");
-  // });
+  it("Checks for Puzzle buttons", async () => {
+    await act(() => {
+      render(<PuzzleSelectionPage />, { wrapper: BrowserRouter });
+    });
+
+    expect(screen.getByTestId("PuzzleSelectionPage").outerHTML).toContain("Puzzle 1 - Title");
+    expect(screen.getByTestId("PuzzleSelectionPage").outerHTML).toContain("Puzzle 2 - Title 2");
+  });
+
+  it("Checks for User Profile Picture link", async () => {
+    await act(() => {
+      render(<PuzzleSelectionPage />, { wrapper: BrowserRouter });
+    });
+
+    expect(screen.getByTestId("PuzzleSelectionPage__pfp").outerHTML).toContain("https://api.dicebear.com/5.x/adventurer/svg?seed=1&amp;backgroundColor=000000&amp;radius=20");
+  });
 
   it("Checks for not Puzzle 2 button", () => {
-    const puzzleSelectionPage = render(<PuzzleSelectionPage />);
+    const { baseElement } = render(<PuzzleSelectionPage />);
     expect(
-      puzzleSelectionPage.baseElement.outerHTML.includes("Puzzle 16509")
+      baseElement.outerHTML.includes("Puzzle 16509")
     ).toBe(false);
   });
+
   it("Checks for Log Out button", () => {
-    const puzzleSelectionPage = render(<PuzzleSelectionPage />);
-    expect(puzzleSelectionPage.baseElement.outerHTML).toContain("Log Out");
+    const { baseElement } = render(<PuzzleSelectionPage />);
+    expect(baseElement.outerHTML).toContain("Log Out");
   });
 });

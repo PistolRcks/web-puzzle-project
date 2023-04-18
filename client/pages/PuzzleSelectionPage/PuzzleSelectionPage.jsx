@@ -18,7 +18,6 @@ export default function PuzzleSelectionPage() {
   const [pfpSeed, setPFPSeed] = useState(0);
   const[pfpBackgroundColor, setPFPBackgroundColor] = useState("000000");
 
-  
   const userIcon = `https://api.dicebear.com/5.x/adventurer/svg?seed=${pfpSeed}&backgroundColor=${pfpBackgroundColor}&radius=20`;
 
   //If puzzles is still default, this evaluates to true
@@ -29,6 +28,8 @@ export default function PuzzleSelectionPage() {
       .then((res) => {
         const { userID, username, pfpSeed, pfpBackgroundColor, 
                 puzzles, userPuzzleCompletion } = res.data;
+
+          console.log(res);
 
         setPFPBackgroundColor(pfpBackgroundColor);
         setPFPSeed(pfpSeed);
@@ -44,7 +45,7 @@ export default function PuzzleSelectionPage() {
   }
 
   return (
-    <div className="puzzleSelectionPage min-vh-100 min-vw-100">
+    <div data-testid="PuzzleSelectionPage" className="puzzleSelectionPage min-vh-100 min-vw-100">
       <div className="logOut">
         <Link to="/" onClick={logOut}>
           <Button className="puzzleSelectionPage__button" width="150">
@@ -57,11 +58,7 @@ export default function PuzzleSelectionPage() {
         <p className="puzzleSelectionPage__selection-title">Puzzle Selection</p>
       </Container>
 
-      {
-        // TODO: This link will likely not work until we know how we are handling
-        // TODO: user authentication and managing the userID after logging in
-      }
-      <div className="puzzle_selection_page__profile-link">
+      <div data-testid="PuzzleSelectionPage__pfp" className="puzzle_selection_page__profile-link">
         <Link to={`/UserProfile/${userID}`}>
           <img src={userIcon} alt="User profile" height="75" />
         </Link>
@@ -84,31 +81,3 @@ export default function PuzzleSelectionPage() {
     </div>
   );
 }
-
-// TODO: Update this function to call the API once it's ready + unit test
-// TODO: userID will likely be passed around on the front end to reduce database queries
-export const RetrievePuzzleData = () => {
-  return {
-    userID: 1,
-    userIcon:
-      "https://api.dicebear.com/5.x/adventurer/svg?seed=Gracie&scale=130&radius=20&backgroundType=solid,gradientLinear&randomizeIds=true&backgroundColor=c0aede,b6e3f4,d1d4f9,ffdfbf,ffd5dc",
-    puzzles: [
-      {
-        puzzleID: 1,
-        isCompleted: true,
-      },
-      {
-        puzzleID: 2,
-        isCompleted: false,
-      },
-      {
-        puzzleID: 3,
-        isCompleted: false,
-      },
-      {
-        puzzleID: 4,
-        isCompleted: true,
-      },
-    ],
-  };
-};
