@@ -18,35 +18,37 @@ const Sqlite3 = require("sqlite3");
 function initDatabase(fp, puzzles) {
   const db = new Sqlite3.Database(fp);
 
-  db.serialize(function () {
+  db.serialize(() => {
     // create the database schema for the app
-    db.run(
-      `CREATE TABLE IF NOT EXISTS User (
+    db.run(`
+      CREATE TABLE IF NOT EXISTS User (
         user_id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE,
         hashed_password BLOB,
         salt BLOB
-      )`
-    );
+      )
+    `);
 
-    db.run(
-      `CREATE TABLE IF NOT EXISTS Puzzle (
+    db.run(`
+      CREATE TABLE IF NOT EXISTS Puzzle (
         puzzle_id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT
-      )`
-    );
+      )
+    `);
 
-    db.run(
-      `CREATE TABLE IF NOT EXISTS User_Puzzle (
+    db.run(`
+      CREATE TABLE IF NOT EXISTS User_Puzzle (
         user_id INTEGER,
         puzzle_id INTEGER,
         time	INTEGER,
         progress	NUMERIC NOT NULL COLLATE BINARY,
         FOREIGN KEY(user_id) REFERENCES User(user_id),
         FOREIGN KEY(puzzle_id) REFERENCES Puzzle(puzzle_id)
-      )`
-    );
+      )
+    `);
+
+    addColumns(db);
 
     // upsert puzzles
     for (let i = 0; i < puzzles.length; i++) {
@@ -69,6 +71,30 @@ function initDatabase(fp, puzzles) {
   });
 
   return db;
+}
+
+/**
+ * Adds any columns not in includued when initializing the database.
+ * This allows developers to not delete their existing database in order to add new columns.
+ * @param {Sqlite3.Database} db - the database
+ */
+const addColumns = (db) => {
+  const columnsToAdd = {
+    User: [
+      { name: "profile_picture", typeDef: "BLOB"},
+      { name: "profile_picture_top", typeDef: "INTEGER"},
+      { name: "profile_picture_left", typeDef: "INTEGER"}
+    ]
+  };
+
+  for (const table in columnsToAdd) {
+    columnsToAdd[table].forEach(column => {
+        db.run(`
+          ALTER TABLE ${table}
+          ADD COLUMN ${column.name} ${column.typeDef}
+        `, (err) => { });
+    });
+  }
 }
 
 // Puzzle makers! Put your puzzle objects in here!
