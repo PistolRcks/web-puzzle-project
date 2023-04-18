@@ -1,0 +1,30 @@
+.text-body{
+    display: inline-flex;
+    flex-wrap:wrap;
+    justify-content: flex-start;
+    flex-shrink: 0;
+}
+
+.text-hint{
+    flex-shrink: 2;
+}
+
+a:link {
+    text-decoration: none;
+    color: #52796f;
+  }
+  
+  a:visited {
+    text-decoration: none;
+    color: #52796f;
+  }
+  
+  a:hover {
+    text-decoration: none;
+    color: #52796f;
+  }
+  
+  a:active {
+    text-decoration: none;
+    color: #52796f;
+  }
