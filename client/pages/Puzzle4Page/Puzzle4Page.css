@@ -9,3 +9,11 @@
 .incorrect {
     color: rgb(93, 100, 104);
 }
+
+.form-control {
+    width: 50px;
+}
+
+.form-row {
+    align-self: center;
+}
