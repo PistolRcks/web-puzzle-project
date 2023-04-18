@@ -26,7 +26,7 @@ function initDatabase(fp, puzzles) {
         username TEXT UNIQUE,
         hashed_password BLOB,
         salt BLOB, \
-      is_oauth INTEGER
+        is_oauth INTEGER \
       )
     `);
 
