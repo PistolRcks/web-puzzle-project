@@ -22,7 +22,7 @@ async function googleLogin(req, res, next) {
   db.get(
     "SELECT user_id, default_pfp_seed, default_pfp_color FROM User WHERE username = ?",
     username,
-    async (err, row) => {
+    async function (err, row) {
       // if entered username isn't found, send error
       if (err) {
         // TODO: Eventually place more speciic errors in here
