@@ -73,14 +73,14 @@ describe("Tests for the Puzzle Selection Page", () => {
   });
 
   it("Checks for not Puzzle 2 button", () => {
-    const { baseElement } = render(<PuzzleSelectionPage />);
+    const { baseElement } = render(<PuzzleSelectionPage />, { wrapper: BrowserRouter });
     expect(
       baseElement.outerHTML.includes("Puzzle 16509")
     ).toBe(false);
   });
 
   it("Checks for Log Out button", () => {
-    const { baseElement } = render(<PuzzleSelectionPage />);
+    const { baseElement } = render(<PuzzleSelectionPage />, { wrapper: BrowserRouter });
     expect(baseElement.outerHTML).toContain("Log Out");
   });
 });

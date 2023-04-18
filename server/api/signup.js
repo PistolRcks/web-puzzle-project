@@ -99,10 +99,12 @@ async function insertUser(db, username, hashedPassword, salt, callback) {
     [username, hashedPassword, salt, diceBearSeed, diceBearBackgroundColor],
     (err) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
-      return callback(err);
+      callback(err);
+      return;
     }
   );
 }
