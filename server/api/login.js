@@ -4,7 +4,7 @@ const { db } = require("../db");
 function login(req, res, next) {
   const { username, password } = req.body;
 
-  if (!username|| !password) {
+  if (!username || !password) {
     res.status(400).send("Error: Username or password not set!");
     return;
   }
