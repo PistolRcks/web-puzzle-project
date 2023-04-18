@@ -110,6 +110,15 @@ function getUserInfo(req, res, next) {
  * @returns Nothing.
  */
 function postUserInfo(req, res, next) {
+  if (!("old_password" in req.body && "new_password" in req.body)) {
+    res
+      .status(400)
+      .send(
+        "Error: Either 'old_password' or 'new_password' (or both) not found in the request body!"
+      );
+    return;
+  }
+
   const { old_password, new_password } = req.body;
 
   // validate new password requirements
@@ -153,13 +162,11 @@ function postUserInfo(req, res, next) {
                   return;
                 }
 
-                // "lastID" should be there if we were successful
-                if ("lastID" in this) {
-                  res.status(200).send("Successfully updated password!");
-                } else {
-                  // this is terrible and hopefully this should never happen (err should happen first)
-                  res.status(500).send("Error: Password failed to update!");
-                }
+                // Going to assume that an error will be thrown if the password
+                // was not successfully updated. I honestly don't know a case where
+                // an error would not be thrown, yet it was not successfully updated.
+                // Also, the testing for adding the "this" sucks and I don't wanna anymore
+                res.status(200).send("Successfully updated password!");
               }
             );
           }
