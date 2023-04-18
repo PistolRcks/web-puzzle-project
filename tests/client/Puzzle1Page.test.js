@@ -1,7 +1,6 @@
 import {render, screen, getByTestId} from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { PuzzleNavBar } from "../../client/components/PuzzleNavBar/PuzzleNavBar";
 import { BrowserRouter } from "react-router-dom";
 import Puzzle1Page from "../../client/pages/Puzzle1Page/Puzzle1Page";
 
@@ -23,46 +22,6 @@ describe("Tests for Puzzle 1 Page", () => {
   afterAll(() => {
     window.location = location;
 
-  });
-  test("Checks for Puzzle Nav Bar", () => {
-    const wrapper = render(
-    <BrowserRouter>
-      <PuzzleNavBar puzzleNum={1} puzzleDesc={"desc"}/>
-    </BrowserRouter>
-    );
-    expect(wrapper.baseElement.outerHTML).toContain("Puzzle 1");
-  });
-  test("Checks for Home nav link in Nav Bar", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <PuzzleNavBar />
-      </BrowserRouter>
-      );        
-    expect(wrapper.baseElement.outerHTML).toContain("Home");
-  });
-  test("Checks for Puzzle Selection Page nav link in Nav Bar", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <PuzzleNavBar />
-      </BrowserRouter>
-      );
-    expect(wrapper.baseElement.outerHTML).toContain("Puzzle Selection Page");
-  });
-  test("Checks for User Profile nav link in Nav Bar", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <PuzzleNavBar />
-      </BrowserRouter>
-      );
-    expect(wrapper.baseElement.outerHTML).toContain("User Profile");
-  });
-  test("Checks for Puzzle Description modal link in Nav Bar", () => {
-    const wrapper = render(
-      <BrowserRouter>
-          <PuzzleNavBar />
-      </BrowserRouter>
-      );
-    expect(wrapper.baseElement.outerHTML).toContain("Puzzle Description");
   });
   test("Checks for Page Title", () => {
     const wrapper = render(

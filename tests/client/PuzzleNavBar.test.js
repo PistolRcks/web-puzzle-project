@@ -55,6 +55,14 @@ describe("Tests for Puzzle Nav Bar", () => {
         );
         expect(wrapper.baseElement.outerHTML).toContain("Log Out");
     });
+    test("Checks for timer", () => {
+      const wrapper = render(
+        <BrowserRouter>
+          <PuzzleNavBar />
+        </BrowserRouter>
+      );
+      expect(wrapper.baseElement.outerHTML).toContain("Time: ");
+    });
 
 });
 

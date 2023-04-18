@@ -27,7 +27,7 @@ export function PuzzleNavBar({puzzleNum, puzzleDesc, minutes, seconds}) {
               <Nav.Link onClick={handleShowDesc}>Puzzle Description</Nav.Link>
               <Form>
                 <Form.Group className="timer">
-                  <Form.Label>Time: {minutes}:{seconds.toString().padStart(2, '0')}</Form.Label>
+                  <Form.Label>Time: {minutes}:{seconds?.toString().padStart(2, '0') || "00"}</Form.Label>
                 </Form.Group>
               </Form>
             </Nav>

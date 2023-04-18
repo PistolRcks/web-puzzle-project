@@ -200,7 +200,7 @@ export default function Puzzle1Page() {
                       {/* If stoppedTime is not zero, display the message with the time */}
                       {stoppedTime > 0 && (
                         <Form.Label>
-                          You have completed Puzzle 1 in {minutes}:{seconds.toString().padStart(2, '0')}!
+                            You have completed Puzzle 1 in {minutes}:{seconds?.toString().padStart(2, '0') || "00"}!
                         </Form.Label>
                       )}
                     </Form.Group>

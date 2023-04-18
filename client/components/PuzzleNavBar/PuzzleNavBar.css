@@ -9,7 +9,10 @@ a:hover {
 }
 
 .timer {
-  padding: 10px;
+  padding-top: 6px;
+  padding-left: 12px;
+  font-size: larger;
+  font-weight: bolder;
   color:  #e8f1e8;
 
 }
