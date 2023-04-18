@@ -86,3 +86,17 @@ export async function googleLogin(googleIdToken) {
         })
     });
 }
+
+//Function that calls the changePassword post
+export function changePassword() {
+  return new Promise((resolve, reject) => {
+    axios
+      .get("api/changePassword")
+      .then(function (res) {
+        return resolve(res);
+      })
+      .catch(function (err) {
+        return reject(err);
+      });
+  });
+}
