@@ -63,7 +63,7 @@ function signup(req, res, next) {
             } else {
               res.status(500)
                 .send(`Error: Failed to insert new user!\nSpecific error: ${err}`);
-                return;
+              return;
             }
           }
           // Log the user in
