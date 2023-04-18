@@ -12,7 +12,7 @@ function login(req, res, next) {
   db.get(
     "SELECT hashed_password, salt, user_id, default_pfp_seed, default_pfp_color FROM User WHERE username = ?",
     username,
-    (err, row) => {
+    function (err, row) {
       // if entered username isn't found, send error
       if (err) {
         // TODO: Eventually place more speciic errors in here

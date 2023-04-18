@@ -87,7 +87,7 @@ async function insertGoogleUser(db, username, callback) {
     (username, default_pfp_seed, default_pfp_color) 
     VALUES (?, ?, ?)`,
     [username, diceBearSeed, diceBearBackgroundColor],
-    (err, row) => {
+    function (err, row) {
       if (err) {
         return callback(err);
       }
