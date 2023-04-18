@@ -82,6 +82,7 @@ function initDatabase(fp, puzzles) {
 const addColumns = (db) => {
   const columnsToAdd = {
     User: [
+      { name: "is_oauth", typeDef: "INTEGER"},
       { name: "profile_picture", typeDef: "BLOB"},
       { name: "profile_picture_top", typeDef: "INTEGER"},
       { name: "profile_picture_left", typeDef: "INTEGER"}
