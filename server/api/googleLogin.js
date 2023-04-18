@@ -26,11 +26,13 @@ async function googleLogin(req, res, next) {
       // if entered username isn't found, send error
       if (err) {
         // TODO: Eventually place more speciic errors in here
-        return res.status(500).send(err);
+        res.status(500).send(err);
+        return;
       }
 
       if (!row) {
-        return await googleSignup(req, res, username);
+        await googleSignup(req, res, username);
+        return;
       }
       
       const { user_id: userID, 
@@ -41,7 +43,8 @@ async function googleLogin(req, res, next) {
       req.session.username = username;
       req.session.pfpSeed = pfpSeed;
       req.session.pfpBackgroundColor = pfpBackgroundColor;
-      return res.status(200).send();
+      res.status(200).send();
+      return;
     }
   );
 }
@@ -52,8 +55,9 @@ async function googleSignup(req, res, username) {
     username,
     (err, user) => {
       if (err) {
-        return res.status(500)
+        res.status(500)
           .send(`Error: Failed to insert new user!\nSpecific error: ${err}`);
+        return;
       }
 
       req.session.userID = user.user_id;
@@ -61,7 +65,8 @@ async function googleSignup(req, res, username) {
       req.session.pfpSeed = user.pfpSeed;
       req.session.pfpBackgroundColor = user.pfpBackgroundColor;
 
-      return res.status(200).send(`Successfully signed user ${username} up!`);
+      res.status(200).send(`Successfully signed user ${username} up!`);
+      return;
     }
   )
 }
@@ -89,7 +94,8 @@ async function insertGoogleUser(db, username, callback) {
     [username, diceBearSeed, diceBearBackgroundColor],
     function (err, row) {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       // create a user object, handle it elsewhere
@@ -100,7 +106,8 @@ async function insertGoogleUser(db, username, callback) {
         pfpBackgroundColor: diceBearBackgroundColor
       };
 
-      return callback(err, user);
+      callback(err, user);
+      return;
     }
   );
 }

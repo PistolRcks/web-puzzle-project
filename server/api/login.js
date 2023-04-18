@@ -4,8 +4,9 @@ const { db } = require("../db");
 function login(req, res, next) {
   const { username, password } = req.body;
 
-  if (!req.body.password || !req.body.username) {
-    return res.status(400).send("Error: Username or password not set!");
+  if (!username|| !password) {
+    res.status(400).send("Error: Username or password not set!");
+    return;
   }
 
   // select existing user in database
@@ -16,11 +17,13 @@ function login(req, res, next) {
       // if entered username isn't found, send error
       if (err) {
         // TODO: Eventually place more speciic errors in here
-        return res.status(500).send(err);
+        res.status(500).send(err);
+        return;
       }
 
       if (!row) {
-        return res.status(500).send("Error: Username not found!");
+        res.status(500).send("Error: Username not found!");
+        return;
       }
 
       const { hashed_password: hashedPassword, 
@@ -36,7 +39,7 @@ function login(req, res, next) {
         310000,
         32,
         "sha256",
-        (err, attemptedPassword) => {
+        function (err, attemptedPassword) {
           // if an error was made upon doing this, send an error
           if (err) {
             // TODO: send specific errors eventually
@@ -51,10 +54,11 @@ function login(req, res, next) {
             req.session.pfpSeed = pfpSeed;
             req.session.pfpBackgroundColor = pfpBackgroundColor;
 
-            return res.status(200).send("OK");
+            res.status(200).send("OK");
           } else {
-            return res.status(401).send(err);
+            res.status(401).send(err);
           }
+          return;
         }
       );
     }
