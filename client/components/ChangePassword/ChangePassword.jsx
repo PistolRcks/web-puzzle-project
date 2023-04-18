@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Button, Container, Form, Modal, Row } from "react-bootstrap";
 import "./ChangePassword.css"
 
 function ChangePassword(props) {
-  return (
-    <div className="changePassword">
+    return(
+        <div className="changePassword">
             <form>
                 <div className="form-group">
                     <label htmlFor="currentPassword">Current Password:</label>
@@ -21,8 +20,9 @@ function ChangePassword(props) {
                 <button type="submit" className="changePassword_Submit">Change Password</button>
             </form>
         </div>
-  );
+
+
+    );
 }
 
 export { ChangePassword };
-

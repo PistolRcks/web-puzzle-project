@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Button, Form, Container, Modal } from "react-bootstrap";
-import { ChangePassword } from "../../components/ChangePassword/ChangePassword";
+//import { ChangePassword } from "../../api/DataHelper";
 import "./UserPage.css";
 
 export default function UserPage () {
