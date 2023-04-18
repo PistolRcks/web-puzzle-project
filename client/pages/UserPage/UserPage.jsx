@@ -1,16 +1,17 @@
-import React, {UseState} from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Button, Form, Container, Modal } from "react-bootstrap";
+import { ChangePassword } from "../../components/ChangePassword/ChangePassword";
 import "./UserPage.css";
 
 export default function UserPage () {
     const userIcon =
     "https://api.dicebear.com/5.x/adventurer/svg?seed=Gracie&scale=130&radius=20&backgroundType=solid,gradientLinear&randomizeIds=true&backgroundColor=c0aede,b6e3f4,d1d4f9,ffdfbf,ffd5dc";
-    /* const [showChange, setShowChange] = useState(false);
-    const handleCloseChange = () => setShowChange(false);
-    const handleShowChange = () => setShowChange(true); 
     
-    const navigate = useNavigate();*/
+    const [showChange, setShowChange] = useState(false);
+
+    const handleShowChange = () => setShowChange(true);
+    const handleCloseChange = () => setShowChange(false);
 
     return(
         <div className="UserPage">
@@ -24,9 +25,25 @@ export default function UserPage () {
                 <p className="userPage_Username"> Username goes here! </p>
             </div>
             <div>
-                <Button class="userPage_Button">
+                <Button 
+                className="userPage_Button" 
+                variant="secondary"
+                onClick={handleShowChange}>
                     Change Password
                 </Button>
+                <Modal show={showChange} onHide={handleCloseChange}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Change Password</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ChangePassword />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseChange}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         </div>
     )
