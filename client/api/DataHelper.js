@@ -58,6 +58,22 @@ export function logIn(userData) {
   });
 }
 
+export function changePassword(userData) {
+  const { newPassword } = userData;
+  return new Promise((resolve, reject) => {
+    axios
+      .post("api/changePassword", {
+        newPassword,
+      })
+      .then(function (res) {
+        return resolve(res);
+      })
+      .catch(function (err) {
+        return reject(err);
+      });
+  });
+}
+
 //Function that calls the listPuzzles get
 export function listPuzzles() {
   return new Promise((resolve, reject) => {

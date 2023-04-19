@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Button, Form, Container, Modal } from "react-bootstrap";
-//import { ChangePassword } from "../../api/DataHelper";
+import { ChangePassword } from "../../components/ChangePassword/ChangePassword";
 import "./UserPage.css";
 
 export default function UserPage () {
@@ -9,8 +9,25 @@ export default function UserPage () {
     "https://api.dicebear.com/5.x/adventurer/svg?seed=Gracie&scale=130&radius=20&backgroundType=solid,gradientLinear&randomizeIds=true&backgroundColor=c0aede,b6e3f4,d1d4f9,ffdfbf,ffd5dc";
     
     const [showChange, setShowChange] = useState(false);
+
     const handleShowChange = () => setShowChange(true);
     const handleCloseChange = () => setShowChange(false);
+
+    //Default values for form data
+    const initialFormData = Object.freeze({
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+    });
+
+    const [formData, updateFormData] = React.useState(initialFormData);
+
+    const handleChange = (e) => {
+        updateFormData({
+            ...formData,
+            [e.target.name]: e.target.value.trim()
+        });
+    }
 
     return(
         <div className="UserPage">
