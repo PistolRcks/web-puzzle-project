@@ -102,3 +102,23 @@ export async function googleLogin(googleIdToken) {
         })
     });
 }
+
+/**
+ * 
+ * @see /api/randomWord for more info on how to structure the requirements
+ * @param {Array} requirements the object with an array of requirements of the words needed
+ * @returns resolve or reject
+ */
+export async function randomWord(requirements) {
+  return new Promise((resolve, reject) => {
+    axios.post('/api/word', 
+      requirements
+    )
+    .then((res) => {
+      return resolve(res);
+    })
+    .catch((err) => {
+      return reject(err);
+    })
+  });
+}

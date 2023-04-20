@@ -9,6 +9,33 @@ function login(req, res, next) {
     return;
   }
 
+  // Verify password correctness
+  verifyPassword(db, username, password, (status, reason, user) => {
+    // Password correctly verified, store info
+    if (status === 200) {
+      // Store the userID and username for use on the front and back end
+      req.session.userID = user.userID;
+      req.session.username = username;
+      req.session.pfpSeed = user.pfpSeed;
+      req.session.pfpBackgroundColor = user.pfpBackgroundColor;
+    }
+
+    // whether we verified or not, send out what happened
+    res.status(status).send(reason);
+  });
+}
+
+/**
+ * Verifies that a password is correct by checking the attempted password with the stored one for that User.
+ * @param {Database} db - The SQLite3 database to search in.
+ * @param {String} username - The username of the User which owns the password.
+ * @param {String} password - The attempted password to be verified.
+ * @param {Function} callback - Called after completion of the function. Takes in three parameters:
+ *  - `Number` status - The status code of the result of verifying the password.
+ *  - `String` reason - The textual reason of the result of verifying the password.
+ *  - `Number|undefined` userID - The userID of the user being verified. Will be `null` if the password is not verified.
+ */
+function verifyPassword(db, username, password, callback) {
   // select existing user in database
   db.get(
     "SELECT hashed_password, salt, user_id, default_pfp_seed, default_pfp_color FROM User WHERE username = ?",
@@ -16,13 +43,12 @@ function login(req, res, next) {
     function (err, row) {
       // if entered username isn't found, send error
       if (err) {
-        // TODO: Eventually place more speciic errors in here
-        res.status(500).send(err);
+        callback(500, err, null);
         return;
       }
 
       if (!row) {
-        res.status(500).send("Error: Username not found!");
+        callback(500, "Error: Username not found!", null);
         return;
       }
 
@@ -42,21 +68,15 @@ function login(req, res, next) {
         function (err, attemptedPassword) {
           // if an error was made upon doing this, send an error
           if (err) {
-            // TODO: send specific errors eventually
-            return res.status(500).send(err);
+            callback(500, err, null);
+            return;
           }
           // if the attempted password matches the existing password, let user know login
           // was a success, otherwise send an error
           if (Buffer.compare(attemptedPassword, hashedPassword) === 0) {
-            // Store the userID and username for use on the front and back end
-            req.session.userID = userID;
-            req.session.username = username;
-            req.session.pfpSeed = pfpSeed;
-            req.session.pfpBackgroundColor = pfpBackgroundColor;
-
-            res.status(200).send("OK");
+            callback(200, "OK", { userID, pfpSeed, pfpBackgroundColor});
           } else {
-            res.status(401).send(err);
+            callback(401, "Invalid password.", null);
           }
           return;
         }
@@ -65,4 +85,4 @@ function login(req, res, next) {
   );
 }
 
-module.exports = { login };
+module.exports = { login, verifyPassword };
