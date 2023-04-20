@@ -75,18 +75,6 @@ export default function PuzzleSelectionPage() {
             );
           })}
         </Form>
-        <Form>
-          {puzzles.map((puzzle) => {
-            return (
-              <PuzzleItem
-                puzzle={puzzle}
-                puzzleCompletion={userPuzzleCompletion.find(
-                  (upc) => upc.puzzle_id === puzzle.puzzle_id
-                )}
-              />
-            );
-          })}
-        </Form>
       </div>
     </div>
   );

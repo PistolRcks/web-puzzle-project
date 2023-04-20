@@ -1,0 +1,21 @@
+.version-one {
+    /* your styles for the class version-one */
+    font-size: 3em;
+    color: #2f3e46;
+}
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  .button{
+    background-color: #52796f;
+    color: #e8f1e8;
+    border-style: none;
+    box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 5px;
+    justify-content: center;
+    align-items: center;
+  }
