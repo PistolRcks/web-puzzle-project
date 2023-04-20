@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button, Carousel, Col, Container, Form, Modal, Overlay, Row, Stack, Tooltip } from "react-bootstrap";
 import { PuzzleHint } from "../../components/PuzzleHint/PuzzleHint";
-import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
+import  PuzzleNavBar  from "../../components/PuzzleNavBar/PuzzleNavBar";
 import frog from "../../assets/frog.jpg";
 import cloud from "../../assets/cloud.jpg";
 import clown from "../../assets/clown.jpg";
@@ -20,26 +20,16 @@ export default function Puzzle1Page() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [showTipsHint, setShowTipsHint] = useState(false);
   const [showComplete, setShowComplete] = useState(false);
-  const [timeOnSite, setTimeOnSite] = useState(0);
   const [stoppedTime, setStoppedTime] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [disableTipsButton, setDisableTipsButton] = useState(true);
   const [disableContactButton, setDisableContactButton] = useState(true);
   const handleCloseComplete = () => setShowComplete(false);
-  const intervalRef = useRef(null);
+  const childRef = useRef(null);
   const target = useRef(null);
-  const minutes = Math.floor(timeOnSite / 60);
-  const seconds = timeOnSite % 60;
-
-  // Keeps track of the time spent on the site, starts as soon as the page loads
-  // Time is paused once the puzzle is completed and the time is displayed in the completed modal
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if(isPaused == false){
-        setTimeOnSite(timeOnSite => timeOnSite + 1);
-      }}, 1000);
-    return () => clearInterval(interval);
-  }, [isPaused]);
+  const milliseconds = stoppedTime % 100;
+  const totalSeconds = Math.floor(stoppedTime / 100);
+  const seconds = totalSeconds % 60;
+  const minutes = Math.floor(totalSeconds / 60);
 
   //Use state for puzzle description
   const [puzzleDesc, setPuzzleDesc] = useState("");
@@ -72,17 +62,18 @@ export default function Puzzle1Page() {
     setShowComplete(false);
     window.location.reload(true);
   };
+
   const handleShowComplete = () => {
     setShowComplete(true); 
-    setIsPaused(true);
-    clearInterval(intervalRef.current);
-    setStoppedTime(timeOnSite);
+    if(childRef.current){
+      childRef.current.stopTimer();
+    }
   };
 
   const hintObj = [{title: "Opening the Console", steps: ["Right click on the screen and select Inspect", "Once the side bar is open on the right, select Console from the top tabs in the side bar."]}];
   return(
     <>
-      <PuzzleNavBar puzzleNum={1} puzzleDesc={puzzleDesc} minutes={minutes} seconds={seconds}/>
+      <PuzzleNavBar puzzleNum={1} puzzleDesc={puzzleDesc} onTimerStop={(time) => setStoppedTime(time)} ref={childRef} />
       <PuzzleHint hints={hintObj}/>
       <div className="puzzle1 min-vw-100 min-vh-100">
         <Container className="justify-content-center content">
@@ -196,14 +187,9 @@ export default function Puzzle1Page() {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <Form.Group>
-                      {/* If stoppedTime is not zero, display the message with the time */}
-                      {stoppedTime > 0 && (
-                        <Form.Label>
-                            You have completed Puzzle 1 in {minutes}:{seconds?.toString().padStart(2, '0') || "00"}!
-                        </Form.Label>
-                      )}
-                    </Form.Group>
+                    {stoppedTime > 0 && (
+                      <p>You have completed Puzzle 1 in {minutes}:{seconds?.toString().padStart(2, '0') || '00'}:{milliseconds?.toString().padStart(2, '0') || '00'}!</p>
+                    )}
                   </Modal.Body>
                   <Modal.Footer>
                     <Button 
