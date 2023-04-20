@@ -1,6 +1,6 @@
 import {render} from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { PuzzleNavBar } from '../../client/components/PuzzleNavBar/PuzzleNavBar'
+import  PuzzleNavBar  from '../../client/components/PuzzleNavBar/PuzzleNavBar'
 import { BrowserRouter } from 'react-router-dom'
 
 describe("Tests for Puzzle Nav Bar", () => {
