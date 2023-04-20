@@ -103,7 +103,6 @@ async function insertUser(db, username, hashedPassword, salt, callback) {
       }
 
       callback(err);
-      return;
     }
   );
 }
