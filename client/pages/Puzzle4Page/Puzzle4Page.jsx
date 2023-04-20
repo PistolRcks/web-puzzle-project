@@ -87,6 +87,7 @@ export default function Puzzle4Page() {
                 for(let j = 0; j < 8; j++) {
                   if(!answerFlags[j] && input[i] == word[j] && !guessFlags[i]) {
                     guessFlags[i] = true;
+                    answerFlags[j] = true;
                     cssVals[i+1] = "halfCorrect";
                     console.log('We are comparing ' + input[i] + ' to ' + word[j] + ' and they match!');
                   }
