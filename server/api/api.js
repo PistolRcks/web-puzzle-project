@@ -1,12 +1,12 @@
 const Express = require("express");
 const { signup } = require("./signup");
 const { login } = require("./login");
-const { logout } = require("./logout")
+const { logout } = require("./logout");
 const { randomWord } = require("./randomWord");
 const { listPuzzles } = require("./listPuzzles");
 const { setUserPuzzleMeta } = require("./setUserPuzzleMeta");
 const { googleLogin } = require("./googleLogin");
-const { getUserInfo, postUserInfo } = require("./userInfo")
+const { getUserInfo, setUserPassword, setUserPFP } = require("./userInfo");
 
 const router = new Express.Router();
 
@@ -31,10 +31,10 @@ router.get("/listPuzzles", listPuzzles);
 router.post("/userPuzzleMeta", setUserPuzzleMeta);
 
 // User profile routes
-router.get("/user/:user_id(\\d+)", getUserInfo);  // user_id must be one or more digits
-router.post("/user", postUserInfo)                // always affects the current user; `:user_id` unnecessary
+router.get("/user/:user_id(\\d+)", getUserInfo); // user_id must be one or more digits
+router.post("/user/password", setUserPassword); // always affects the current user; `:user_id` unnecessary
+router.post("/user/picture", setUserPFP);
 
 router.post("/googleLogin", googleLogin);
 
 module.exports = router;
-
