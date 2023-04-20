@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Form, Container, Modal } from "react-bootstrap";
 import { ChangePassword } from "../../components/ChangePassword/ChangePassword";
 import "./UserPage.css";
@@ -28,6 +28,8 @@ export default function UserPage () {
             [e.target.name]: e.target.value.trim()
         });
     }
+
+    const navigate = useNavigate();
 
     return(
         <div className="UserPage">

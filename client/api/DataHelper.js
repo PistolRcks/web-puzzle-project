@@ -62,7 +62,7 @@ export function changePassword(userData) {
   const { newPassword } = userData;
   return new Promise((resolve, reject) => {
     axios
-      .post("api/changePassword", {
+      .post("api/userInfo", {
         newPassword,
       })
       .then(function (res) {
