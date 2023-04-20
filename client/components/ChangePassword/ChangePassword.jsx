@@ -34,15 +34,16 @@ function ChangePassword(props) {
             .then((res) => {
             //No need to navigate anywhere else from this point.
             //Give user the option to continue viewing user profile
-            props.close();
+            alert("Password successfully changed")
             })
             .catch((err) => {
             alert(err)
             })
         }
-      console.log("Hey this code works");
+        console.log("Hey this code works");
+        props.close();
     } catch (error) {
-      alert(error.message);
+        alert(error.message);
     }
   };
     return(
