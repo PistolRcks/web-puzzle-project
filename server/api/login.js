@@ -2,20 +2,22 @@ const Crypto = require("crypto");
 const { db } = require("../db");
 
 function login(req, res, next) {
-  if (!req.body.password || !req.body.username) {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
     res.status(400).send("Error: Username or password not set!");
     return;
   }
 
-  const { username, password } = req.body;
-
   // Verify password correctness
-  verifyPassword(db, username, password, (status, reason, userID) => {
+  verifyPassword(db, username, password, (status, reason, user) => {
     // Password correctly verified, store info
     if (status === 200) {
       // Store the userID and username for use on the front and back end
-      req.session.userID = userID;
+      req.session.userID = user.userID;
       req.session.username = username;
+      req.session.pfpSeed = user.pfpSeed;
+      req.session.pfpBackgroundColor = user.pfpBackgroundColor;
     }
 
     // whether we verified or not, send out what happened
@@ -36,7 +38,7 @@ function login(req, res, next) {
 function verifyPassword(db, username, password, callback) {
   // select existing user in database
   db.get(
-    "SELECT hashed_password, salt, user_id FROM User WHERE username = ?",
+    "SELECT hashed_password, salt, user_id, default_pfp_seed, default_pfp_color FROM User WHERE username = ?",
     username,
     function (err, row) {
       // if entered username isn't found, send error
@@ -50,7 +52,11 @@ function verifyPassword(db, username, password, callback) {
         return;
       }
 
-      const { hashed_password: hashedPassword, salt, user_id: userID } = row;
+      const { hashed_password: hashedPassword, 
+              user_id: userID,
+              salt,
+              default_pfp_seed: pfpSeed,
+              default_pfp_color: pfpBackgroundColor } = row;
 
       // if entered username is found, encrypt entered password with existing salt
       Crypto.pbkdf2(
@@ -68,7 +74,7 @@ function verifyPassword(db, username, password, callback) {
           // if the attempted password matches the existing password, let user know login
           // was a success, otherwise send an error
           if (Buffer.compare(attemptedPassword, hashedPassword) === 0) {
-            callback(200, "OK", userID);
+            callback(200, "OK", { userID, pfpSeed, pfpBackgroundColor});
           } else {
             callback(401, "Invalid password.", null);
           }
