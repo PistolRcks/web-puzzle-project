@@ -25,8 +25,8 @@ function initDatabase(fp, puzzles) {
         user_id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE,
         hashed_password BLOB,
-        salt BLOB, \
-        is_oauth INTEGER \
+        salt BLOB, 
+        oauth_id TEXT UNIQUE 
       )
     `);
 
@@ -82,7 +82,7 @@ function initDatabase(fp, puzzles) {
 const addColumns = (db) => {
   const columnsToAdd = {
     User: [
-      { name: "is_oauth", typeDef: "INTEGER"},
+      { name: "oauth_id", typeDef: "TEXT"},
       { name: "profile_picture", typeDef: "BLOB"},
       { name: "profile_picture_top", typeDef: "INTEGER"},
       { name: "profile_picture_left", typeDef: "INTEGER"}

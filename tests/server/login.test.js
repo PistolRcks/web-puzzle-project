@@ -137,7 +137,7 @@ describe("Tests for POST at /api/login", () => {
         password,
       });
 
-    expect(db.get.mock.lastCall[0]).toBe("SELECT hashed_password, salt, user_id FROM User WHERE username = ? AND is_oauth = 0");
+    expect(db.get.mock.lastCall[0]).toBe("SELECT hashed_password, salt, user_id FROM User WHERE username = ?");
     expect(db.get.mock.lastCall[1]).toBe(username);
     expect(response.statusCode).toBe(500);
   });

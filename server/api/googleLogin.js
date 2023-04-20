@@ -18,7 +18,7 @@ async function googleLogin(req, res, next) {
   const username = req.body.googleIdToken;
   // select existing user in database
   db.get(
-    "SELECT user_id FROM User WHERE username = ? AND is_oauth = 1",
+    "SELECT user_id FROM User WHERE oauth_id = ?",
     username,
     async function (err, row) {
       // if entered username isn't found, send error
@@ -71,7 +71,7 @@ async function googleSignup(req, res, username) {
  */
 async function insertGoogleUser(db, username, callback) {
   await db.run(
-    "INSERT INTO User (username, is_oauth) VALUES (?, 1)",
+    "INSERT INTO User (oauth_id) VALUES (?)",
     [username],
     function (err, row) {
       let user = {};
