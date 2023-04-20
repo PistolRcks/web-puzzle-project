@@ -1,19 +1,18 @@
 .correct {
-    color: rgb(87, 126, 69);
+    background-color: rgb(87, 126, 69);
+    width: 50px;
 }
 
 .halfCorrect {
-    color: rgb(104, 91, 34);
+    background-color: rgb(104, 91, 34);
+    width: 50px;
 }
 
 .incorrect {
-    color: rgb(93, 100, 104);
+    background-color: rgb(93, 100, 104);
+    width: 50px;
 }
 
 .form-control {
     width: 50px;
-}
-
-.form-row {
-    align-self: center;
 }

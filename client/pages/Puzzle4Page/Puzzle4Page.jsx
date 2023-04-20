@@ -7,6 +7,17 @@ import "./Puzzle4Page.css";
 import { Form, Row, Col, Button } from "react-bootstrap";
 
 export default function Puzzle4Page() {
+    let cssVals = {
+        1: "form-control",
+        2: "form-control",
+        3: "form-control",
+        4: "form-control",
+        5: "form-control",
+        6: "form-control",
+        7: "form-control",
+        8: "form-control",
+    }
+
     const initialFormData = Object.freeze({
         char1: "",
         char2: "",
@@ -35,6 +46,7 @@ export default function Puzzle4Page() {
     const [hasResponded, setHasResponded] = useState(false);
     const [wordleWord, setWordleWord] = useState("");
     const [formData, updateFormData] = useState(initialFormData);
+    const [cssValues, updateCssValues] = useState(cssVals);
 
     const handleChange = (e) => {
         const lastChar = e.target.value.trim().charAt(e.target.value.trim().length - 1);
@@ -45,7 +57,6 @@ export default function Puzzle4Page() {
             });
             refChar[(Number(e.target.name.charAt(e.target.name.length - 1)) + 1) % 9].current.focus();
         }
-        console.log(formData);
     };
 
     const handleSubmit = () => {
@@ -56,7 +67,41 @@ export default function Puzzle4Page() {
           }
           else {
             //Do the wordle rules
-            console.log("Incorrect!")
+            const input = Object.values(formData).toString().replace(/,/g, "").toLowerCase();
+            let word = wordleWord[0];
+            let guessFlags = [false, false, false, false, false, false, false, false];
+            let answerFlags = [false, false, false, false, false, false, false, false];
+
+            //Check correct
+            for(let i = 0; i < 8; i++) {
+                if(word[i] == input[i]) {
+                    cssVals[i+1] = "correct";
+                    guessFlags[i] = true;
+                    answerFlags[i] = true;
+                }
+            }
+
+            //Check half correct
+            for(let i = 0; i < 8; i++) {
+              if(!guessFlags[i]) {
+                for(let j = 0; j < 8; j++) {
+                  if(!answerFlags[j] && input[i] == word[j] && !guessFlags[i]) {
+                    guessFlags[i] = true;
+                    answerFlags[j] = true;
+                    cssVals[i+1] = "halfCorrect";
+                    console.log('We are comparing ' + input[i] + ' to ' + word[j] + ' and they match!');
+                  }
+                }
+              }
+            }
+
+            //Check incorrect
+            for (let i = 0; i < 8; i++) {
+              if(!answerFlags[i]) {
+                cssVals[i+1] = "incorrect";
+              }
+            }
+            updateCssValues(cssVals);
           }
         } catch (error) {
           alert(error.message);
@@ -85,13 +130,13 @@ export default function Puzzle4Page() {
             <PuzzleHint hints={hintObj}/>
             <h1>{wordleWord}</h1>
             <Form>
-              <Row ref={refChar[0]}>
+              <Row>
                 <Col lg="auto">
                   <Form.Control
                     onChange={handleChange}
                     name="char1"
                     type="text"
-                    className="form-control"
+                    className={cssValues[1]}
                     size="lg"
                     value={formData.char1}
                     ref={refChar[1]}
@@ -102,7 +147,7 @@ export default function Puzzle4Page() {
                     onChange={handleChange}
                     name="char2"
                     type="text"
-                    className="form-control"
+                    className={cssValues[2]}
                     size="lg"
                     value={formData.char2}
                     ref={refChar[2]}
@@ -113,7 +158,7 @@ export default function Puzzle4Page() {
                     onChange={handleChange}
                     name="char3"
                     type="text"
-                    className="form-control"
+                    className={cssValues[3]}
                     size="lg"
                     value={formData.char3}
                     ref={refChar[3]}
@@ -124,7 +169,7 @@ export default function Puzzle4Page() {
                     onChange={handleChange}
                     name="char4"
                     type="text"
-                    className="form-control"
+                    className={cssValues[4]}
                     size="lg"
                     value={formData.char4}
                     ref={refChar[4]}
@@ -135,7 +180,7 @@ export default function Puzzle4Page() {
                     onChange={handleChange}
                     name="char5"
                     type="text"
-                    className="form-control"
+                    className={cssValues[5]}
                     size="lg"
                     value={formData.char5}
                     ref={refChar[5]}
@@ -146,7 +191,7 @@ export default function Puzzle4Page() {
                     onChange={handleChange}
                     name="char6"
                     type="text"
-                    className="form-control"
+                    className={cssValues[6]}
                     size="lg"
                     value={formData.char6}
                     ref={refChar[6]}
@@ -157,7 +202,7 @@ export default function Puzzle4Page() {
                     onChange={handleChange}
                     name="char7"
                     type="text"
-                    className="form-control"
+                    className={cssValues[7]}
                     size="lg"
                     value={formData.char7}
                     ref={refChar[7]}
@@ -168,7 +213,7 @@ export default function Puzzle4Page() {
                     onChange={handleChange}
                     name="char8"
                     type="text"
-                    className="form-control"
+                    className={cssValues[8]}
                     size="lg"
                     value={formData.char8}
                     ref={refChar[8]}
