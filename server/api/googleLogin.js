@@ -15,11 +15,11 @@ async function googleLogin(req, res, next) {
     res.status(400).send("Error: Google Id Not Set!");
     return;
   }
-  const username = req.body.googleIdToken;
+  const oauth_id = req.body.googleIdToken;
   // select existing user in database
   db.get(
     "SELECT user_id FROM User WHERE oauth_id = ?",
-    username,
+    oauth_id,
     async function (err, row) {
       // if entered username isn't found, send error
       if (err) {
@@ -30,13 +30,13 @@ async function googleLogin(req, res, next) {
 
       if (!row) {
         // res.status(500).send("Error: Google User not found!");
-        await googleSignup(req, res, username);
+        await googleSignup(req, res, oauth_id);
         return;
       }
       
       const { user_id: userID } = row;
       req.session.userID = userID;
-      req.session.username = username;
+      req.session.username = oauth_id;
       res.status(200).send();
     }
   );
