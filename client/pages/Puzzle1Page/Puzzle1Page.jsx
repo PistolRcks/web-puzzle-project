@@ -13,7 +13,7 @@ import instagram from "../../assets/instagram.png";
 import tiktok from "../../assets/tiktok.png";
 import email from "../../assets/gmail.png";
 import "./Puzzle1Page.css";
-import { listPuzzles } from "../../api/DataHelper";
+import { completePuzzle, listPuzzles } from "../../api/DataHelper";
 
 export default function Puzzle1Page() {
 
@@ -58,6 +58,10 @@ export default function Puzzle1Page() {
   const handleRestartPuzzle = () => {
     setShowComplete(false);
     window.location.reload(true);
+  }
+  const handleShow = () => {
+    completePuzzle(1)
+      .catch((err) => { alert(err) });
   }
 
   const hintObj = [{title: "Opening the Console", steps: ["Right click on the screen and select Inspect", "Once the side bar is open on the right, select Console from the top tabs in the side bar."]}];
@@ -164,6 +168,7 @@ export default function Puzzle1Page() {
                 </Col>
                 <Modal
                   show={showComplete}
+                  onShow={handleShow}
                   onHide={handleCloseComplete}
                   backdrop="static"
                   keyboard={false}
