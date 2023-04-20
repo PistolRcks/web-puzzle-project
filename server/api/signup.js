@@ -58,11 +58,13 @@ function signup(req, res, next) {
           if (err) {
             // 19 is SQLITE_CONSTRAINT, should be username constraint
             if (err.errno === 19) {
-              res.status(400).send("Error: Username already exists!");
+              res.status(400).send("Error: Username already exists!")
             } else {
-              res.status(500)
+              res
+                .status(500)
                 .send(`Error: Failed to insert new user!\nSpecific error: ${err}`);
             }
+            return; // end prematurely
           }
           // Log the user in
           login(req, res, next);
