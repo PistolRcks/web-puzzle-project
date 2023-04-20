@@ -5,6 +5,7 @@ import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
 import { randomWord } from "../../api/DataHelper";
 import "./Puzzle4Page.css";
 import { Form, Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function Puzzle4Page() {
     let cssVals = {
@@ -47,6 +48,9 @@ export default function Puzzle4Page() {
     const [wordleWord, setWordleWord] = useState("");
     const [formData, updateFormData] = useState(initialFormData);
     const [cssValues, updateCssValues] = useState(cssVals);
+    const [wordleTries, updateWordleTries] = useState(3);
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const lastChar = e.target.value.trim().charAt(e.target.value.trim().length - 1);
@@ -61,11 +65,16 @@ export default function Puzzle4Page() {
 
     const handleSubmit = () => {
         try {
+          updateWordleTries(wordleTries-1);
           if(Object.values(formData).toString().replace(/,/g, "").toLowerCase() == wordleWord[0]) {
             //Do what needs to be done after puzzle is complete
             console.log("Correct!")
           }
           else {
+            if(wordleTries == 1) {
+              alert("You lost :(")
+              navigate("/Puzzle/Selection")
+            }
             //Do the wordle rules
             const input = Object.values(formData).toString().replace(/,/g, "").toLowerCase();
             let word = wordleWord[0];
@@ -128,7 +137,7 @@ export default function Puzzle4Page() {
         <>
             <PuzzleNavBar puzzleNum={4} puzzleDesc={puzzleDesc}/>
             <PuzzleHint hints={hintObj}/>
-            <h1>{wordleWord}</h1>
+            <h1>Tries: {wordleTries}</h1>
             <Form>
               <Row>
                 <Col lg="auto">
