@@ -226,9 +226,17 @@ function setUserPFP(req, res, next) {
     res.status(400).send("Error: 'profile_picture_top' or 'profile_picture_left' is negative!")
   }
 
-  // There should be a POST route which allows a user to input a binary blob of the image they would like to upload, along with the top and left croppings.
-  // The route should validate crop distances (e.g. no negative numbers, should be numbers, etc.)
-  // The route should give pertinent error codes if something goes wrong
+  // Input data now
+  db.run("UPDATE User SET profile_picture = ?, profile_picture_top = ?, profile_picture_left = ? WHERE user_id = ?",
+    [profile_picture, profile_picture_top, profile_picture_left, req.session.userID],
+    function(err) {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      
+      res.status(200).send("Profile picture updated successfully.")
+    })
 }
 
 module.exports = {
