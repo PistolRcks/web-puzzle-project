@@ -24,7 +24,7 @@ router.post("/login", login);
 
 router.post("/logout", logout);
 
-router.get("/word", randomWord);
+router.post("/word", randomWord);
 
 router.get("/listPuzzles", listPuzzles);
 

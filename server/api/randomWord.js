@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 /**
- * Serves as the callback for the GET /api/word route. Gets an Array containing Arrays containing words.
+ * Serves as the callback for the POST /api/word route. Gets an Array containing Arrays containing words.
  * The JSON body should have one key-value pair at the root called "words" which contains the Array of requirement Objects, e.g.:
  * ```json
  * {

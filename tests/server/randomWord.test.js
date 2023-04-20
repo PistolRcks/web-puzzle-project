@@ -37,7 +37,7 @@ describe("Tests for POST at /api/word", () => {
 
     axios.get.mockResolvedValueOnce({ data: data, status: 200 });
 
-    const response = await request.get(route)
+    const response = await request.post(route)
       .send({
         words: [
           {
@@ -57,7 +57,7 @@ describe("Tests for POST at /api/word", () => {
 
     axios.get.mockResolvedValueOnce({ data: data, status: 200 });
 
-    const response = await request.get(route)
+    const response = await request.post(route)
       .send({
         words: [
           {
@@ -78,7 +78,7 @@ describe("Tests for POST at /api/word", () => {
 
     axios.get.mockResolvedValueOnce({ data: data, status: 200 });
 
-    const response = await request.get(route)
+    const response = await request.post(route)
       .send({
         words: [
           {
@@ -106,7 +106,7 @@ describe("Tests for POST at /api/word", () => {
 
     axios.get.mockResolvedValueOnce({ data: data2, status: 200 });
 
-    const response = await request.get(route)
+    const response = await request.post(route)
       .send({
         words: [
           {
@@ -126,7 +126,7 @@ describe("Tests for POST at /api/word", () => {
   });
 
   test("400 - Invalid input", async () => {
-    const response = await request.get(route)
+    const response = await request.post(route)
       .send({
         blah: []
       });
@@ -138,7 +138,7 @@ describe("Tests for POST at /api/word", () => {
   test("500 - Random Word API failed", async () => {
     axios.get.mockResolvedValueOnce({ status: 418 });
 
-    const response = await request.get(route).send({
+    const response = await request.post(route).send({
       words: [
         {
           numWords: 2,
