@@ -197,6 +197,35 @@ function setUserPassword(req, res, next) {
  * @returns Nothing.
  */
 function setUserPFP(req, res, next) {
+  // Existence validation
+  if (
+    !(
+      "profile_picture" in req.body &&
+      "profile_picture_top" in req.body &&
+      "profile_picture_left" in req.body
+    )
+  ) {
+    res
+      .status(400)
+      .send(
+        "Error: 'profile_picture', 'profile_picture_top', or 'profile_picture_left' not found in the request body!"
+      );
+    return;
+  }
+  
+  // Type validation
+  const { profile_picture, profile_picture_top, profile_picture_left } = req.body
+  
+  if (isNaN(profile_picture_top) || isNaN(profile_picture_left)) {
+    res.status(400).send("Error: 'profile_picture_top' or 'profile_picture_left' is not a number!")
+  }
+  
+  // Space validation
+  // TODO: Maybe we should figure out how we could make sure the cropping is not greater than the size of the image?
+  if (profile_picture_top < 0 || profile_picture_left < 0) {
+    res.status(400).send("Error: 'profile_picture_top' or 'profile_picture_left' is negative!")
+  }
+
   // There should be a POST route which allows a user to input a binary blob of the image they would like to upload, along with the top and left croppings.
   // The route should validate crop distances (e.g. no negative numbers, should be numbers, etc.)
   // The route should give pertinent error codes if something goes wrong
@@ -205,5 +234,5 @@ function setUserPFP(req, res, next) {
 module.exports = {
   getUserInfo,
   setUserPassword,
-  setUserPFP
+  setUserPFP,
 };

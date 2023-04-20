@@ -160,8 +160,8 @@ describe("Tests for userInfo.js: getUserInfo", () => {
   });
 });
 
-describe("Tests for userInfo.js: postUserInfo", () => {
-  const route = "/api/user";
+describe("Tests for userInfo.js: setUserPassword", () => {
+  const route = "/api/user/password";
   const origPass = "origPass123";
   const newPass = "newPass123";
   const missingBody =
