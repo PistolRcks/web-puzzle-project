@@ -261,6 +261,6 @@ describe("Tests for userInfo.js: postUserInfo", () => {
     console.log(response.text)
     
     expect(response.statusCode).toBe(401);
-    expect(response.text).toEqual("Invalid Password")
+    expect(response.text).toEqual("Incorrect Password")
   });
 });
