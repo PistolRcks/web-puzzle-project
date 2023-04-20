@@ -13,9 +13,10 @@ import {
 import { PuzzleHint } from "../../components/PuzzleHint/PuzzleHint";
 import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
 import "./Puzzle2.css";
-const [text, onChangeText] = React.useState("Useless Text");
+
 
 export default function Puzzle2Page() {
+  
   return (
     <>
       <PuzzleNavBar />
@@ -29,11 +30,7 @@ export default function Puzzle2Page() {
               </div>
             </Stack>
             <h4 className="version-one">Passcode</h4>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeText}
-              value={text}
-            />
+           
             <div className="search">
               <Button className="button" variant="secondary">
                 Search
