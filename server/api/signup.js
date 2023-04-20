@@ -45,8 +45,7 @@ function signup(req, res, next) {
     "sha256",
     async (err, hashedPassword) => {
       if (err) {
-        res.status(500).send(err);
-        return;
+        return res.status(500).send(err);
       }
       
       // insert new user into database
@@ -60,16 +59,13 @@ function signup(req, res, next) {
             // 19 is SQLITE_CONSTRAINT, should be username constraint
             if (err.errno === 19) {
               res.status(400).send("Error: Username already exists!");
-              return;
             } else {
               res.status(500)
                 .send(`Error: Failed to insert new user!\nSpecific error: ${err}`);
-              return;
             }
           }
           // Log the user in
           login(req, res, next);
-          return;
         }
       )
     }

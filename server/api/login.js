@@ -78,7 +78,6 @@ function verifyPassword(db, username, password, callback) {
           } else {
             callback(401, "Invalid password.", null);
           }
-          return;
         }
       );
     }

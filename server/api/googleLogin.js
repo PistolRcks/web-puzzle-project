@@ -44,7 +44,6 @@ async function googleLogin(req, res, next) {
       req.session.pfpSeed = pfpSeed;
       req.session.pfpBackgroundColor = pfpBackgroundColor;
       res.status(200).send();
-      return;
     }
   );
 }
@@ -107,7 +106,6 @@ async function insertGoogleUser(db, username, callback) {
       };
 
       callback(err, user);
-      return;
     }
   );
 }
