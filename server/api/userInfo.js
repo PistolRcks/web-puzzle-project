@@ -17,7 +17,7 @@ const { verifyPassword } = require("./login");
  *  ```js
  *    {
  *      "username": "the user's username",
- *      "profile_picture": "a string-encoded binary blob of the profile picture",
+ *      "profile_picture": "a Base64-encoded string of the profile picture",
  *      "profile_picture_top": the integer cropping point from the top of the image,
  *      "profile_picture_left": the integer cropping point from the left of the image,
  *      "best_times": [

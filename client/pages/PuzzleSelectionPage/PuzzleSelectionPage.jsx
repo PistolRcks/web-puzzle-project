@@ -4,7 +4,7 @@ import { Button, Form, Container } from "react-bootstrap";
 import { useState } from "react";
 
 import { PuzzleItem } from "../../components/PuzzleItem/PuzzleItem.jsx";
-import { listPuzzles, logOut } from "../../api/DataHelper";
+import { listPuzzles, getUserInfo, logOut } from "../../api/DataHelper";
 import "./PuzzleSelectionPage.css";
 
 export default function PuzzleSelectionPage() {
@@ -15,10 +15,8 @@ export default function PuzzleSelectionPage() {
   const [userID, setUserID] = useState(-1);
   const [, setUsername] = useState("");
   const [userPuzzleCompletion, setUserPuzzleCompletion] = useState([]);
-  const [pfpSeed, setPFPSeed] = useState(0);
-  const[pfpBackgroundColor, setPFPBackgroundColor] = useState("000000");
-
-  const userIcon = `https://api.dicebear.com/5.x/adventurer/svg?seed=${pfpSeed}&backgroundColor=${pfpBackgroundColor}&radius=20`;
+  const [userIcon, setUserIcon] = useState("https://api.dicebear.com/5.x/adventurer/svg?seed=0&backgroundColor=000000&radius=20");
+  const [croppingStyle, setCroppingStyle] = useState({})
 
   //If puzzles is still default, this evaluates to true
   //hasResponded makes sure that if there is 1 puzzle in the DB that we don't accidentally
@@ -29,15 +27,24 @@ export default function PuzzleSelectionPage() {
         const { userID, username, pfpSeed, pfpBackgroundColor, 
                 puzzles, userPuzzleCompletion } = res.data;
 
-          console.log(res);
+        getUserInfo(userID)
+          .then((res) => {
+            const { profile_picture, profile_picture_top, profile_picture_left } = res.data;
 
-        setPFPBackgroundColor(pfpBackgroundColor);
-        setPFPSeed(pfpSeed);
-        setPuzzles(puzzles);
-        setUserID(userID);
-        setUsername(username);
-        setUserPuzzleCompletion(userPuzzleCompletion);
-        setHasResponded(true);
+            // if the profile picture exists, use it instead of the pfp
+            if (profile_picture) {
+              setUserIcon(`data:image/png;base64, ${profile_picture}`)
+              // do cropping here
+              // check here: https://www.digitalocean.com/community/tutorials/css-cropping-images-object-fit
+            } else {
+              setUserIcon(`https://api.dicebear.com/5.x/adventurer/svg?seed=${pfpSeed}&backgroundColor=${pfpBackgroundColor}&radius=20`)
+            }
+            setPuzzles(puzzles);
+            setUserID(userID);
+            setUsername(username);
+            setUserPuzzleCompletion(userPuzzleCompletion);
+            setHasResponded(true);
+          })
       })
       .catch((err) => {
         alert(err);
@@ -60,7 +67,7 @@ export default function PuzzleSelectionPage() {
 
       <div data-testid="PuzzleSelectionPage__pfp" className="puzzle_selection_page__profile-link">
         <Link to={`/UserProfile/${userID}`}>
-          <img src={userIcon} alt="User profile" height="75" />
+          <img src={userIcon} alt="User profile" height="75" style={croppingStyle} />
         </Link>
       </div>
 

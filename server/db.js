@@ -81,7 +81,7 @@ function initDatabase(fp, puzzles) {
 const addColumns = (db) => {
   const columnsToAdd = {
     User: [
-      { name: "profile_picture", typeDef: "BLOB" },
+      { name: "profile_picture", typeDef: "TEXT" },
       { name: "profile_picture_top", typeDef: "INTEGER" },
       { name: "profile_picture_left", typeDef: "INTEGER" },
       { name: "default_pfp_seed", typeDef: "INTEGER" },

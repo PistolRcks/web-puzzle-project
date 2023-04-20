@@ -60,7 +60,6 @@ export function logIn(userData) {
 
 //Function that calls the logout post
 export function logOut(userData) {
-  console.log("yes this is getting called smile");
   return new Promise((resolve, reject) => {
     axios
       .post("/api/logout")
@@ -114,6 +113,25 @@ export async function randomWord(requirements) {
     axios.post('/api/word', 
       requirements
     )
+    .then((res) => {
+      return resolve(res);
+    })
+    .catch((err) => {
+      return reject(err);
+    })
+  });
+}
+
+/**
+ * Calls the /api/user/:user_id GET route to return a user's information.
+ * 
+ * @see /api/user/:user_id for more info on what is returned
+ * @param {Number} userID - The userID to get info from
+ * @returns {Promise} that resolves to the data or rejects with an error
+ */
+export function getUserInfo(userID) {
+  return new Promise((resolve, reject) => {
+    axios.post(`/api/user/${userID}`)
     .then((res) => {
       return resolve(res);
     })
