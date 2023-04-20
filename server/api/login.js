@@ -16,11 +16,11 @@ function login(req, res, next) {
       // Store the userID and username for use on the front and back end
       req.session.userID = userID;
       req.session.username = username;
-    } 
-    
-    // whether we verified or not, send out what happened 
+    }
+
+    // whether we verified or not, send out what happened
     res.status(status).send(reason);
-  })
+  });
 }
 
 /**

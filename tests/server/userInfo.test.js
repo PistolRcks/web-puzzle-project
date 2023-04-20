@@ -164,14 +164,15 @@ describe("Tests for userInfo.js: postUserInfo", () => {
   const route = "/api/user";
   const origPass = "origPass123";
   const newPass = "newPass123";
-  const missingBody = "Error: Either 'old_password' or 'new_password' (or both) not found in the request body!"
+  const missingBody =
+    "Error: Either 'old_password' or 'new_password' (or both) not found in the request body!";
 
-  // console.log and console.error are already being spied upon in 
+  // console.log and console.error are already being spied upon in
   // the previous suite, so not necessary to do it again
-  
+
   afterEach(() => {
-    db.run.mockReset()
-  })
+    db.run.mockReset();
+  });
 
   test("200 - Normal operation", async () => {
     db.run = jest.fn((query, params, callback) => {
@@ -190,77 +191,73 @@ describe("Tests for userInfo.js: postUserInfo", () => {
   });
 
   test("400 - request body empty", async () => {
-    const response = await request
-      .post(route)
-      .send({});
-    
+    const response = await request.post(route).send({});
+
     expect(response.statusCode).toBe(400);
     expect(response.text).toEqual(missingBody);
-  })
-  
+  });
+
   test("400 - 'old_password' not in request body", async () => {
-    const response = await request
-      .post(route)
-      .send({ new_password: newPass });
-    
+    const response = await request.post(route).send({ new_password: newPass });
+
     expect(response.statusCode).toBe(400);
     expect(response.text).toEqual(missingBody);
-  })
-  
+  });
+
   test("400 - 'new_password' not in request body", async () => {
-    const response = await request
-      .post(route)
-      .send({ old_password: origPass });
-    
+    const response = await request.post(route).send({ old_password: origPass });
+
     expect(response.statusCode).toBe(400);
     expect(response.text).toEqual(missingBody);
-  })
+  });
 
   test("400 - Password failed to meet requirements", async () => {
     const response = await request
       .post(route)
       .send({ old_password: origPass, new_password: "badPass" });
-    
-      expect(response.statusCode).toBe(400);
-      // I don't want to look at the error responses of `checkPasswordServer`,
-      // so we're just expecting *some* text here
-      expect(response.text).toBeTruthy();
+
+    expect(response.statusCode).toBe(400);
+    // I don't want to look at the error responses of `checkPasswordServer`,
+    // so we're just expecting *some* text here
+    expect(response.text).toBeTruthy();
   });
 
   test("500 - Password failed to be hashed", async () => {
-    crypto.pbkdf2.mockImplementationOnce((pass, salt, iter, keylen, digest, callback) => {
-      callback("Error!", null)
-    }) 
-    
+    crypto.pbkdf2.mockImplementationOnce(
+      (pass, salt, iter, keylen, digest, callback) => {
+        callback("Error!", null);
+      }
+    );
+
     const response = await request
       .post(route)
       .send({ old_password: origPass, new_password: newPass });
-    
+
     expect(response.statusCode).toBe(500);
-    expect(response.text).toEqual("Error!")
+    expect(response.text).toEqual("Error!");
   });
 
   test("500 - Password failed to be updated in database", async () => {
     db.run = jest.fn((query, params, callback) => {
-      callback("Error!")
-    })
+      callback("Error!");
+    });
 
     const response = await request
       .post(route)
       .send({ old_password: origPass, new_password: newPass });
-    
+
     expect(response.statusCode).toBe(500);
-    expect(response.text).toEqual("Error!")
+    expect(response.text).toEqual("Error!");
   });
 
   test("Non-200 - Password failed to be verified", async () => {
     const response = await request
       .post(route)
       .send({ old_password: "BadPass", new_password: newPass });
-    
-    console.log(response.text)
-    
+
+    console.log(response.text);
+
     expect(response.statusCode).toBe(401);
-    expect(response.text).toEqual("Incorrect Password")
+    expect(response.text).toEqual("Incorrect Password");
   });
 });
