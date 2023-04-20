@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Button, Carousel, Col, Container, Form, Modal, Overlay, Row, Stack, Tooltip } from "react-bootstrap";
+import { Button, Carousel, Col, Container, Modal, Overlay, Row, Stack, Tooltip } from "react-bootstrap";
 import { PuzzleHint } from "../../components/PuzzleHint/PuzzleHint";
 import  PuzzleNavBar  from "../../components/PuzzleNavBar/PuzzleNavBar";
 import frog from "../../assets/frog.jpg";
