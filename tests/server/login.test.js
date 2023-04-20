@@ -11,9 +11,9 @@ jest.mock("../../server/db");
 jest.mock("crypto", () => {
   return {
     ...jest.requireActual("crypto"),
-    pbkdf2: (pass, salt, iter, keylen, digest, callback) => {
+    pbkdf2: jest.fn((pass, salt, iter, keylen, digest, callback) => {
      callback(null, Buffer.from(pass, "utf8"));
-    }
+    })
   }
 });
 
