@@ -83,9 +83,11 @@ const addColumns = (db) => {
   const columnsToAdd = {
     User: [
       { name: "oauth_id", typeDef: "TEXT"},
-      { name: "profile_picture", typeDef: "BLOB"},
-      { name: "profile_picture_top", typeDef: "INTEGER"},
-      { name: "profile_picture_left", typeDef: "INTEGER"}
+      { name: "profile_picture", typeDef: "BLOB" },
+      { name: "profile_picture_top", typeDef: "INTEGER" },
+      { name: "profile_picture_left", typeDef: "INTEGER" },
+      { name: "default_pfp_seed", typeDef: "INTEGER" },
+      { name: "default_pfp_color", typeDef: "TEXT" }
     ]
   };
 
