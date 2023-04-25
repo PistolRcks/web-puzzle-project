@@ -8,6 +8,7 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function Puzzle4Page() {
+
     let cssVals = {
         1: "form-control",
         2: "form-control",
@@ -49,8 +50,32 @@ export default function Puzzle4Page() {
     const [formData, updateFormData] = useState(initialFormData);
     const [cssValues, updateCssValues] = useState(cssVals);
     const [wordleTries, updateWordleTries] = useState(3);
+    const [wordResponse, updateWordResponse] = useState(false);
+    const [displayScramble, updateDisplayScramble] = useState("");
+    const [initialScramble, updateInitialScramble] = useState("");
+    const [scrambleFormData, updateScrambleFormData] = useState("");
 
     const navigate = useNavigate();
+
+    function scramble(word) {
+      let wordArray = ['a','a','a','a','a','a'];
+      for(let i = 0; i < word[0].length; i++) {
+        wordArray[i] = word[0][i];
+      }
+
+      let j,k;
+      for (let i = 0; i < word[0].length; i++) {
+        j = Math.floor(((Math.random() + 1) * i) + 1) % 6;
+        k = wordArray[i];
+        wordArray[i] = wordArray[j];
+        wordArray[j] = k;
+      }
+      return wordArray;
+    }
+
+    const handleScrambleChange = (e) => {
+      updateScrambleFormData(e.target.value.trim());
+    }
 
     const handleChange = (e) => {
         const lastChar = e.target.value.trim().charAt(e.target.value.trim().length - 1);
@@ -62,6 +87,15 @@ export default function Puzzle4Page() {
             refChar[(Number(e.target.name.charAt(e.target.name.length - 1)) + 1) % 9].current.focus();
         }
     };
+
+    const handleScrambleSubmit = () => {
+      if(initialScramble == scrambleFormData) {
+        console.log("Good");
+      }
+      else {
+        console.log("Bad");
+      }
+    }
 
     const handleSubmit = () => {
         try {
@@ -124,8 +158,11 @@ export default function Puzzle4Page() {
         listPuzzles().then((res) => {
             setHasResponded(true);
             setPuzzleDesc(res.data.puzzles[3].description);
-            randomWord({words: [{numWords: 1, length: 8}]}).then((res) => {
+            randomWord({words: [{numWords: 1, length: 8}, {numWords: 1, length: 6}]}).then((res) => {
+                updateWordResponse(true);
                 setWordleWord(res.data[0]);
+                updateInitialScramble(res.data[1]);
+                updateDisplayScramble(scramble(res.data[1]));
             });
         }).catch((err) => {
             alert(err);
@@ -236,6 +273,21 @@ export default function Puzzle4Page() {
                     Submit
                     </Button>
                 </Col>
+              </Row>
+            </Form>
+            <h1>Unscramble: {displayScramble}</h1>
+            <Form>
+              <Row>
+              <Form.Control
+                size="lg"
+                className="mini-control"
+                onChange={handleScrambleChange}
+              />
+              <Button
+                onClick={handleScrambleSubmit}
+                >
+                Submit
+              </Button>
               </Row>
             </Form>
         </>
