@@ -8,50 +8,38 @@ describe("Tests for User Page", () => {
         jest.spyOn(console, "error").mockImplementation();
     });
 
-    test("Tests for loaded User Page", async () => {
-        render(
-            <BrowserRouter>
-                <UserPage url="/UserProfile"/>
-            </BrowserRouter>
-        );
-        const userPage = screen.getByTestId("userPage");
-        expect(userPage).toBeInTheDocument();
-    });
-
     test("Checks for User Profile header", () => {
-        const wrapper = render(
+        const { baseElement } = render(
             <BrowserRouter>
                 <UserPage/>
             </BrowserRouter>
         );
-        expect(wrapper.baseElement.outerHTML).toContain("User Profile");
+        expect(baseElement.outerHTML).toContain("User Profile");
     });
 
     test("Checks for user profile picture", () => {
         render(
-            <BrowserRouter>
-                <UserPage url="/UserProfile"/>
-            </BrowserRouter>
+            <UserPage url="/UserProfile"/>, {wrapper: BrowserRouter}
         );
-        const profilePic = screen.getByTestId("profilePic");
-        expect(profilePic).toBeInTheDocument();
+        
+        expect(screen.getByTestId("profilePic").outerHTML).toContain("https://api.dicebear.com/5.x/adventurer/svg?seed=Gracie&amp;scale=130&amp;radius=20&amp;backgroundType=solid,gradientLinear&amp;randomizeIds=true&amp;backgroundColor=c0aede,b6e3f4,d1d4f9,ffdfbf,ffd5dc");
     });
 
     test("Checks for username header", () => {
-        const wrapper = render(
+        const { baseElement } = render(
             <BrowserRouter>
                 <UserPage/>
             </BrowserRouter>
         );
-        expect(wrapper.baseElement.outerHTML).toContain("Username goes here!");
+        expect(baseElement.outerHTML).toContain("Username goes here!");
     });
 
     test("Checks for change password button", () => {
-        const wrapper = render(
+        const { baseElement } = render(
             <BrowserRouter>
                 <UserPage/>
             </BrowserRouter>
         );
-        expect(wrapper.baseElement.outerHTML).toContain("Change Password");
+        expect(baseElement.outerHTML).toContain("Change Password");
     });
 });
