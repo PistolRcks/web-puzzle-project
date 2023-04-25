@@ -14,9 +14,7 @@ import { PuzzleHint } from "../../components/PuzzleHint/PuzzleHint";
 import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
 import "./Puzzle2.css";
 
-
 export default function Puzzle2Page() {
-  
   return (
     <>
       <PuzzleNavBar />
@@ -30,11 +28,18 @@ export default function Puzzle2Page() {
               </div>
             </Stack>
             <h4 className="version-one">Passcode</h4>
-           
+
             <div className="search">
               <Button className="button" variant="secondary">
                 Search
               </Button>
+            </div>
+            <div className="input-container">
+              <label>Password </label>
+              <input type="password" name="pass" required />
+            </div>
+            <div className="button-container">
+              <input type="submit" />
             </div>
           </Row>
         </Container>
