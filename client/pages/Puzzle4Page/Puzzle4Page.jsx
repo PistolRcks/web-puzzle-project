@@ -68,7 +68,6 @@ export default function Puzzle4Page() {
         char = ((char + (rand)) % 26 + 97);
         wordArray[i] = String.fromCharCode(char);
       }
-      console.log(wordArray);
       return wordArray;
     }
 
@@ -193,7 +192,6 @@ export default function Puzzle4Page() {
                 updateDisplayScramble(scramble(res.data[1]));
                 setCryptoWord(res.data[2]);
                 updateEncodedWord(crypto(res.data[2]));
-                console.log(res.data[2]);
             });
         }).catch((err) => {
             alert(err);
