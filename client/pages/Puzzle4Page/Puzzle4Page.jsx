@@ -90,7 +90,7 @@ export default function Puzzle4Page() {
 
     const handleScrambleSubmit = () => {
       if(initialScramble == scrambleFormData) {
-        console.log("Correct!  Your free letter is " + wordleWord[0][2] + " in the 2nd spot!");
+        console.log("Correct!  Your free letter is " + wordleWord[0][1] + " in the 2nd spot!");
       }
       else {
         console.log("Incorrect!");
