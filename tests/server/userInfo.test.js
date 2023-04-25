@@ -263,7 +263,7 @@ describe("Tests for userInfo.js: setUserPassword", () => {
 describe("Tests for userInfo.js: setUserPFP", () => {
   const route = "/api/user/picture";
   const inputData = {
-    profile_picture: "Blob data...",
+    profile_picture: "abcd1234===",
     profile_picture_top: 0,
     profile_picture_left: 0,
   };
@@ -273,6 +273,7 @@ describe("Tests for userInfo.js: setUserPFP", () => {
     "Error: 'profile_picture_top' or 'profile_picture_left' is not a number!";
   const boundsError =
     "Error: 'profile_picture_top' or 'profile_picture_left' is negative!";
+  const base64Error = "Error: 'profile_picture' is not Base64-encoded!";
 
   afterEach(() => {
     db.run.mockReset();
@@ -286,10 +287,18 @@ describe("Tests for userInfo.js: setUserPFP", () => {
     const response = await request.post(route).send(inputData);
 
     // Expect parameters to be what they should be
-    expect(db.run.mock.lastCall[1]).toEqual(["Blob data...", 0, 0, 1]);
+    expect(db.run.mock.lastCall[1]).toEqual(["abcd1234===", 0, 0, 1]);
 
     expect(response.statusCode).toBe(200);
     expect(response.text).toEqual("Profile picture updated successfully.");
+  });
+
+  test("400 - profile_picture not Base64-encoded", async () => {
+    const badInput = { ...inputData, profile_picture: "This is bad input!" };
+    const response = await request.post(route).send(badInput);
+
+    expect(response.statusCode).toBe(400);
+    expect(response.text).toEqual(base64Error);
   });
 
   // the following boilerplate tests brought to you by ChatGPT :)))
