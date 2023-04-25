@@ -53,7 +53,6 @@ export default function PuzzleSelectionPage() {
       <div data-testid="PuzzleSelectionPage__pfp" className="puzzle_selection_page__profile-link">
         <Link to={`/UserProfile/${userID}`}>
           <ProfileImage userID={userID} />
-          <img src={userIcon} alt="User profile" height="75" style={croppingStyle} />
         </Link>
       </div>
 

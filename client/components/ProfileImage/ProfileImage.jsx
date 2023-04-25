@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, View, Image } from "react";
 import { getUserInfo } from "../../api/DataHelper";
 
 /**
@@ -17,10 +17,18 @@ export default function ProfileImage({ userID }) {
       // if the profile picture exists, use it instead of the pfp
       if (profile_picture) {
         setUserIcon(`data:image/png;base64, ${profile_picture}`)
-        // do cropping here
-        // check here: https://www.digitalocean.com/community/tutorials/css-cropping-images-object-fit
+        setCroppingStyle({
+          top: profile_picture_top,
+          left: profile_picture_left
+        })
       } else {
         setUserIcon(`https://api.dicebear.com/5.x/adventurer/svg?seed=${pfp_seed}&backgroundColor=${pfp_background_color}&radius=20`)
       }
     })
+  
+    return (
+      <View style={{ width: 75, height: 75, overflow: 'hidden' }}>
+        <Image alt={"User profile picture"} source={{uri: userIcon}} style={croppingStyle} />
+      </View>
+    )
 }
