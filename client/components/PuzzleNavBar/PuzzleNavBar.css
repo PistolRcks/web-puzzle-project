@@ -7,3 +7,10 @@ a:hover {
   position: static;
   box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+.timer {
+  padding-top: 15px;
+  padding-right: 12px;
+  color:  #e8f1e8;
+  opacity: 75%;
+}
