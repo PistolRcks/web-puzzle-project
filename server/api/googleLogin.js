@@ -11,17 +11,17 @@ const { db } = require("../db");
  * @returns Nothing.
  */
 async function googleLogin(req, res, next) {
-  const username = req.body.googleIdToken;
+  const oauth_id = req.body.googleIdToken;
 
-  if (!username) {
+  if (!oauth_id) {
     res.status(400).send("Error: Google Id Not Set!");
     return;
   }
 
   // select existing user in database
   db.get(
-    "SELECT user_id, default_pfp_seed, default_pfp_color FROM User WHERE username = ?",
-    username,
+    "SELECT user_id, default_pfp_seed, default_pfp_color FROM User WHERE oauth_id = ?",
+    oauth_id,
     async function (err, row) {
       // if entered username isn't found, send error
       if (err) {
@@ -31,7 +31,8 @@ async function googleLogin(req, res, next) {
       }
 
       if (!row) {
-        await googleSignup(req, res, username);
+        // res.status(500).send("Error: Google User not found!");
+        await googleSignup(req, res, oauth_id);
         return;
       }
       
@@ -40,7 +41,7 @@ async function googleLogin(req, res, next) {
               default_pfp_color: pfpBackgroundColor } = row;
               
       req.session.userID = userID;
-      req.session.username = username;
+      req.session.username = null;
       req.session.pfpSeed = pfpSeed;
       req.session.pfpBackgroundColor = pfpBackgroundColor;
       res.status(200).send();
@@ -88,7 +89,7 @@ async function insertGoogleUser(db, username, callback) {
 
   await db.run(
     `INSERT INTO User 
-    (username, default_pfp_seed, default_pfp_color) 
+    (oauth_id, default_pfp_seed, default_pfp_color) 
     VALUES (?, ?, ?)`,
     [username, diceBearSeed, diceBearBackgroundColor],
     function (err, row) {
