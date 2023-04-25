@@ -52,7 +52,7 @@ export default function PuzzleSelectionPage() {
 
       <div data-testid="PuzzleSelectionPage__pfp" className="puzzle_selection_page__profile-link">
         <Link to={`/UserProfile/${userID}`}>
-          <ProfileImage userID={userID} hasResponded={hasResponded} />
+          <ProfileImage userID={userID} />
         </Link>
       </div>
 

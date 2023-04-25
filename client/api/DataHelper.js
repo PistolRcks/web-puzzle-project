@@ -125,18 +125,23 @@ export async function randomWord(requirements) {
 /**
  * Calls the /api/user/:user_id GET route to return a user's information.
  * 
+ * Doesn't do anything if the userID === -1
  * @see /api/user/:user_id for more info on what is returned
  * @param {Number} userID - The userID to get info from
  * @returns {Promise} that resolves to the data or rejects with an error
  */
 export function getUserInfo(userID) {
   return new Promise((resolve, reject) => {
-    axios.post(`/api/user/${userID}`)
-    .then((res) => {
-      return resolve(res);
-    })
-    .catch((err) => {
-      return reject(err);
-    })
+    if (userID !== -1) {
+      axios.get(`/api/user/${userID}`)
+      .then((res) => {
+        return resolve(res);
+      })
+      .catch((err) => {
+        return reject(err);
+      })
+    } else {
+      return reject("getUserInfo: Sent bad userID, passing...")
+    }
   });
 }
