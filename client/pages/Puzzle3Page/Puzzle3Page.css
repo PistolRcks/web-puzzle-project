@@ -1,3 +1,17 @@
+.blank-space {
+  height: 145px;
+}
+
+body {
+  overflow: auto;
+  background-color: #2f3e46;
+}
+
+.content {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .text-body{
     display: inline-flex;
     flex-wrap:wrap;
@@ -7,6 +21,40 @@
 
 .text-hint{
     flex-shrink: 2;
+}
+
+.main-block {
+  background-color: #e8f1e8;
+  color: #2f3e46;
+  height: fit-content;
+  margin-left: 60px;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 20px;
+  border-radius: 1%;
+}
+
+.page-title {
+  margin-left: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: xx-large;
+}
+
+.puzzle3 {
+  color: #e8f1e8;
+}
+
+.side-nav {
+  list-style-type: none;
+  padding-left: 0px;
+  margin-left: 0px;
+  margin-top: 35px;
+}
+
+.social-buttons {
+  width: 45px;
+  height: 45px;
+  padding: 0px;
 }
 
 a:link {
