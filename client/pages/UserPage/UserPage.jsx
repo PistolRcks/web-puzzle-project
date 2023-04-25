@@ -32,20 +32,21 @@ export default function UserPage () {
     const navigate = useNavigate();
 
     return(
-        <div className="UserPage">
+        <div className="UserPage" data-testid="userPage">
             <div>
                 <p className="userPage_Title">User Profile</p>
             </div>
             <div>
-                <img className = "userPage__ProfilePicture" src = {userIcon} height="75" />
+                <img className="userPage__ProfilePicture" src={userIcon} data-testid="profilePic" height="75" />
             </div>
             <div>
-                <p className="userPage_Username"> Username goes here! </p>
+                <p className="userPage_Username" data-testid="usename"> Username goes here! </p>
             </div>
             <div>
                 <Button 
                 className="userPage_Button" 
                 variant="secondary"
+                data-testid="changePassword"
                 onClick={handleShowChange}>
                     Change Password
                 </Button>
