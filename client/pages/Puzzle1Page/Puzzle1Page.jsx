@@ -188,7 +188,7 @@ export default function Puzzle1Page() {
                   </Modal.Header>
                   <Modal.Body>
                     {stoppedTime > 0 && (
-                      <p>You have completed Puzzle 1 in {minutes}:{seconds?.toString().padStart(2, '0') || '00'}:{milliseconds?.toString().padStart(2, '0') || '00'}!</p>
+                      <p>You have completed Puzzle 1 in {minutes}:{seconds?.toString().padStart(2, '0') || '00'}.{milliseconds?.toString().padStart(2, '0') || '00'}!</p>
                     )}
                   </Modal.Body>
                   <Modal.Footer>

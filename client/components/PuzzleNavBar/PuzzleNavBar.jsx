@@ -51,7 +51,7 @@ function PuzzleNavBar({puzzleNum, puzzleDesc, onTimerStop}, ref){
               <Nav.Link href="/UserProfile">User Profile</Nav.Link>
               <Nav.Link onClick={handleShowDesc}>Puzzle Description</Nav.Link>
             </Nav>
-            <p className="timer">Time: {minutes}:{seconds?.toString().padStart(2, '0') || '00'}:{milliseconds?.toString().padStart(2, '0') || '00'}</p>
+            <p className="timer">Time: {minutes}:{seconds?.toString().padStart(2, '0') || '00'}.{milliseconds?.toString().padStart(2, '0') || '00'}</p>
             <Link to="/" onClick={logOut}>
               <Button className="button" width="150" onClick={logOut}>
                 Log Out
