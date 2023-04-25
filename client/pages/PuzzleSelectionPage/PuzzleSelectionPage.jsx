@@ -6,7 +6,7 @@ import { useState } from "react";
 import { PuzzleItem } from "../../components/PuzzleItem/PuzzleItem.jsx";
 import { listPuzzles, logOut } from "../../api/DataHelper";
 import "./PuzzleSelectionPage.css";
-import ProfileImage from "../../components/ProfileImage/ProfileImage.jsx";
+import { ProfileImage } from "../../components/ProfileImage/ProfileImage.jsx";
 
 export default function PuzzleSelectionPage() {
   const [puzzles, setPuzzles] = useState([
@@ -24,12 +24,12 @@ export default function PuzzleSelectionPage() {
     listPuzzles()
       .then((res) => {
         const { userID, username, puzzles, userPuzzleCompletion } = res.data;
-
-            setPuzzles(puzzles);
-            setUserID(userID);
-            setUsername(username);
-            setUserPuzzleCompletion(userPuzzleCompletion);
-            setHasResponded(true);
+        console.log(userID)
+        setPuzzles(puzzles);
+        setUserID(userID);
+        setUsername(username);
+        setUserPuzzleCompletion(userPuzzleCompletion);
+        setHasResponded(true);
       })
       .catch((err) => {
         alert(err);
@@ -52,7 +52,7 @@ export default function PuzzleSelectionPage() {
 
       <div data-testid="PuzzleSelectionPage__pfp" className="puzzle_selection_page__profile-link">
         <Link to={`/UserProfile/${userID}`}>
-          <ProfileImage userID={userID} />
+          <ProfileImage userID={userID} hasResponded={hasResponded} />
         </Link>
       </div>
 

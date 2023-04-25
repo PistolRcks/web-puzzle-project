@@ -8,7 +8,7 @@ await esbuild
     entryPoints: ["client/app.jsx"],
     outfile: "public/bundle.js",
     bundle: true,
-    minify: true,
+    minify: false,
     target: "ES6",
     loader: { 
       '.png': 'file',
