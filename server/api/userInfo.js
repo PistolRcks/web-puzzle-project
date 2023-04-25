@@ -17,6 +17,8 @@ const { verifyPassword } = require("./login");
  *  ```js
  *    {
  *      "username": "the user's username",
+ *      "pfp_seed": the integer seed used to create the default profile picture,
+ *      "pfp_background_color": the string html hex code color used for the profile picture's background
  *      "profile_picture": "a Base64-encoded string of the profile picture",
  *      "profile_picture_top": the integer cropping point from the top of the image,
  *      "profile_picture_left": the integer cropping point from the left of the image,
@@ -35,6 +37,8 @@ const { verifyPassword } = require("./login");
  *  If an error occurs, only the key "error" will be sent, containing error message.
  */
 function getUserInfo(req, res, next) {
+  const { pfpSeed, pfpBackgroundColor } = req.session;
+
   let out = {
     username: "",
     profile_picture: "",
@@ -77,6 +81,11 @@ function getUserInfo(req, res, next) {
             // only insert the data we've got if we have it
             out.best_times = rows ? rows : [];
 
+            // not sure why, but we can't just input these in when we have declare `out`...
+            // might as well place it here!
+            out.pfp_seed = pfpSeed;
+            out.pfp_background_color = pfpBackgroundColor;
+            
             // finally have all our data; send it
             res.status(200).json(out);
           }

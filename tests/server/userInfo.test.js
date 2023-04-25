@@ -13,6 +13,8 @@ jest.mock("../../server/middleware", () => {
     logRouteAndCheckAuthorization: jest.fn((req, res, next) => {
       req.session.userID = 1;
       req.session.username = "alice";
+      req.session.pfpSeed = 1;
+      req.session.pfpBackgroundColor = "000000";
       next();
     }),
   };
@@ -64,8 +66,8 @@ describe("Tests for userInfo.js: getUserInfo", () => {
   ];
 
   beforeAll(() => {
-    //jest.spyOn(console, "log").mockImplementation();
-    //jest.spyOn(console, "error").mockImplementation();
+    jest.spyOn(console, "log").mockImplementation();
+    jest.spyOn(console, "error").mockImplementation();
   });
 
   test("200 - Normal operation", async () => {
@@ -91,7 +93,7 @@ describe("Tests for userInfo.js: getUserInfo", () => {
     expect(data.username).toEqual(username);
 
     // All keys should be there
-    expect(Object.entries(data)).toHaveLength(5);
+    expect(Object.entries(data)).toHaveLength(7);
   });
 
   test("200 - Normal operation, but no User_Puzzles", async () => {
@@ -113,7 +115,7 @@ describe("Tests for userInfo.js: getUserInfo", () => {
     expect(data.best_times).toHaveLength(0);
 
     // All keys should be there, though
-    expect(Object.entries(data)).toHaveLength(5);
+    expect(Object.entries(data)).toHaveLength(7);
   });
 
   test("400 - User does not exist", async () => {
