@@ -54,8 +54,23 @@ export default function Puzzle4Page() {
     const [displayScramble, updateDisplayScramble] = useState("");
     const [initialScramble, updateInitialScramble] = useState("");
     const [scrambleFormData, updateScrambleFormData] = useState("");
+    const [cryptoWord, setCryptoWord] = useState("");
+    const [encodedWord, updateEncodedWord] = useState("");
+    const [cryptoFormData, updateCryptoFormData] = useState("");
 
     const navigate = useNavigate();
+
+    function crypto(word) {
+      let wordArray = ['a','a','a','a','a','a'];
+      let rand = Math.floor((Math.random() * 10) + 1)
+      for(let i = 0; i < word[0].length; i++) {
+        let char = word[0].charCodeAt(i);
+        char = ((char + (rand)) % 26 + 97);
+        wordArray[i] = String.fromCharCode(char);
+      }
+      console.log(wordArray);
+      return wordArray;
+    }
 
     function scramble(word) {
       let wordArray = ['a','a','a','a','a','a'];
@@ -73,6 +88,10 @@ export default function Puzzle4Page() {
       return wordArray;
     }
 
+    const handleCryptoChange = (e) => {
+      updateCryptoFormData(e.target.value.trim());
+    }
+
     const handleScrambleChange = (e) => {
       updateScrambleFormData(e.target.value.trim());
     }
@@ -87,6 +106,15 @@ export default function Puzzle4Page() {
             refChar[(Number(e.target.name.charAt(e.target.name.length - 1)) + 1) % 9].current.focus();
         }
     };
+
+    const handleCryptoSubmit = () => {
+      if(cryptoWord == cryptoFormData) {
+        console.log("Correct!  Your free letter is " + wordleWord[0][4] + " in the 5th spot!");
+      }
+      else {
+        console.log("Incorrect!");
+      }
+    }
 
     const handleScrambleSubmit = () => {
       if(initialScramble == scrambleFormData) {
@@ -158,11 +186,14 @@ export default function Puzzle4Page() {
         listPuzzles().then((res) => {
             setHasResponded(true);
             setPuzzleDesc(res.data.puzzles[3].description);
-            randomWord({words: [{numWords: 1, length: 8}, {numWords: 1, length: 6}]}).then((res) => {
+            randomWord({words: [{numWords: 1, length: 8}, {numWords: 1, length: 6}, {numWords: 1, length: 6}]}).then((res) => {
                 updateWordResponse(true);
                 setWordleWord(res.data[0]);
                 updateInitialScramble(res.data[1]);
                 updateDisplayScramble(scramble(res.data[1]));
+                setCryptoWord(res.data[2]);
+                updateEncodedWord(crypto(res.data[2]));
+                console.log(res.data[2]);
             });
         }).catch((err) => {
             alert(err);
@@ -289,6 +320,19 @@ export default function Puzzle4Page() {
                 Submit
               </Button>
               </Row>
+            </Form>
+            <h1>Cryptogram: {encodedWord}</h1>
+            <Form>
+              <Form.Control
+                size="lg"
+                className="mini-control"
+                onChange={handleCryptoChange}
+              />
+              <Button
+              onClick={handleCryptoSubmit}
+              >
+                Submit
+              </Button>
             </Form>
         </>
     )
