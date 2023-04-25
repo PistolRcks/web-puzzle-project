@@ -37,7 +37,7 @@ export default function UserPage () {
                 <p className="userPage_Title">User Profile</p>
             </div>
             <div>
-                <img className="userPage__ProfilePicture" src={userIcon} data-testid="profilePic" height="75" />
+                <img className="userPage_ProfilePicture" src={userIcon} data-testid="profilePic" height="75" />
             </div>
             <div>
                 <p className="userPage_Username" data-testid="usename"> Username goes here! </p>

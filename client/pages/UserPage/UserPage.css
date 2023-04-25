@@ -1,7 +1,6 @@
-.userPage_ProfilePicture{
-  padding: 70px 0;
-  border: 3px solid green;
-  text-align: center;
+.userPage_ProfilePicture {
+  display: block;
+  margin: auto;
 }
 
 .userPage_Title{
@@ -18,4 +17,6 @@
 .userPage_Button{
   background-color: lightgreen;
   text-align: center;
+  margin: auto;
+  display: block;
 }
