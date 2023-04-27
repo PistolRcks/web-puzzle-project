@@ -1,12 +1,10 @@
 import React, { useState, useRef } from "react";
-import { render, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Button,
-  Carousel,
   Col,
   Container,
   Modal,
-  Overlay,
   OverlayTrigger,
   Row,
   Stack,
@@ -14,22 +12,22 @@ import {
   Form,
 } from "react-bootstrap";
 import { PuzzleHint } from "../../components/PuzzleHint/PuzzleHint";
-import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
-import { randomWord, listPuzzles } from "../../api/DataHelper";
+import PuzzleNavBar from "../../components/PuzzleNavBar/PuzzleNavBar";
+import { randomWord, listPuzzles, completePuzzle } from "../../api/DataHelper";
 import "./Puzzle3Page.css";
 import puzzle from "../../assets/puzzle.jpg";
 
 export default function Puzzle3Page() {
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [showTipsHint, setShowTipsHint] = useState(false);
   const [showComplete, setShowComplete] = useState(false);
-  const [disableTipsButton, setDisableTipsButton] = useState(true);
-  const [disableContactButton, setDisableContactButton] = useState(true);
-
   const [allowSubmit, setAllowSubmit] = useState(false);
   const handleCloseComplete = () => setShowComplete(false);
-  const handleShowComplete = () => setShowComplete(true);
-  const target = useRef(null);
+
+  const childRef = useRef(null);
+  const [stoppedTime, setStoppedTime] = useState(0);
+  const milliseconds = stoppedTime % 100;
+  const totalSeconds = Math.floor(stoppedTime / 100);
+  const seconds = totalSeconds % 60;
+  const minutes = Math.floor(totalSeconds / 60);
 
   //Use state for puzzle description
   const [puzzleDesc, setPuzzleDesc] = useState("");
@@ -47,18 +45,6 @@ export default function Puzzle3Page() {
     });
   }
 
-  const handleShowOverlay = () => {
-    setShowOverlay(!showOverlay);
-    setDisableTipsButton(false);
-  };
-  const handleShowTipsHint = () => {
-    setShowTipsHint(true);
-    console.log("Click on Contact Us");
-  };
-  const handleCloseTipsHint = () => {
-    setShowTipsHint(false);
-    setDisableContactButton(false);
-  };
   const handleRestartPuzzle = () => {
     setShowComplete(false);
     window.location.reload(true);
@@ -75,7 +61,6 @@ export default function Puzzle3Page() {
       ...formData,
       [e.target.name]: e.target.value.trim(),
     });
-    console.log(e.target.value, random);
     if (e.target.value === random) {
       setAllowSubmit(true);
     }
@@ -84,6 +69,14 @@ export default function Puzzle3Page() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setShowComplete(true);
+    if (childRef.current) {
+      childRef.current.stopTimer();
+    }
+  }
+
+  const handleShowCompleteModal = () => {
+    completePuzzle(3, stoppedTime)
+      .catch((err) => { alert(err) });
   }
 
   // Tooltip that contains the first hint
@@ -116,17 +109,16 @@ export default function Puzzle3Page() {
       setFrag1(rand.substring(0, 3));
       setFrag2(rand.substring(3, 6));
       setFrag3(rand.substring(6));
-    }).catch(error => {
-      console.log("Error getting random word!");
-    }
-    );
+    }).catch(err => {
+      alert(err);
+    });
   }
 
-  const hintObj = [{ title: "Opening the Console", steps: ["Right click on the screen and select Inspect", "Once the side bar is open on the right, select Console from the top tabs in the side bar."] }];
+  const hintObj = [{ title: "Reading the alt text of an image", steps: ['Right click on the image and click "inspect"', "In the inspector, find the highlighted line of HTML.", 'The hint will be in the "alt" property'] }];
 
   return (
     <>
-      <PuzzleNavBar puzzleNum={3} puzzleDesc={puzzleDesc} />
+      <PuzzleNavBar puzzleNum={3} puzzleDesc={puzzleDesc} onTimerStop={(time) => setStoppedTime(time)} ref={childRef} />
       <PuzzleHint hints={hintObj} />
       <div className="puzzle3 min-vw-100 min-vh-100">
         <Container className="content">
@@ -136,52 +128,57 @@ export default function Puzzle3Page() {
                 New Puzzle Stumps Internet Browsers
               </div>
               <div className="ms-auto">
-                <Row>
-                  <Form>
-                    <Form.Group className="mb-3" controlId="formSearchSubmit">
+                <Form>
+                  <Row>
+                    <Form.Group as={Col} xs={5} className="mb-3" controlId="formSearchBox">
                       <Form.Control type="text" placeholder="Search" name="checkAnswer" onChange={handleChange} />
-                      <Button className="rounded-pill" variant="primary" type="submit" onClick={handleSubmit} disabled={!allowSubmit}>Search</Button>
                     </Form.Group>
-                  </Form>
-                </Row>
+                    <Form.Group as={Col} controlId="formSearchButton">
+                      <Button className="rounded-pill" variant="primary" type="submit" onClick={handleSubmit} disabled={!allowSubmit}>&#x1F50E;&#xFE0E;</Button>
+                    </Form.Group>
+                  </Row>
+                </Form>
               </div>
             </Stack>
           </Row>
           <div className="puzzle3 text-body">
             <div className="puzzle3 author">
-              John {fragment3}
+              By: John {fragment3}
             </div>
             <div className="puzzle3">
               <img
                 src={puzzle}
                 alt={fragment2}
-                width="200"
-                height="150"
+                width="250"
+                height="200"
               />
-              In a world where we spend countless hours online,
-              it's no surprise that people are always looking for new and interesting ways to pass the time.
-              Recently, a new puzzle has been making the rounds on the internet, and it has stumped many internet browsers.
-              The puzzle, which features a grid of squares
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderFragment}
-              >
-                <a> Hover me! </a>
-              </OverlayTrigger>
-              with numbers, has been shared on social media and puzzle forums around the world.
-              The goal is to fill in the blank squares with numbers so that each row, column, and
-              diagonal adds up to the same sum. While the concept seems simple enough, the puzzle
-              has proven to be a real brain teaser for many. Experts are calling this puzzle one of
-              the most challenging yet. Some have even compared it to the infamous Rubik's cube.
-              Despite its difficulty, the puzzle has gained a large following, with many people determined to solve it.
-              With so many people working together and sharing tips and strategies online,
-              it's only a matter of time before this puzzle is finally cracked.
+              <p className="text-article">
+                In a world where we spend countless hours online,
+                it's no surprise that people are always looking for new and interesting ways to pass the time.
+                Recently, a new puzzle has been making the rounds on the internet, and it has stumped many internet browsers.
+                The puzzle, which features a grid of
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderFragment}
+                >
+                  <a> squares </a>
+                </OverlayTrigger>
+                with numbers, has been shared on social media and puzzle forums around the world.
+                The goal is to fill in the blank squares with numbers so that each row, column, and
+                diagonal adds up to the same sum. While the concept seems simple enough, the puzzle
+                has proven to be a real brain teaser for many. Experts are calling this puzzle one of
+                the most challenging yet. Some have even compared it to the infamous Rubik's cube.
+                Despite its difficulty, the puzzle has gained a large following, with many people determined to solve it.
+                With so many people working together and sharing tips and strategies online,
+                it's only a matter of time before this puzzle is finally cracked.
+              </p>
             </div>
           </div>
           <Row>
             <Modal
               show={showComplete}
+              onShow={handleShowCompleteModal}
               onHide={handleCloseComplete}
               backdrop="static"
               keyboard={false}
@@ -195,7 +192,9 @@ export default function Puzzle3Page() {
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                You have completed Puzzle 3!
+                {stoppedTime > 0 && (
+                  <p>You have completed Puzzle 3 in {minutes}:{seconds?.toString().padStart(2, '0') || '00'}.{milliseconds?.toString().padStart(2, '0') || '00'}!</p>
+                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button
