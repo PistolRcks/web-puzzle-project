@@ -29,8 +29,6 @@ export default function PuzzleSelectionPage() {
         const { userID, username, pfpSeed, pfpBackgroundColor, 
                 puzzles, userPuzzleCompletion } = res.data;
 
-          console.log(res);
-
         setPFPBackgroundColor(pfpBackgroundColor);
         setPFPSeed(pfpSeed);
         setPuzzles(puzzles);
