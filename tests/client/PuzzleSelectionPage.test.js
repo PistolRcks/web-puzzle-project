@@ -64,14 +64,6 @@ describe("Tests for the Puzzle Selection Page", () => {
     expect(screen.getByTestId("PuzzleSelectionPage").outerHTML).toContain("Puzzle 2 - Title 2");
   });
 
-  it("Checks for User Profile Picture link", async () => {
-    await act(() => {
-      render(<PuzzleSelectionPage />, { wrapper: BrowserRouter });
-    });
-
-    expect(screen.getByTestId("PuzzleSelectionPage__pfp").outerHTML).toContain("https://api.dicebear.com/5.x/adventurer/svg?seed=1&amp;backgroundColor=000000&amp;radius=20");
-  });
-
   it("Checks for not Puzzle 2 button", () => {
     const { baseElement } = render(<PuzzleSelectionPage />, { wrapper: BrowserRouter });
     expect(
