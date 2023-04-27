@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { listPuzzles } from "../../api/DataHelper";
 import { PuzzleHint } from "../../components/PuzzleHint/PuzzleHint";
-import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
+import  PuzzleNavBar  from "../../components/PuzzleNavBar/PuzzleNavBar";
 import { randomWord } from "../../api/DataHelper";
 
 export default function Puzzle4Page() {
