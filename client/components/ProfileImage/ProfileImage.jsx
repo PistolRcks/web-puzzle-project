@@ -7,8 +7,6 @@ import { getUserInfo } from "../../api/DataHelper";
  * @prop {Number} userID - The userID of the user whose profile picture to render
  */
 export function ProfileImage({ userID }) {
-  // TODO: Make sure the endpoint doesn't get spammed!
-  const [userIcon, setUserIcon] = useState("https://api.dicebear.com/5.x/adventurer/svg?seed=0&backgroundColor=000000&radius=20");
   const [style, setStyle] = useState({})
   const [hasResponded, setHasResponded] = useState(false)
 
@@ -21,23 +19,22 @@ export function ProfileImage({ userID }) {
         const basicStyle = {
           width: "64px",
           height: "64px",
-          overflow: "hidden"
         }
 
         // if the profile picture exists, use it instead of the pfp
         if (profile_picture) {
-          setUserIcon(`data:image/png;base64,${profile_picture}`)
           setStyle({
             ...basicStyle,
-            backgroundImage: userIcon,
+            overflow: "hidden",
+            backgroundImage: `url(data:image/png;base64,${profile_picture})`,
             backgroundSize: `${profile_picture_zoom}%`,
             backgroundPosition: `top -${profile_picture_top}px left -${profile_picture_left}px`,
           })
         } else {
-          setUserIcon(`https://api.dicebear.com/5.x/adventurer/svg?seed=${pfp_seed}&backgroundColor=${pfp_background_color}&radius=20`)
           setStyle({
             ...basicStyle,
-            backgroundImage: userIcon,
+            objectFit: "contain",
+            backgroundImage: `url(https://api.dicebear.com/5.x/adventurer/svg?seed=${pfp_seed}&backgroundColor=${pfp_background_color}&radius=20)`,
           })
         }
         // Issue may occur: getUserInfo may continue to throw errors that are not related to OOB userID accesses
@@ -50,6 +47,8 @@ export function ProfileImage({ userID }) {
         console.error(err)
       })
     }
+  
+    console.log(style)
   
     return (
       <div style={style}></div>

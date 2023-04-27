@@ -51,6 +51,7 @@ describe("Tests for userInfo.js: getUserInfo", () => {
     profile_picture: "blob data...",
     profile_picture_top: 0,
     profile_picture_left: 0,
+    profile_picture_zoom: 0.0
   };
   const dbAllData = [
     {
