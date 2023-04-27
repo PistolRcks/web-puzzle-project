@@ -40,12 +40,12 @@ export function accountCreation(userData) {
   });
 }
 
-export function completePuzzle(puzzleID) {
+export function completePuzzle(puzzleID, time = 0) {
   return new Promise((resolve, reject) => {
     axios.post("/api/userPuzzleMeta", {
       puzzle_id: puzzleID,
       progress: 1,
-      time: 0
+      time: time
     })
     .then(function (res) {
       return resolve(res);

@@ -64,14 +64,16 @@ export default function Puzzle1Page() {
   };
 
   const handleShowComplete = () => {
-    completePuzzle(1)
-      .catch((err) => { alert(err) });
-      
     setShowComplete(true); 
     if(childRef.current){
       childRef.current.stopTimer();
     }
   };
+
+  const handleShowCompleteModal = () => {
+    completePuzzle(1, stoppedTime)
+      .catch((err) => { alert(err) });
+  }
 
   const hintObj = [{title: "Opening the Console", steps: ["Right click on the screen and select Inspect", "Once the side bar is open on the right, select Console from the top tabs in the side bar."]}];
   return(
@@ -177,6 +179,7 @@ export default function Puzzle1Page() {
                 </Col>
                 <Modal
                   show={showComplete}
+                  onShow={handleShowCompleteModal}
                   onHide={handleCloseComplete}
                   backdrop="static"
                   keyboard={false}
