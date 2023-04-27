@@ -29,17 +29,13 @@ export default function Puzzle2Page() {
             </Stack>
             <h4 className="version-one">Passcode</h4>
 
-            <div className="search">
+            <div className="search"></div>
+            <div className="input-container">
+              <input type="text" name="pass" required />
+
               <Button className="button" variant="secondary">
                 Search
               </Button>
-            </div>
-            <div className="input-container">
-              <label>Password </label>
-              <input type="password" name="pass" required />
-            </div>
-            <div className="button-container">
-              <input type="submit" />
             </div>
           </Row>
         </Container>
