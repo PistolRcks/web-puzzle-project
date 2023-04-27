@@ -24,7 +24,7 @@ export default function PuzzleSelectionPage() {
     listPuzzles()
       .then((res) => {
         const { userID, username, puzzles, userPuzzleCompletion } = res.data;
-        console.log(userID)
+
         setPuzzles(puzzles);
         setUserID(userID);
         setUsername(username);

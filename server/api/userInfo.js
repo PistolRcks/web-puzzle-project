@@ -22,6 +22,7 @@ const { verifyPassword } = require("./login");
  *      "profile_picture": "a Base64-encoded string of the profile picture",
  *      "profile_picture_top": the integer cropping point from the top of the image,
  *      "profile_picture_left": the integer cropping point from the left of the image,
+ *      "profile_picture_zoom": the float zoom of the image,
  *      "best_times": [
  *        {
  *          "puzzle_id": the integer id of the puzzle,
@@ -44,6 +45,7 @@ function getUserInfo(req, res, next) {
     profile_picture: "",
     profile_picture_top: 0,
     profile_picture_left: 0,
+    profile_picture_zoom: 0.0,
     best_times: [],
   };
 
@@ -51,7 +53,14 @@ function getUserInfo(req, res, next) {
 
   // get User info
   db.get(
-    "SELECT username, profile_picture, profile_picture_top, profile_picture_left FROM User WHERE user_id=?",
+    `SELECT 
+      username, 
+      profile_picture, 
+      profile_picture_top, 
+      profile_picture_left, 
+      profile_picture_zoom 
+    FROM User WHERE user_id=?
+    `,
     [userID],
     function (err, row) {
       if (err) {

@@ -93,7 +93,7 @@ describe("Tests for userInfo.js: getUserInfo", () => {
     expect(data.username).toEqual(username);
 
     // All keys should be there
-    expect(Object.entries(data)).toHaveLength(7);
+    expect(Object.entries(data)).toHaveLength(8);
   });
 
   test("200 - Normal operation, but no User_Puzzles", async () => {
@@ -115,7 +115,7 @@ describe("Tests for userInfo.js: getUserInfo", () => {
     expect(data.best_times).toHaveLength(0);
 
     // All keys should be there, though
-    expect(Object.entries(data)).toHaveLength(7);
+    expect(Object.entries(data)).toHaveLength(8);
   });
 
   test("400 - User does not exist", async () => {

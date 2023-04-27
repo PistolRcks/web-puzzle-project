@@ -85,6 +85,7 @@ const addColumns = (db) => {
       { name: "profile_picture", typeDef: "TEXT" },
       { name: "profile_picture_top", typeDef: "INTEGER" },
       { name: "profile_picture_left", typeDef: "INTEGER" },
+      { name: "profile_picture_zoom", typeDef: "REAL" },
       { name: "default_pfp_seed", typeDef: "INTEGER" },
       { name: "default_pfp_color", typeDef: "TEXT" }
     ]
