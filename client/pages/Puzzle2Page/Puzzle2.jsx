@@ -15,6 +15,23 @@ import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
 import "./Puzzle2.css";
 
 export default function Puzzle2Page() {
+  const [disableButton, setDisableButton] = useState(true);
+  const [showComplete, setShowComplete] = useState(false);
+  const handleCloseComplete = () => setShowComplete(false);
+  const handleShowComplete = () => setShowComplete(true);
+  const [message, setMessage] = useState("");
+
+  const [updated, setUpdated] = useState(message);
+
+  const handleChange = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const handleClick = () => {
+    // 👇 "message" stores input field value
+    setUpdated(message);
+  };
+
   return (
     <>
       <PuzzleNavBar />
@@ -31,10 +48,30 @@ export default function Puzzle2Page() {
 
             <div className="search"></div>
             <div className="input-container">
-              <input type="text" name="pass" required />
+              <input
+                type="text"
+                id="message"
+                name="message"
+                onChange={handleChange}
+                value={message}
+              />
 
-              <Button className="button" variant="secondary">
+              <Button
+                className="button"
+                variant="secondary"
+                onClick={handleClick}
+              >
                 Search
+              </Button>
+              
+              <Button
+                className="Comment-button"
+                disabled={disableButton}
+                variant="secondary"
+                onClick={handleShowComplete}
+                data-testid="contact-us"
+              >
+                Comment
               </Button>
             </div>
           </Row>
