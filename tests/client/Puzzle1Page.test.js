@@ -1,4 +1,6 @@
-import {render, screen, getByTestId} from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
@@ -12,6 +14,14 @@ jest.mock("../../server/api/listPuzzles", () => {
 
 describe("Tests for Puzzle 1 Page", () => {
   const { location } = window;
+
+  // Mock axios and the endpoints used in the Puzzle1Page component
+  const mock = new MockAdapter(axios);
+  mock.onPost("/api/userPuzzleMeta").reply(400);
+  mock.onGet("/api/listPuzzles").reply(200, { 
+    puzzles: [ { description: "description" } ]
+  });
+
   beforeAll(() => {
     delete window.location;
     window.location = { reload: jest.fn() };
@@ -24,64 +34,51 @@ describe("Tests for Puzzle 1 Page", () => {
 
   });
   test("Checks for Page Title", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <Puzzle1Page />
-      </BrowserRouter>
+    const { baseElement } = render(
+        <Puzzle1Page />, { wrapper: BrowserRouter }
     );
-    expect(wrapper.baseElement.outerHTML).toContain("How to Photoshop like a Pro");
+    expect(baseElement.outerHTML).toContain("How to Photoshop like a Pro");
   });
   test("Checks for top right buttons", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <Puzzle1Page />
-      </BrowserRouter>
-      );        
-    expect(wrapper.baseElement.outerHTML).toContain("Tutorial");
-    expect(wrapper.baseElement.outerHTML).toContain("Software");
-    expect(wrapper.baseElement.outerHTML).toContain("Tips");
+    const { baseElement } = render(
+      <Puzzle1Page />, { wrapper: BrowserRouter }
+    );       
+    expect(baseElement.outerHTML).toContain("Tutorial");
+    expect(baseElement.outerHTML).toContain("Software");
+    expect(baseElement.outerHTML).toContain("Tips");
   });
   test("Checks for left buttons", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <Puzzle1Page />
-      </BrowserRouter>
-      );
-    expect(wrapper.baseElement.outerHTML).toContain("Ideas");
-    expect(wrapper.baseElement.outerHTML).toContain("FAQs");
-    expect(wrapper.baseElement.outerHTML).toContain("About");
-    expect(wrapper.baseElement.outerHTML).toContain("Contact Us");
-    expect(wrapper.baseElement.outerHTML).toContain("Help");
+    const { baseElement } = render(
+      <Puzzle1Page />, { wrapper: BrowserRouter }
+    );
+    expect(baseElement.outerHTML).toContain("Ideas");
+    expect(baseElement.outerHTML).toContain("FAQs");
+    expect(baseElement.outerHTML).toContain("About");
+    expect(baseElement.outerHTML).toContain("Contact Us");
+    expect(baseElement.outerHTML).toContain("Help");
 
   });
   test("Checks Contact Us button is disabled", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <Puzzle1Page />
-      </BrowserRouter>
-      );
+    render(
+      <Puzzle1Page />, { wrapper: BrowserRouter }
+    );
     const contactButton = screen.getByTestId("contact-us");
     expect(contactButton).toBeDisabled();
   });
   test("Checks for Tooltip on click me button", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <Puzzle1Page />
-      </BrowserRouter>
-      );
+    const { baseElement } = render(
+      <Puzzle1Page />, { wrapper: BrowserRouter }
+    );
     const clickMeButton = screen.getByTestId("click-me");
     userEvent.click(clickMeButton);
-    expect(wrapper.baseElement.outerHTML).toContain("Click on the word Tips");
+    expect(baseElement.outerHTML).toContain("Click on the word Tips");
   });
   test("Checks for secret word in console", () => {
     const consoleSpy = jest.spyOn(global.console, "log");
-    const close = jest.fn();
 
-    const wrapper = render(
-      <BrowserRouter>
-        <Puzzle1Page close={close}/>
-      </BrowserRouter>
-      );
+    render(
+      <Puzzle1Page />, { wrapper: BrowserRouter }
+    );
     const clickMeButton = screen.getByTestId("click-me");
     userEvent.click(clickMeButton);
     const tipsButton = screen.getByTestId("tips");
@@ -89,11 +86,9 @@ describe("Tests for Puzzle 1 Page", () => {
     expect(consoleSpy).toBeCalledWith("Click on Contact Us");
   });
   test("Checks Contact Us is enabled when it should be", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <Puzzle1Page />
-      </BrowserRouter>
-      );
+    render(
+      <Puzzle1Page />, { wrapper: BrowserRouter }
+    );
     const clickMeButton = screen.getByTestId("click-me");
     userEvent.click(clickMeButton);
     const tipsButton = screen.getByTestId("tips");
@@ -104,20 +99,16 @@ describe("Tests for Puzzle 1 Page", () => {
     expect(contactButton).toBeEnabled();
   });
   test("Checks tips button is disabled", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <Puzzle1Page />
-      </BrowserRouter>
-      );
+    render(
+      <Puzzle1Page />, { wrapper: BrowserRouter }
+    );
     const tipsButton = screen.getByTestId("tips");
     expect(tipsButton).toBeDisabled();
   });
   test("Checks Restart Puzzle button in completed puzzle modal refreshes the page", () => {
-    const wrapper = render(
-      <BrowserRouter>
-        <Puzzle1Page />
-      </BrowserRouter>
-      );
+    render(
+      <Puzzle1Page />, { wrapper: BrowserRouter }
+    );
     const clickMeButton = screen.getByTestId("click-me");
     userEvent.click(clickMeButton);
     const tipsButton = screen.getByTestId("tips");

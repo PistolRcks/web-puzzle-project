@@ -40,6 +40,22 @@ export function accountCreation(userData) {
   });
 }
 
+export function completePuzzle(puzzleID, time = 0) {
+  return new Promise((resolve, reject) => {
+    axios.post("/api/userPuzzleMeta", {
+      puzzle_id: puzzleID,
+      progress: 1,
+      time: time
+    })
+    .then(function (res) {
+      return resolve(res);
+    })
+    .catch(function (err) {
+      reject(err);
+    })
+  });
+}
+
 //Function that calls the login post
 export function logIn(userData) {
   const { username, password } = userData;
