@@ -19,6 +19,7 @@ export function ProfileImage({ userID }) {
         const basicStyle = {
           width: "64px",
           height: "64px",
+          borderRadius: "15%"
         }
 
         // if the profile picture exists, use it instead of the pfp
@@ -34,7 +35,8 @@ export function ProfileImage({ userID }) {
           setStyle({
             ...basicStyle,
             objectFit: "contain",
-            backgroundImage: `url(https://api.dicebear.com/5.x/adventurer/svg?seed=${pfp_seed}&backgroundColor=${pfp_background_color}&radius=20)`,
+            backgroundImage: `url(https://api.dicebear.com/5.x/adventurer/svg?seed=${pfp_seed}&backgroundColor=${pfp_background_color})`,
+            backgroundPosition: "center"
           })
         }
         // Issue may occur: getUserInfo may continue to throw errors that are not related to OOB userID accesses
