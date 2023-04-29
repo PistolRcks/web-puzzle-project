@@ -20,7 +20,7 @@ async function googleLogin(req, res, next) {
 
   // select existing user in database
   db.get(
-    "SELECT user_id, default_pfp_seed, default_pfp_color FROM User WHERE oauth_id = ?",
+    "SELECT user_id, username, default_pfp_seed, default_pfp_color FROM User WHERE oauth_id = ?",
     oauthID,
     async function (err, row) {
       // if entered username isn't found, send error

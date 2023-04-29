@@ -99,14 +99,14 @@ async function insertUser(db, userID, username, hashedPassword, salt, oauthID, c
   if (userID) {
     await db.run(
       `UPDATE User 
-        SET user_id = ?, username = ?, hashed_password = ?, salt = ?, oauth_id = ?, default_pfp_seed = ?, default_pfp_color = ?`,
-      [userID, username, hashedPassword, salt, oauthID, diceBearSeed, diceBearBackgroundColor],
+        SET username = ?, hashed_password = ?, salt = ?, oauth_id = ?, default_pfp_seed = ?, default_pfp_color = ?
+        WHERE user_id = ?`,
+      [username, hashedPassword, salt, oauthID, diceBearSeed, diceBearBackgroundColor, userID],
       (err) => {
         if (err) {
           callback(err);
           return;
         }
-  
         callback(err);
       }
     );

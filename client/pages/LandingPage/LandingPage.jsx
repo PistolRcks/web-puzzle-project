@@ -142,7 +142,8 @@ export default function LandingPage() {
             if(res.data.username) {
               navigate("/Puzzle/Selection");
             } else {
-              handleShowCreate();
+              //handleShowCreate();
+              handleShowLogin();
             }
         });
           }}
