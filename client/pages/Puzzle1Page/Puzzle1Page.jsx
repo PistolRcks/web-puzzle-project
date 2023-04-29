@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button, Carousel, Col, Container, Modal, Overlay, Row, Stack, Tooltip } from "react-bootstrap";
 import { PuzzleHint } from "../../components/PuzzleHint/PuzzleHint";
-import { PuzzleNavBar } from "../../components/PuzzleNavBar/PuzzleNavBar";
+import  PuzzleNavBar  from "../../components/PuzzleNavBar/PuzzleNavBar";
 import frog from "../../assets/frog.jpg";
 import cloud from "../../assets/cloud.jpg";
 import clown from "../../assets/clown.jpg";
@@ -13,23 +13,27 @@ import instagram from "../../assets/instagram.png";
 import tiktok from "../../assets/tiktok.png";
 import email from "../../assets/gmail.png";
 import "./Puzzle1Page.css";
-import { listPuzzles } from "../../api/DataHelper";
+import { completePuzzle, listPuzzles } from "../../api/DataHelper";
 
 export default function Puzzle1Page() {
 
   const [showOverlay, setShowOverlay] = useState(false);
   const [showTipsHint, setShowTipsHint] = useState(false);
   const [showComplete, setShowComplete] = useState(false);
+  const [stoppedTime, setStoppedTime] = useState(0);
   const [disableTipsButton, setDisableTipsButton] = useState(true);
   const [disableContactButton, setDisableContactButton] = useState(true);
   const handleCloseComplete = () => setShowComplete(false);
-  const handleShowComplete = () => setShowComplete(true);  
+  const childRef = useRef(null);
   const target = useRef(null);
+  const milliseconds = stoppedTime % 100;
+  const totalSeconds = Math.floor(stoppedTime / 100);
+  const seconds = totalSeconds % 60;
+  const minutes = Math.floor(totalSeconds / 60);
 
   //Use state for puzzle description
   const [puzzleDesc, setPuzzleDesc] = useState("");
   const [hasResponded, setHasResponded] = useState(false);
-
 
   //Database call to get the puzzle description on this page
   //Realistically this could be done in a better way, but it would require something
@@ -41,29 +45,40 @@ export default function Puzzle1Page() {
       }).catch((err) => {
           alert(err);
       });
-  }
-
+  };
   const handleShowOverlay = () => {
     setShowOverlay(!showOverlay);
     setDisableTipsButton(false);
-  }
+  };
   const handleShowTipsHint = () => {
     setShowTipsHint(true);
     console.log("Click on Contact Us");
-  }
+  };
   const handleCloseTipsHint = () => {
     setShowTipsHint(false);
     setDisableContactButton(false);
-  }
+  };
   const handleRestartPuzzle = () => {
     setShowComplete(false);
     window.location.reload(true);
+  };
+
+  const handleShowComplete = () => {
+    setShowComplete(true); 
+    if(childRef.current){
+      childRef.current.stopTimer();
+    }
+  };
+
+  const handleShowCompleteModal = () => {
+    completePuzzle(1, stoppedTime)
+      .catch((err) => { alert(err) });
   }
 
   const hintObj = [{title: "Opening the Console", steps: ["Right click on the screen and select Inspect", "Once the side bar is open on the right, select Console from the top tabs in the side bar."]}];
   return(
     <>
-      <PuzzleNavBar puzzleNum={1} puzzleDesc={puzzleDesc}/>
+      <PuzzleNavBar puzzleNum={1} puzzleDesc={puzzleDesc} onTimerStop={(time) => setStoppedTime(time)} ref={childRef} />
       <PuzzleHint hints={hintObj}/>
       <div className="puzzle1 min-vw-100 min-vh-100">
         <Container className="justify-content-center content">
@@ -164,6 +179,7 @@ export default function Puzzle1Page() {
                 </Col>
                 <Modal
                   show={showComplete}
+                  onShow={handleShowCompleteModal}
                   onHide={handleCloseComplete}
                   backdrop="static"
                   keyboard={false}
@@ -177,7 +193,9 @@ export default function Puzzle1Page() {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    You have completed Puzzle 1!
+                    {stoppedTime > 0 && (
+                      <p>You have completed Puzzle 1 in {minutes}:{seconds?.toString().padStart(2, '0') || '00'}.{milliseconds?.toString().padStart(2, '0') || '00'}!</p>
+                    )}
                   </Modal.Body>
                   <Modal.Footer>
                     <Button 
