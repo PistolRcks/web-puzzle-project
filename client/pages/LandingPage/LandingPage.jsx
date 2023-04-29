@@ -137,8 +137,14 @@ export default function LandingPage() {
           // console.log(credentialResponse);
           const decoded = jwt_decode(credentialResponse.credential);
           // console.log(decoded.sub);
-          await googleLogin(decoded.sub);
-          navigate("/Puzzle/Selection");
+          await googleLogin(decoded.sub).then((res) => {
+            console.log(res.data.username);
+            if(res.data.username) {
+              navigate("/Puzzle/Selection");
+            } else {
+              handleShowCreate();
+            }
+        });
           }}
           onError={() => {
             console.log('Login Failed');

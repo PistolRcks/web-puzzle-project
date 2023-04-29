@@ -11,9 +11,9 @@ const { db } = require("../db");
  * @returns Nothing.
  */
 async function googleLogin(req, res, next) {
-  const oauth_id = req.body.googleIdToken;
+  const oauthID = req.body.googleIdToken;
 
-  if (!oauth_id) {
+  if (!oauthID) {
     res.status(400).send("Error: Google Id Not Set!");
     return;
   }
@@ -21,7 +21,7 @@ async function googleLogin(req, res, next) {
   // select existing user in database
   db.get(
     "SELECT user_id, default_pfp_seed, default_pfp_color FROM User WHERE oauth_id = ?",
-    oauth_id,
+    oauthID,
     async function (err, row) {
       // if entered username isn't found, send error
       if (err) {
@@ -29,22 +29,22 @@ async function googleLogin(req, res, next) {
         res.status(500).send(err);
         return;
       }
-
       if (!row) {
         // res.status(500).send("Error: Google User not found!");
-        await googleSignup(req, res, oauth_id);
+        await googleSignup(req, res, oauthID);
         return;
       }
       
-      const { user_id: userID, 
+      const { user_id: userID,
+              username: username,
               default_pfp_seed: pfpSeed, 
               default_pfp_color: pfpBackgroundColor } = row;
-              
       req.session.userID = userID;
-      req.session.username = null;
+      req.session.username = username;
+      req.session.oauthID = oauthID;
       req.session.pfpSeed = pfpSeed;
       req.session.pfpBackgroundColor = pfpBackgroundColor;
-      res.status(200).send();
+      res.status(200).send({username: username});
     }
   );
 }

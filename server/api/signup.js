@@ -47,13 +47,16 @@ function signup(req, res, next) {
       if (err) {
         return res.status(500).send(err);
       }
-      
+      console.log("oauthID: " + req.session.oauthID);
+      console.log("UserID: " + req.session.userID);
       // insert new user into database
       await insertUser(
         db,
+        req.session.userID,
         username,
         hashedPassword,
         salt,
+        req.session.oauthID,
         (err) => {
           if (err) {
             // 19 is SQLITE_CONSTRAINT, should be username constraint
@@ -85,17 +88,35 @@ function signup(req, res, next) {
  *                   `error` will be null if there is no error.
  * @returns Nothing.
  */
-async function insertUser(db, username, hashedPassword, salt, callback) {
+async function insertUser(db, userID, username, hashedPassword, salt, oauthID, callback) {
   // Generate a random seed for the user's default pfp
   const diceBearSeed = Math.floor(Math.random() * 100000) + 1;
   // Generate a random background color for the user's default pfp
   const diceBearBackgroundColor = Math.floor(Math.random()*16777215).toString(16);
-
+  if(!oauthID) {
+    oauthID = null;
+  }
+  if (userID) {
+    await db.run(
+      `UPDATE User 
+        SET user_id = ?, username = ?, hashed_password = ?, salt = ?, oauth_id = ?, default_pfp_seed = ?, default_pfp_color = ?`,
+      [userID, username, hashedPassword, salt, oauthID, diceBearSeed, diceBearBackgroundColor],
+      (err) => {
+        if (err) {
+          callback(err);
+          return;
+        }
+  
+        callback(err);
+      }
+    );
+  }
+  else {
   await db.run(
     `INSERT INTO User 
-      (username, hashed_password, salt, default_pfp_seed, default_pfp_color) 
-      VALUES (?, ?, ?, ?, ?)`,
-    [username, hashedPassword, salt, diceBearSeed, diceBearBackgroundColor],
+      (username, hashed_password, salt, oauth_id, default_pfp_seed, default_pfp_color) 
+      VALUES (?, ?, ?, ?, ?, ?)`,
+    [username, hashedPassword, salt, oauthID, diceBearSeed, diceBearBackgroundColor],
     (err) => {
       if (err) {
         callback(err);
@@ -105,6 +126,7 @@ async function insertUser(db, username, hashedPassword, salt, callback) {
       callback(err);
     }
   );
+  }
 }
 
 module.exports = { signup };
