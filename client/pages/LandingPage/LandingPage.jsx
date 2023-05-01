@@ -131,7 +131,7 @@ export default function LandingPage() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div className='center'>
+      <div className="center">
         <GoogleLogin
           onSuccess={async credentialResponse => {
           // console.log(credentialResponse);

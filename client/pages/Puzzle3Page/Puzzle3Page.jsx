@@ -150,6 +150,7 @@ export default function Puzzle3Page() {
               <img
                 src={puzzle}
                 alt={fragment2}
+                className="puzzle3-img"
                 width="250"
                 height="200"
               />
