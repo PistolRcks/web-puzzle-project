@@ -139,7 +139,7 @@ export default function Puzzle1Page() {
           </Row>
           <Row>
             <Container className="main-block">
-              <Row>
+              <Row className="w-100">
                 <Col sm={2}>
                   <Stack gap={5} className="side-nav">
                     <Button 
@@ -292,8 +292,8 @@ export default function Puzzle1Page() {
                   </Carousel>
                 </Col>
               </Row>
-              <Row className="blank-space"></Row>
-              <Row>
+              <Row className="blank-space w-100"></Row>
+              <Row className="w-100">
                 <Col sm={9}></Col>
                 <Col sm={3}>
                 <Button 
