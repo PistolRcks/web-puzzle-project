@@ -19,6 +19,10 @@ export default function LandingPage() {
   const handleCloseCreate = () => setShowCreate(false);
   const handleShowCreate = () => setShowCreate(true);
 
+  const [showPrompt, setShowPrompt] = useState(false);
+  const handleClosePrompt = () => setShowPrompt(false);
+  const handleShowPrompt = () => setShowPrompt(true);
+
   const initialFormData = Object.freeze({
     username: "",
     password: "",
@@ -139,11 +143,10 @@ export default function LandingPage() {
           // console.log(decoded.sub);
           await googleLogin(decoded.sub).then((res) => {
             console.log(res.data.username);
-            if(res.data.username) {
-              navigate("/Puzzle/Selection");
+            if(res.data.promptUser) {
+              handleShowPrompt();
             } else {
-              //handleShowCreate();
-              handleShowLogin();
+              navigate("/Puzzle/Selection");
             }
         });
           }}
@@ -151,6 +154,46 @@ export default function LandingPage() {
             console.log('Login Failed');
           }}
         />;
+      <Modal
+        show={showPrompt}
+        onHide={handleClosePrompt}
+        backdrop="static"
+        keyboard={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Prompt
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Button 
+            className="close-button"
+            variant="secondary" 
+            onClick={handleShowCreate}
+            >
+            Link to New Account
+          </Button>
+          <Button 
+            className="close-button"
+            variant="secondary" 
+            onClick={handleShowLogin}
+            >
+            Link to Existing Account
+          </Button>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button 
+            className="close-button"
+            variant="secondary" 
+            onClick={() => navigate("/Puzzle/Selection")}
+            >
+            Skip
+          </Button>
+        </Modal.Footer>
+      </Modal>
       </div>
     </div>
     

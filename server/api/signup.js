@@ -47,8 +47,6 @@ function signup(req, res, next) {
       if (err) {
         return res.status(500).send(err);
       }
-      console.log("oauthID: " + req.session.oauthID);
-      console.log("UserID: " + req.session.userID);
       // insert new user into database
       await insertUser(
         db,

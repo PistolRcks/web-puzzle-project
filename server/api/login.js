@@ -18,8 +18,22 @@ function login(req, res, next) {
       req.session.username = username;
       req.session.pfpSeed = user.pfpSeed;
       req.session.pfpBackgroundColor = user.pfpBackgroundColor;
+      if (req.session.promptUser && req.session.oauthID) {
+        // Delete oauth row
+        deleteOauth(db, req.session.oauthID, (status, reason) => {
+          if (status === 200) {
+            // Update username row with oauthID
+            updateUserOauth(db, req.session.oauthID, req.session.userID, (status, reason) => {
+              req.session.promptUser = false;
+              res.status(status).send(reason);
+            })
+            return;
+          }
+          res.status(status).send(reason);
+        })
+        return;
+      }
     }
-
     // whether we verified or not, send out what happened
     res.status(status).send(reason);
   });
@@ -80,6 +94,37 @@ function verifyPassword(db, username, password, callback) {
           }
         }
       );
+    }
+  );
+}
+
+function deleteOauth(db, oauthID, callback) {
+  // select existing user in database
+  db.get(
+    "DELETE FROM User WHERE oauth_id = ?",
+    oauthID,
+    function (err, row) {
+      if (err) {
+        callback(500, err);
+        return;
+      }
+      callback(200, "OK");
+    }
+  );
+}
+
+function updateUserOauth(db, oauthID, userID, callback) {
+  // select existing user in database
+  db.get(
+    "UPDATE User SET oauth_id = ? WHERE user_id = ?",
+    oauthID,
+    userID,
+    function (err, row) {
+      if (err) {
+        callback(500, err);
+        return;
+      }
+      callback(200, "OK");
     }
   );
 }
