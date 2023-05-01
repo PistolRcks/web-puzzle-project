@@ -117,8 +117,7 @@ function updateUserOauth(db, oauthID, userID, callback) {
   // select existing user in database
   db.get(
     "UPDATE User SET oauth_id = ? WHERE user_id = ?",
-    oauthID,
-    userID,
+    [oauthID, userID],
     function (err, row) {
       if (err) {
         callback(500, err);
