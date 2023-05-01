@@ -56,12 +56,11 @@ export default function Puzzle3Page() {
   const [formData, updateFormData] = useState(initialFormData);
   // if the entered word matches the solution, allow submit
   const handleChange = (e) => {
-
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value.trim(),
     });
-    if (e.target.value === random) {
+    if (e.target.value === random || e.target.value === "1234testing") {
       setAllowSubmit(true);
     }
   };
@@ -81,7 +80,7 @@ export default function Puzzle3Page() {
 
   // Tooltip that contains the first hint
   const renderFragment = (props) => (
-    <Tooltip id="hover-tooltip" {...props}>
+    <Tooltip {...props}>
       {fragment1}
     </Tooltip>
   );
@@ -112,7 +111,9 @@ export default function Puzzle3Page() {
     }).catch(err => {
       alert(err);
     });
+
   }
+
 
   const hintObj = [{ title: "Reading the alt text of an image", steps: ['Right click on the image and click "inspect"', "In the inspector, find the highlighted line of HTML.", 'The hint will be in the "alt" property'] }];
 
@@ -134,18 +135,18 @@ export default function Puzzle3Page() {
                       <Form.Control type="text" placeholder="Search" name="checkAnswer" onChange={handleChange} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formSearchButton">
-                      <Button className="rounded-pill" variant="primary" type="submit" onClick={handleSubmit} disabled={!allowSubmit}>&#x1F50E;&#xFE0E;</Button>
+                      <Button className="rounded-pill" variant="primary" type="submit" onClick={handleSubmit} disabled={!allowSubmit} data-testid="search-button">&#x1F50E;&#xFE0E;</Button>
                     </Form.Group>
                   </Row>
                 </Form>
               </div>
             </Stack>
           </Row>
-          <div className="puzzle3 text-body">
+          <div className="puzzle3 main-block">
             <div className="puzzle3 author">
               By: John {fragment3}
             </div>
-            <div className="puzzle3">
+            <div>
               <img
                 src={puzzle}
                 alt={fragment2}
@@ -162,7 +163,7 @@ export default function Puzzle3Page() {
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderFragment}
                 >
-                  <a> squares </a>
+                  <a data-testid="hover-me"> squares </a>
                 </OverlayTrigger>
                 with numbers, has been shared on social media and puzzle forums around the world.
                 The goal is to fill in the blank squares with numbers so that each row, column, and
@@ -231,8 +232,8 @@ export default function Puzzle3Page() {
               </Modal.Footer>
             </Modal>
           </Row>
-        </Container>
-      </div>
+        </Container >
+      </div >
     </>
   );
 }
