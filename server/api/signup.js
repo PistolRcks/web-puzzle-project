@@ -47,6 +47,7 @@ function signup(req, res, next) {
       if (err) {
         return res.status(500).send(err);
       }
+      req.session.promptUser = false;
       // insert new user into database
       await insertUser(
         db,
@@ -101,6 +102,7 @@ async function insertUser(db, userID, username, hashedPassword, salt, oauthID, c
         WHERE user_id = ?`,
       [username, hashedPassword, salt, oauthID, diceBearSeed, diceBearBackgroundColor, userID],
       (err) => {
+        
         if (err) {
           callback(err);
           return;

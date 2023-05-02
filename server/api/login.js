@@ -19,12 +19,12 @@ function login(req, res, next) {
       req.session.pfpSeed = user.pfpSeed;
       req.session.pfpBackgroundColor = user.pfpBackgroundColor;
       if (req.session.promptUser && req.session.oauthID) {
+        req.session.promptUser = false;
         // Delete oauth row
         deleteOauth(db, req.session.oauthID, (status, reason) => {
           if (status === 200) {
             // Update username row with oauthID
             updateUserOauth(db, req.session.oauthID, req.session.userID, (status, reason) => {
-              req.session.promptUser = false;
               res.status(status).send(reason);
             })
             return;
