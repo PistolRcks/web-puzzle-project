@@ -9,7 +9,7 @@ const { db } = require("../db");
  * @returns Nothing.
  */
 function listPuzzles(req, res) {
-  const { userID, username } = req.session;
+  const { userID, username, pfpSeed, pfpBackgroundColor } = req.session;
 
   //up.progress, p.puzzle_id, p.title, p.description
 
@@ -37,6 +37,8 @@ function listPuzzles(req, res) {
           res.status(200).send({
             userID,
             username,
+            pfpSeed,
+            pfpBackgroundColor,
             puzzles: rows,
             userPuzzleCompletion
           });

@@ -1,6 +1,6 @@
 import {render} from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { PuzzleNavBar } from '../../client/components/PuzzleNavBar/PuzzleNavBar'
+import  PuzzleNavBar  from '../../client/components/PuzzleNavBar/PuzzleNavBar'
 import { BrowserRouter } from 'react-router-dom'
 
 describe("Tests for Puzzle Nav Bar", () => {
@@ -54,6 +54,14 @@ describe("Tests for Puzzle Nav Bar", () => {
         </BrowserRouter>
         );
         expect(wrapper.baseElement.outerHTML).toContain("Log Out");
+    });
+    test("Checks for timer", () => {
+      const wrapper = render(
+        <BrowserRouter>
+          <PuzzleNavBar />
+        </BrowserRouter>
+      );
+      expect(wrapper.baseElement.outerHTML).toContain("Time: ");
     });
 
 });

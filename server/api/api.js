@@ -1,11 +1,12 @@
 const Express = require("express");
 const { signup } = require("./signup");
 const { login } = require("./login");
-const { logout } = require("./logout")
+const { logout } = require("./logout");
 const { randomWord } = require("./randomWord");
 const { listPuzzles } = require("./listPuzzles");
 const { setUserPuzzleMeta } = require("./setUserPuzzleMeta");
 const { googleLogin } = require("./googleLogin");
+const { getUserInfo, setUserPassword, setUserPFP } = require("./userInfo");
 
 const router = new Express.Router();
 
@@ -27,13 +28,13 @@ router.post("/word", randomWord);
 
 router.get("/listPuzzles", listPuzzles);
 
-// UserPuzzle relation metadata update routes
 router.post("/userPuzzleMeta", setUserPuzzleMeta);
 
-// a route for the timer variable might be set here as well
-
+// User profile routes
+router.get("/user/:user_id(\\d+)", getUserInfo); // user_id must be one or more digits
+router.post("/user/password", setUserPassword); // always affects the current user; `:user_id` unnecessary
+router.post("/user/picture", setUserPFP);
 
 router.post("/googleLogin", googleLogin);
 
 module.exports = router;
-

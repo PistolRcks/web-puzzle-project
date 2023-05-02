@@ -1,0 +1,39 @@
+.puzzle3-img {
+  float: left;
+  margin: 5px;
+}
+
+.content {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.main-block {
+  background-color: #e8f1e8;
+  color: #2f3e46;
+  height: fit-content;
+  margin-left: 60px;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 20px;
+  border-radius: 1%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
+.text-article {
+  text-align: justify;
+  font-size: 25px;
+  color: #2f3e46;
+}
+
+.puzzle3 {
+  color: #e8f1e8;
+}
+
+.author {
+  font-style: italic;
+  font-size: small;
+  color: gray;
+}
