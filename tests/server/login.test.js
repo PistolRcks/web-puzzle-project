@@ -17,6 +17,22 @@ jest.mock("crypto", () => {
   }
 });
 
+// mock the middleware, specifically mock the auth check to "create" the session
+jest.mock("../../server/middleware", () => {
+  return {
+    redirectBundleManifest: jest.fn((req, res, next) => {
+      next();
+    }),
+    logRouteAndCheckAuthorization: jest.fn((req, res, next) => {
+      req.session.userID = 1;
+      req.session.username = 'alice';
+      req.session.promptUser = true;
+      req.session.oauthID = 1234;
+      next();
+    })
+  }
+})
+
 describe("Tests for POST at /api/login", () => {
   const username = "alice";
   const userID = 1;
@@ -31,13 +47,17 @@ describe("Tests for POST at /api/login", () => {
 
   test("200 - Successful login", async () => {
     // mock the database response
-    db.get = jest.fn((query, params, callback) => {
+    db.get = jest.fn().mockImplementationOnce((query, params, callback) => {
       callback(null, {
         hashed_password: Buffer.from(password, "utf8"),
         salt: "salt",
         user_id: userID
       });
-    });
+    }).mockImplementationOnce((query, params, callback) => {
+      callback(null, null);
+    }).mockImplementationOnce((query, params, callback) => {
+      callback(null, null);
+    })
 
     const response = await request.post(route)
       .send({
@@ -45,7 +65,6 @@ describe("Tests for POST at /api/login", () => {
         password,
       });
 
-    expect(db.get.mock.lastCall[1]).toBe(username);
     expect(response.statusCode).toBe(200);
   });
 
@@ -85,6 +104,48 @@ describe("Tests for POST at /api/login", () => {
 
     expect(db.get.mock.lastCall[1]).toBe(username);
     expect(response.statusCode).toBe(401);
+  });
+
+  test("500 - Error in deleteOauth function", async () => {
+    db.get = jest.fn().mockImplementationOnce((query, params, callback) => {
+      callback(null, {
+        hashed_password: Buffer.from(password, "utf8"),
+        salt: "salt",
+        user_id: userID
+      });
+    }).mockImplementationOnce((query, params, callback) => {
+      callback("Error");
+    });
+
+    const response = await request.post(route)
+      .send({
+        username,
+        password
+      });
+
+    expect(response.statusCode).toBe(500);
+  });
+
+  test("500 - Error in updateUserOauth function", async () => {
+    db.get = jest.fn().mockImplementationOnce((query, params, callback) => {
+      callback(null, {
+        hashed_password: Buffer.from(password, "utf8"),
+        salt: "salt",
+        user_id: userID
+      });
+    }).mockImplementationOnce((query, params, callback) => {
+      callback(null, null);
+    }).mockImplementationOnce((query, params, callback) => {
+      callback("Error");
+    });
+
+    const response = await request.post(route)
+      .send({
+        username,
+        password
+      });
+
+    expect(response.statusCode).toBe(500);
   });
 
   test("500 - Database Error", async () => {

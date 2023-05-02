@@ -11,17 +11,17 @@ const { db } = require("../db");
  * @returns Nothing.
  */
 async function googleLogin(req, res, next) {
-  const oauth_id = req.body.googleIdToken;
+  const oauthID = req.body.googleIdToken;
 
-  if (!oauth_id) {
+  if (!oauthID) {
     res.status(400).send("Error: Google Id Not Set!");
     return;
   }
 
   // select existing user in database
   db.get(
-    "SELECT user_id, default_pfp_seed, default_pfp_color FROM User WHERE oauth_id = ?",
-    oauth_id,
+    "SELECT user_id, username, default_pfp_seed, default_pfp_color FROM User WHERE oauth_id = ?",
+    oauthID,
     async function (err, row) {
       // if entered username isn't found, send error
       if (err) {
@@ -29,43 +29,46 @@ async function googleLogin(req, res, next) {
         res.status(500).send(err);
         return;
       }
-
       if (!row) {
         // res.status(500).send("Error: Google User not found!");
-        await googleSignup(req, res, oauth_id);
+        await googleSignup(req, res, oauthID);
         return;
       }
       
-      const { user_id: userID, 
+      const { user_id: userID,
+              username: username,
               default_pfp_seed: pfpSeed, 
               default_pfp_color: pfpBackgroundColor } = row;
-              
+      const promptUser = !username;
       req.session.userID = userID;
-      req.session.username = null;
+      req.session.username = username;
+      req.session.oauthID = oauthID;
       req.session.pfpSeed = pfpSeed;
       req.session.pfpBackgroundColor = pfpBackgroundColor;
-      res.status(200).send();
+      req.session.promptUser = promptUser;
+      res.status(200).send({promptUser: promptUser});
     }
   );
 }
 
-async function googleSignup(req, res, username) {
+async function googleSignup(req, res, oauthID) {
   await insertGoogleUser(
     db,
-    username,
+    oauthID,
     (err, user) => {
       if (err) {
         res.status(500)
           .send(`Error: Failed to insert new user!\nSpecific error: ${err}`);
         return;
       }
-
+      req.session.oauthID = oauthID;
       req.session.userID = user.user_id;
-      req.session.username = user.username;
+      //req.session.username = user.username;
+      req.session.promptUser = true;
       req.session.pfpSeed = user.pfpSeed;
       req.session.pfpBackgroundColor = user.pfpBackgroundColor;
-
-      res.status(200).send(`Successfully signed user ${username} up!`);
+      //res.status(200).send(`Successfully signed user ${oauthID} up!`);
+      res.status(200).send({promptUser: true});
       return;
     }
   )
@@ -75,13 +78,13 @@ async function googleSignup(req, res, username) {
 /**
  * Inserts a new User into the database `db`. Calls a callback on the new user object afterwards.
  * @param {Database} db - The database to insert the User into.
- * @param {String} username - The username of the new User.
+ * @param {String} oauthID - The username of the new User.
  * @param {Callback} callback - A callback which handles what happens after inserting the user.
  *                   Should take in one argument: an error `error`
  *                   `error` will be null if there is no error.
  * @returns Nothing.
  */
-async function insertGoogleUser(db, username, callback) {
+async function insertGoogleUser(db, oauthID, callback) {
   // Generate a random seed for the user's default pfp
   const diceBearSeed = Math.floor(Math.random() * 100000) + 1;
   // Generate a random background color for the user's default pfp
@@ -91,7 +94,7 @@ async function insertGoogleUser(db, username, callback) {
     `INSERT INTO User 
     (oauth_id, default_pfp_seed, default_pfp_color) 
     VALUES (?, ?, ?)`,
-    [username, diceBearSeed, diceBearBackgroundColor],
+    [oauthID, diceBearSeed, diceBearBackgroundColor],
     function (err, row) {
       if (err) {
         callback(err);
@@ -101,7 +104,7 @@ async function insertGoogleUser(db, username, callback) {
       // create a user object, handle it elsewhere
       const user = {
         user_id: this ? this.lastID : row.lastID,
-        username: username,
+        username: oauthID,
         pfpSeed: diceBearSeed,
         pfpBackgroundColor: diceBearBackgroundColor
       };
