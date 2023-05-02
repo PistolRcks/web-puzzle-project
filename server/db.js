@@ -82,7 +82,7 @@ function initDatabase(fp, puzzles) {
 const addColumns = (db) => {
   const columnsToAdd = {
     User: [
-      { name: "oauth_id", typeDef: "TEXT"},
+      { name: "oauth_id", typeDef: "TEXT" },
       { name: "profile_picture", typeDef: "BLOB" },
       { name: "profile_picture_top", typeDef: "INTEGER" },
       { name: "profile_picture_left", typeDef: "INTEGER" },
@@ -93,7 +93,7 @@ const addColumns = (db) => {
 
   for (const table in columnsToAdd) {
     columnsToAdd[table].forEach(column => {
-        db.run(`
+      db.run(`
           ALTER TABLE ${table}
           ADD COLUMN ${column.name} ${column.typeDef}
         `, (err) => { });
@@ -110,6 +110,16 @@ const db = initDatabase("./server/puzzle.db", [
       "Let's get started! This puzzle will help familiarize you with Web Puzzle Project's puzzle style and UI.\
       Follow the steps to find the hidden solution!",
   },
+  {
+    // Puzzle 2
+    title: "Puzzle 2",
+    description: "This is where puzzle 2 goes...",
+  },
+  {
+    // Puzzle 3
+    title: "Hidden in Plain Text",
+    description: "Find the hidden clues to unscramble a secret word."
+  }
 ]);
 
 module.exports = { db, initDatabase };
